@@ -1,14 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import AppHeader from '../app-header/app-header';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function App() {
-  fetch('https://norma.nomoreparties.space/api/ingredients')
-    .then((resp) => resp.json())
-    .then((data) => console.log(data));
+  const [ingridients, setIngridients] = useState([]);
+
+  useEffect(() => {
+      fetch('https://norma.nomoreparties.space/api/ingredients')
+        .then((response) => response.json())
+        .then((serverData) => setIngridients(serverData))
+        .catch(() => console.log('Ошибка. Попробуйте обновить страницу.'));
+    }, []);
+
   return (
-    <div></div>
-  );
+    <AppHeader />
+  )
 }
 
 export default App;
