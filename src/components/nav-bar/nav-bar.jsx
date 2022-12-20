@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles from './NavBar.module.css';
+import styles from './nav-bar.module.css';
 
 function NavBar({ children, firstRightItem }) {
 

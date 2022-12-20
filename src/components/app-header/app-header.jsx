@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import styles from './AppHeader.module.css';
-import NavBar from '../nav-bar/NavBar.jsx';
-import NavItem from '../nav-item/NavItem.jsx';
+import styles from './app-header.module.css';
+import NavBar from '../nav-bar/nav-bar';
+import NavItem from '../nav-item/nav-item';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader(props) {

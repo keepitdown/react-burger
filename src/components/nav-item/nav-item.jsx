@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles from './NavItem.module.css';
+import styles from './nav-item.module.css';
 
 function NavItem({ children, icon, active }) {
 

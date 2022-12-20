@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import AppHeader from '../app-header/AppHeader.jsx';
+import AppHeader from '../app-header/app-header';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function App() {
