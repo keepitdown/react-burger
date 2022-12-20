@@ -7,17 +7,19 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 function AppHeader(props) {
 
   return (
-    <header className={styles.header + ' mt-4 mb-4'}>
-      <NavBar position="left">
+    <header className={styles.header + ' pt-4 pb-4'}>
+      <div className={styles['logo-container']}>
+        <a href="#">
+          <Logo />
+        </a>
+      </div>
+      <NavBar firstRightItem="3">
         <NavItem active icon={<BurgerIcon type="primary" />}>
           Конструктор
         </NavItem>
         <NavItem icon={<ListIcon type="secondary" />}>
           Лента заказов
         </NavItem>
-      </NavBar>
-      <Logo />
-      <NavBar position="right">
         <NavItem icon={<ProfileIcon type="secondary" />}>
             Личный кабинет
         </NavItem>
