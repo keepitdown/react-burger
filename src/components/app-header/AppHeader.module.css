@@ -11,3 +11,7 @@
   left: calc(50% - (290px / 2));
   text-align: center;
 }
+
+.logo-link {
+  display: flex;
+}

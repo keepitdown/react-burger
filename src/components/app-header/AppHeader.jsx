@@ -9,7 +9,7 @@ function AppHeader(props) {
   return (
     <header className={styles.header + ' pt-4 pb-4'}>
       <div className={styles['logo-container']}>
-        <a href="#">
+        <a href="#" className={styles['logo-link']}>
           <Logo />
         </a>
       </div>

@@ -4,4 +4,9 @@
   color: #f2f2f3;
   text-decoration: none;
   border-radius: 40px;
+  transition: opacity .7s ease-out;
+}
+
+.link:hover, .link:focus {
+  opacity: .5;
 }
