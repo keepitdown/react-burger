@@ -10,12 +10,16 @@ function NavBar({ children, firstRightItem }) {
           children.map?.((item, index) => (
             <li
               key={index}
-              className={'mr-2' + (index === (Number(firstRightItem) - 1) ? (' ' + styles['list-item_first-right']) : '')}
+              className={
+                (index < (Number(firstRightItem) - 1) ? 'mr-2' : '')
+                + (index > (Number(firstRightItem) - 1) ? 'ml-2' : '')
+                + (index === (Number(firstRightItem) - 1) ? (' ' + styles['list-item_first-right']) : '')
+              }
             >
               {item}
             </li>
             ))
-          ?? (<li className="mr-2">{children}</li>)
+          ?? (<li>{children}</li>)
         }
       </ul>
     </nav>
