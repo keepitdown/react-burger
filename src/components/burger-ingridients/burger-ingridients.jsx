@@ -5,15 +5,22 @@ import TabSelector from '../tab-bar/tab-selector';
 
 function BurgerIngridients(props) {
 
+  const defaultTab = 'bun';
+
+  const [current, setCurrent] = useState(defaultTab);
+
   return (
     <section className={styles.section}>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-      <TabSelector defaultSelection="one">
-      <Tab value="one">
-        One
+      <TabSelector>
+      <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        Булки
       </Tab>
-      <Tab value="two">
-        Two
+      <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        Соусы
+      </Tab>
+      <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        Начинки
       </Tab>
       </TabSelector>
     </section>

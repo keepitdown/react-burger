@@ -2,20 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
-import { Button, Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-
-const withAddProps = Component => props => {
-
-  
-  
-  return (
-    <Component {...props} myProp="Свойство" onClick={clickHandler}/>
-  )
-}
-
-const clickHandler = () => console.log('Клик-клак');
-
-const TestCompWithAddProps = withAddProps(Tab);
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function App() {
 
@@ -46,7 +33,6 @@ function App() {
     <>
       <AppHeader/>
       <AppMain />
-      <TestCompWithAddProps>Раз</TestCompWithAddProps>
     </>
   )
 }
