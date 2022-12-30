@@ -6,7 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function App() {
 
-  const [ingridients, setIngridients] = useState([]);
+  const [ingridientsData, setIngridientsData] = useState([]);
 
   useEffect(() => {
 
@@ -24,7 +24,7 @@ function App() {
       .then((response) => response.json())
       .then((serverData) => {
         const processedData = groupByType(serverData.data);
-        setIngridients(processedData);
+        setIngridientsData(processedData);
       })
       .catch(() => console.log('Ошибка. Попробуйте обновить страницу.'));
     }, []);
@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <AppHeader/>
-      <AppMain />
+      <AppMain ingridientsData={ingridientsData} />
     </>
   )
 }
