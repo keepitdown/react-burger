@@ -13,7 +13,7 @@ function AppHeader(props) {
           <Logo />
         </a>
       </div>
-      <NavBar firstRightItem="3">
+      <NavBar firstRightItem={3}>
         <NavItem active icon={<BurgerIcon type="primary" />}>
           Конструктор
         </NavItem>

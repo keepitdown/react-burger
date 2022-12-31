@@ -6,7 +6,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.page {
+#root {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   padding: 40px;
   height: 100vh;

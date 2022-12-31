@@ -1,14 +1,13 @@
 .header {
+  display: flex;
+  justify-content: center;
   background-color: #1c1c21;
   position: relative;
-  max-width: 1920px;
-  margin: auto;
 }
 
 .logo-container {
   position: absolute;
   top: 19px;
-  left: calc(50% - (290px / 2));
   text-align: center;
 }
 

@@ -11,9 +11,9 @@ function NavBar({ children, firstRightItem }) {
             <li
               key={index}
               className={
-                (index < (Number(firstRightItem) - 1) ? 'mr-2' : '')
-                + (index > (Number(firstRightItem) - 1) ? 'ml-2' : '')
-                + (index === (Number(firstRightItem) - 1) ? (' ' + styles['list-item_first-right']) : '')
+                (index < (firstRightItem - 1) ? 'mr-2' : '')
+                + (index > (firstRightItem - 1) ? 'ml-2' : '')
+                + (index === (firstRightItem - 1) ? (' ' + styles['list-item_first-right']) : '')
               }
             >
               {item}
