@@ -29,6 +29,8 @@ function BurgerIngridients({ingridientsData, extraClass}) {
       </TabSelector>
       <IngridientsList>
         <IngridientsCategory categoryData={ingridientsData.bun}>Булки</IngridientsCategory>
+        <IngridientsCategory categoryData={ingridientsData.sauce}>Соусы</IngridientsCategory>
+        <IngridientsCategory categoryData={ingridientsData.main}>Начинки</IngridientsCategory>
       </IngridientsList>
     </section>
   )
