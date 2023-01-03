@@ -3,7 +3,6 @@ import styles from './burger-ingridients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import TabSelector from '../tab-bar/tab-selector';
 import IngridientsList from '../ingridients-list/ingridients-list';
-import IngridientCategory from '../ingridients-category/ingridients-category';
 import IngridientsCategory from '../ingridients-category/ingridients-category';
 
 

@@ -14,6 +14,6 @@
   transition: color .3s ease-in;
 }
 
-.link-text:hover, .link-text:focus {
+.link:hover .link-text, .link:hover .link-text:focus {
   color: #fff;
 }

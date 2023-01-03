@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.total-price {
+  display: flex;
+  align-items: center;
+}
+
+.total-price > svg {
+  width: 36px;
+  height: 36px;
+}

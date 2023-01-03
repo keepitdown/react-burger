@@ -2,8 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-basis: 0;
   position: relative;
+  min-width: 0;
+}
+
+.image {
+  box-sizing: border-box;
+  max-width: 240px;
 }
 
 .price-tag {
