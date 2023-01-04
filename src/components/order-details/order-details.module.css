@@ -13,14 +13,17 @@
   padding-top: 37px;
   padding-left: 37px;
   background-image:
-    url(../../images/Vector\ 1.svg), 
-    url(../../images/Vector\ 2.svg),
-    url(../../images/Vector\ 3.svg);
+    linear-gradient(#1c1c217a 100%, #1c1c21),
+    url(../../images/accepted-layer-1.svg), 
+    url(../../images/accepted-layer-2.svg),
+    url(../../images/accepted-layer-3.svg);
   background-size: 
+    contain,
     68px 65.33px,
     107px 100px,
     98px 102px;
   background-position: 
+    center,
     top 28px left 26px,
     top 11px left 7px,
     top 10px left 11px;

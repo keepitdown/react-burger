@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import styles from './burger-ingridients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import TabSelector from '../tab-bar/tab-selector';
+import TabSelector from '../tab-selector/tab-selector';
 import IngridientsList from '../ingridients-list/ingridients-list';
 import IngridientsCategory from '../ingridients-category/ingridients-category';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 
 function BurgerIngridients({ingridientsData, extraClass}) {
@@ -14,10 +15,10 @@ function BurgerIngridients({ingridientsData, extraClass}) {
 
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedIngridient, setSelectedIngridient] = useState({});
+  const [selectedIngredient, setSelectedIngredient] = useState({});
 
-  const showDetails = (ingridientData) => {
-    setSelectedIngridient({...ingridientData});
+  const showDetails = (ingredientData) => {
+    setSelectedIngredient({...ingredientData});
     setModalIsOpen(true);
   } 
 
@@ -50,7 +51,8 @@ function BurgerIngridients({ingridientsData, extraClass}) {
       </section>
       {modalIsOpen && (
       <ModalOverlay setter={setModalIsOpen}>
-          <Modal setter={setModalIsOpen}>
+          <Modal header="Детали ингредиента" setter={setModalIsOpen}>
+            <IngredientDetails ingredientData={selectedIngredient} />
           </Modal>
         </ModalOverlay>
       )}
