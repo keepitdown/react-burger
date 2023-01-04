@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Checkout from '../checkout/checkout';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import Modal from '../modal/modal';
 
 function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraClass }) {
 
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
+    <>
     <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
       <div className={styles['ingridients-container'] + ' mt-25 mb-10'}>
         {top && (
@@ -49,8 +52,20 @@ function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraCl
           </div>
         )}
       </div>
-      <Checkout ingridientsList={[top, ...middle, bottom]} extraClass="ml-4 mr-4"/>
+      <Checkout
+        ingridientsList={[top, ...middle, bottom]}
+        extraClass="ml-4 mr-4"
+        buttonHandler={() => setModalIsOpen(true)}
+      />
     </section>
+    {modalIsOpen && (
+      <ModalOverlay setter={setModalIsOpen}>
+          <Modal header="Детали ингридиента" setter={setModalIsOpen}>
+            <div className="pt-20"></div>
+          </Modal>
+        </ModalOverlay>
+    )}
+    </>
   )
 }
 

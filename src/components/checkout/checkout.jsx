@@ -1,9 +1,8 @@
 import React, {useMemo, useState} from 'react';
 import styles from './checkout.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Checkout({ ingridientsList, extraClass }) {
+function Checkout({ ingridientsList, extraClass, buttonHandler }) {
 
   const totalPrice = useMemo(
     () => ingridientsList.reduce((total, currentItem) => currentItem.price + total, 0)
@@ -15,7 +14,7 @@ function Checkout({ ingridientsList, extraClass }) {
         <span className="text text_type_digits-medium mr-2">{totalPrice}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="large">
+      <Button htmlType="button" type="primary" size="large" onClick={buttonHandler}>
         Оформить заказ
       </Button>
     </div>
