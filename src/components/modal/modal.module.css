@@ -8,12 +8,16 @@
     0px 16px 24px #0000000a,
     0px 4px 8px #0000000a,
     0px 0px 1px #0000000a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
   display: flex;
   align-items: center;
   min-height: 64px;
+  align-self: stretch;
 }
 
 .close-button {

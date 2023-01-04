@@ -6,6 +6,10 @@
   min-width: 0;
 }
 
+.container:hover {
+  cursor: pointer;
+}
+
 .image {
   box-sizing: border-box;
   max-width: 240px;

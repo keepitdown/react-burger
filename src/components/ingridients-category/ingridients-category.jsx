@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styles from './ingridients-category.module.css';
 import IngridientCard from '../ingridient-card/ingridient-card';
 
-function IngridientsCategory({ children, categoryData }) {
+function IngridientsCategory({ children, categoryData, clickHandler }) {
 
   return (
     <article>
@@ -12,7 +12,13 @@ function IngridientsCategory({ children, categoryData }) {
           {
             categoryData && categoryData.map((itemData, index) => {
               return (
-                <IngridientCard key={index} data={itemData} quantity={1} isEven={index % 2} />
+                <IngridientCard
+                  key={index}
+                  data={itemData}
+                  quantity={1}
+                  isEven={index % 2}
+                  clickHandler={clickHandler}
+                />
               )
             })
           }

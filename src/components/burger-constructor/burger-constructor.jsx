@@ -4,6 +4,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import Checkout from '../checkout/checkout';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraClass }) {
 
@@ -60,8 +61,8 @@ function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraCl
     </section>
     {modalIsOpen && (
       <ModalOverlay setter={setModalIsOpen}>
-          <Modal header="Детали ингридиента" setter={setModalIsOpen}>
-            <div className="pt-20"></div>
+          <Modal setter={setModalIsOpen}>
+            <OrderDetails orderNumber="034536" />
           </Modal>
         </ModalOverlay>
     )}
