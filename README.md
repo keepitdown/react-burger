@@ -1,46 +1,23 @@
-# Getting Started with Create React App
+# Stellar Burgers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## О проекте
 
-## Available Scripts
+Проект представляет собой страницу оформления заказа в бургерной Stellar Burgers. Страница выполнена в виде приложения-конструктора, позволяющего пользователю самостоятельно выбрать ингредиенты для бургера.
 
-In the project directory, you can run:
+В хэдере располагается панель навигации c ссылками для перехода в другие разделы сайта. Основной раздел страницы представлен 2 секциями: список доступных ингредиентов и состав заказа.
 
-### `npm start`
+Список доступных ингредиентов разделен на категории, которые соответствуют их типам. В случае, если список не может быть полностью отображен в выделенной для него части интерфейса, сбоку компонента появляется полоса прокрутки. При нажатии на карточку ингридиента открывается модальное окно с крупным изображением и информацией о пищевой ценности.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+В секции состав заказа отображаются все добавленные пользователем позиции. При отсутствии достаточного места для их полного отображения в разделе появляется полоса прокрутки. Первый и последний ингредиент находятся за пределами прокручиваемой области и всегда видны. В нижней части компонента отображается итоговая стоимость составленного набора. Рядом расположена кнопка оформления заказа. Нажатие на кнопку приводит к открытию модального окна с подтверждением оформления и номером заказа.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Используемые технологии
 
-### `npm test`
+В качестве основы проекта применяется **JavaScript** библиотека для создания пользовательских интерфейсов **React**. Среди использованных в реализации компонентов имеются как специального созданные, так и уже готовые. Благодаря использованию технологии **flexbox** страница приложения подстраивается под размер окна браузера.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Планы по доработке
 
-### `npm run build`
+* Реализация возможности добавления ингредиентов в заказ с использованием функционала Drag & Drop, для чего планируется интеграция библиотеки React DnD.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Расширение логики взаимодействия с сервером для отправки информации о оформленном заказе.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Добавление возможности быстрого открытия необходимой категории ингредиентов при нажатии на расположенные в компоненте вкладки.
