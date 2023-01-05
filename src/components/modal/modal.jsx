@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Modal({ children, header, setter }) {
+
+  const closeWithEsc = (e) => {
+    if (e.key === 'Escape') {
+      setter(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', closeWithEsc);
+    return () => window.removeEventListener('keydown', closeWithEsc);
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.header + ' mt-10 ml-10 mr-10'}>

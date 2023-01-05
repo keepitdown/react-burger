@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
+import ErrorMessage from '../error-message/error-message';
+
+const requestUrl = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
 
   const [ingredientsData, setIngredientsData] = useState({});
+  const [requestHasFailed, setRequestHasFailed] = useState(false);
 
   useEffect(() => {
 
@@ -19,19 +23,25 @@ function App() {
       }, {})
     }
 
-    fetch('https://norma.nomoreparties.space/api/ingredients')
+    fetch(requestUrl)
       .then((response) => response.json())
       .then((serverData) => {
         const processedData = groupByType(serverData.data);
         setIngredientsData(processedData);
       })
-      .catch(() => console.log('Ошибка. Попробуйте обновить страницу.'));
+      .catch(() => {
+        setRequestHasFailed(true);
+        console.log('Error: data request has failed');
+      });
     }, []);
 
   return (
     <>
       <AppHeader/>
-      <AppMain ingredientsData={ingredientsData} />
+      {!requestHasFailed 
+        ? (<AppMain ingredientsData={ingredientsData} />)
+        : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
+      }
     </>
   )
 }
