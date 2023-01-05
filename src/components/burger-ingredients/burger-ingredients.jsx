@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import styles from './burger-ingridients.module.css';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import TabSelector from '../tab-selector/tab-selector';
-import IngridientsList from '../ingridients-list/ingridients-list';
-import IngridientsCategory from '../ingridients-category/ingridients-category';
+import IngredientsList from '../ingredients-list/ingredients-list';
+import IngredientsCategory from '../ingredients-category/ingredients-category';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 
-function BurgerIngridients({ingridientsData, extraClass}) {
+function BurgerIngredients({ ingredientsData, extraClass }) {
 
   const defaultTab = 'bun';
 
@@ -37,17 +38,17 @@ function BurgerIngridients({ingridientsData, extraClass}) {
           Начинки
         </Tab>
         </TabSelector>
-        <IngridientsList>
-          <IngridientsCategory categoryData={ingridientsData.bun} clickHandler={showDetails}>
+        <IngredientsList>
+          <IngredientsCategory categoryData={ingredientsData.bun} clickHandler={showDetails}>
             Булки
-          </IngridientsCategory>
-          <IngridientsCategory categoryData={ingridientsData.sauce} clickHandler={showDetails}>
+          </IngredientsCategory>
+          <IngredientsCategory categoryData={ingredientsData.sauce} clickHandler={showDetails}>
             Соусы
-          </IngridientsCategory>
-          <IngridientsCategory categoryData={ingridientsData.main} clickHandler={showDetails}>
+          </IngredientsCategory>
+          <IngredientsCategory categoryData={ingredientsData.main} clickHandler={showDetails}>
             Начинки
-          </IngridientsCategory>
-        </IngridientsList>
+          </IngredientsCategory>
+        </IngredientsList>
       </section>
       {modalIsOpen && (
       <ModalOverlay setter={setModalIsOpen}>
@@ -60,4 +61,24 @@ function BurgerIngridients({ingridientsData, extraClass}) {
   )
 }
 
-export default BurgerIngridients;
+BurgerIngredients.propTypes = {
+  ingredientsData: PropTypes.objectOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        __v: PropTypes.number,
+        _id: PropTypes.string,
+        calories: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        fat: PropTypes.number,
+        image: PropTypes.string,
+        image_large: PropTypes.string,
+        image_mobile: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.number,
+        proteins: PropTypes.number,
+        type: PropTypes.string
+        }))),
+  extraClass: PropTypes.string
+};
+
+export default BurgerIngredients;

@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function App() {
 
-  const [ingridientsData, setIngridientsData] = useState([]);
+  const [ingredientsData, setIngredientsData] = useState({});
 
   useEffect(() => {
 
@@ -24,16 +23,15 @@ function App() {
       .then((response) => response.json())
       .then((serverData) => {
         const processedData = groupByType(serverData.data);
-        setIngridientsData(processedData);
+        setIngredientsData(processedData);
       })
       .catch(() => console.log('Ошибка. Попробуйте обновить страницу.'));
     }, []);
-    
 
   return (
     <>
       <AppHeader/>
-      <AppMain ingridientsData={ingridientsData} />
+      <AppMain ingredientsData={ingredientsData} />
     </>
   )
 }

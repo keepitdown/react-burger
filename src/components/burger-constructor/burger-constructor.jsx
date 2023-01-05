@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Checkout from '../checkout/checkout';
@@ -6,14 +7,14 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
-function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraClass }) {
+function BurgerConstructor({ selectedIngredients: {top, middle, bottom}, extraClass }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <>
     <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
-      <div className={styles['ingridients-container'] + ' mt-25 mb-10'}>
+      <div className={styles['ingredients-container'] + ' mt-25 mb-10'}>
         {top && (
           <div className="pl-8 mb-4 ml-4 mr-4">
             <ConstructorElement
@@ -54,7 +55,7 @@ function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraCl
         )}
       </div>
       <Checkout
-        ingridientsList={[top, ...middle, bottom]}
+        ingredientsList={[top, ...middle, bottom]}
         extraClass="ml-4 mr-4"
         buttonHandler={() => setModalIsOpen(true)}
       />
@@ -69,5 +70,29 @@ function BurgerConstructor({ selectedIngridients: {top, middle, bottom}, extraCl
     </>
   )
 }
+
+const ingredientObjectShape = PropTypes.shape({
+    __v: PropTypes.number,
+    _id: PropTypes.string,
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    proteins: PropTypes.number,
+    type: PropTypes.string
+  });
+
+BurgerConstructor.propTypes = {
+  selectedIngredients: PropTypes.shape({
+    top: ingredientObjectShape,
+    middle: PropTypes.arrayOf(ingredientObjectShape),
+    bottom: ingredientObjectShape
+  }),
+  extraClass: PropTypes.string
+};
 
 export default BurgerConstructor;

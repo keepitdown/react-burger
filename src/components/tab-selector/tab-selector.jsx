@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './tab-selector.module.css';
 
 function TabSelector({ children }) {
@@ -17,5 +18,12 @@ function TabSelector({ children }) {
     </ul>
   )
 }
+
+TabSelector.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
+};
 
 export default TabSelector;

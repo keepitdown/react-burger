@@ -5,7 +5,7 @@
   color: #f2f2f3;
 }
 
-.ingridients-container {
+.ingredients-container {
   display: flex;
   flex-direction: column;
   min-height: 0;

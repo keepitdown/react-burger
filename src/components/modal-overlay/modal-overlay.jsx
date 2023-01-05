@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import styles from './modal-overlay.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function ModalOverlay({ children, setter }) {
 
@@ -30,5 +30,10 @@ function ModalOverlay({ children, setter }) {
     </div>
   ), modalPortal.current)
 }
+
+ModalOverlay.propTypes = {
+  children: PropTypes.element.isRequired,
+  setter: PropTypes.func.isRequired
+};
 
 export default ModalOverlay;

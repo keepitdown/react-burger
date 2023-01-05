@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './nav-bar.module.css';
 
 function NavBar({ children, firstRightItem }) {
@@ -25,5 +26,13 @@ function NavBar({ children, firstRightItem }) {
     </nav>
   )
 }
+
+NavBar.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ]),
+  firstRightItem: PropTypes.number
+};
 
 export default NavBar;

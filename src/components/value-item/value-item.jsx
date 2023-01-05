@@ -1,4 +1,5 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './value-item.module.css';
 
 function ValueItem({ children, value }) {
@@ -10,5 +11,13 @@ function ValueItem({ children, value }) {
     </div>
   )
 }
+
+ValueItem.propTypes = {
+  children: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ])
+};
 
 export default ValueItem;

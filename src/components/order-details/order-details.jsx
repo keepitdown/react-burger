@@ -1,4 +1,5 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -12,6 +13,10 @@ function OrderDetails({ orderNumber }) {
       <p className="text text_type_main-default text_color_inactive mt-2 mb-30">Дождитесь готовности на орбитальной станции</p>
     </>
   )
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.string.isRequired
 }
 
 export default OrderDetails;

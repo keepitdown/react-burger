@@ -1,4 +1,5 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './nutritional-values.module.css';
 import ValueItem from '../value-item/value-item';
 
@@ -14,6 +15,13 @@ function NutritionalValues({ children }) {
       }
     </ul>
   )
+}
+
+NutritionalValues.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
 }
 
 export default NutritionalValues;

@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './nav-item.module.css';
 
-function NavItem({ children, icon, active }) {
+function NavItem({ children, icon, active, link }) {
 
   return (
     <a 
-      href="#"
+      href={link}
       className={
-        styles.link 
+        styles.link
         + ' pl-5 pr-5 pt-4 pb-4'
         + (active ? (' ' + styles['link-active']) : ' text_color_inactive ')
       }
@@ -26,5 +27,12 @@ function NavItem({ children, icon, active }) {
     </a>
   )
 }
+
+NavItem.propTypes = {
+  children: PropTypes.string,
+  icon: PropTypes.element,
+  active: PropTypes.bool,
+  link: PropTypes.string.isRequired
+};
 
 export default NavItem;

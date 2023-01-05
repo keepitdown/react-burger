@@ -1,6 +1,6 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ValueItem from '../value-item/value-item';
 import NutritionalValues from '../nutritional-values/nutritional-values';
 
@@ -18,5 +18,22 @@ function IngredientDetails({ ingredientData }) {
     </>
   )
 }
+
+IngredientDetails.propTypes = {
+  ingredientData: PropTypes.shape({
+        __v: PropTypes.number,
+        _id: PropTypes.string,
+        calories: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        fat: PropTypes.number,
+        image: PropTypes.string,
+        image_large: PropTypes.string,
+        image_mobile: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.number,
+        proteins: PropTypes.number,
+        type: PropTypes.string
+        })
+};
 
 export default IngredientDetails;
