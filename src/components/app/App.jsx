@@ -24,15 +24,21 @@ function App() {
     }
 
     fetch(requestUrl)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        return Promise.reject(`Error ${response.status}`);
+
+      })
       .then((serverData) => {
         const processedData = groupByType(serverData.data);
         setIngredientsData(processedData);
         setDataIsLoaded(true);
       })
-      .catch(() => {
+      .catch((error) => {
         setRequestHasFailed(true);
-        console.log('Error: data request has failed');
+        console.log(error);
       });
   }, []);
 

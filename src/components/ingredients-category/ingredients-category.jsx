@@ -15,7 +15,7 @@ function IngredientsCategory({ children, categoryData, clickHandler }) {
             categoryData && categoryData.map((itemData, index) => {
               return (
                 <IngredientCard
-                  key={index}
+                  key={itemData._id}
                   data={itemData}
                   quantity={1}
                   isEven={!!(index % 2)}

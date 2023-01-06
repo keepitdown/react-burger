@@ -21,7 +21,7 @@ function BurgerConstructor({ selectedIngredients: { top, middle, bottom }, extra
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={top.name}
+                text={top.name + ' (верх)'}
                 price={top.price}
                 thumbnail={top.image}
               />
@@ -48,7 +48,7 @@ function BurgerConstructor({ selectedIngredients: { top, middle, bottom }, extra
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={bottom.name}
+                text={bottom.name + ' (низ)'}
                 price={bottom.price}
                 thumbnail={bottom.image}
               />
