@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #1c1c21;
+  position: relative;
+}
+
+.logo-container {
+  position: absolute;
+  top: 19px;
+  text-align: center;
+}
+
+.logo-link {
+  display: flex;
+}

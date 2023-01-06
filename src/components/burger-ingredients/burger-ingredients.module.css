@@ -1,0 +1,6 @@
+.section {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  color: #f2f2f3;
+}

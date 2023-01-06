@@ -1,0 +1,11 @@
+.container {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  min-width: 516px;
+}
+
+.item {
+  flex-grow: 1;
+  min-width: 112px;
+}

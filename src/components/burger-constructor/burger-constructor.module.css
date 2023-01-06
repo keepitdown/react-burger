@@ -1,0 +1,36 @@
+.section {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  color: #f2f2f3;
+}
+
+.ingredients-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.scrollable-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.dragable-container {
+  display: flex;
+  align-items: center;
+}
+
+.dragable-container > * {
+  flex-shrink: 0;
+}
+
+.icon-container {
+  width: 32px;
+  line-height: 0;
+}
+
+.checkout {
+  display: flex;
+}
+
