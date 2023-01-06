@@ -5,7 +5,7 @@ import styles from './nav-item.module.css';
 function NavItem({ children, icon, active, link }) {
 
   return (
-    <a 
+    <a
       href={link}
       className={
         styles.link
@@ -14,7 +14,7 @@ function NavItem({ children, icon, active, link }) {
       }
     >
       {icon}
-      <span 
+      <span
         className={
           'text text_type_main-default'
           + (active ? '' : ' text_color_inactive ')

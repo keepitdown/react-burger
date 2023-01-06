@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import ingredientType from '../../utils/types';
 
 function Checkout({ ingredientsList, extraClass, buttonHandler }) {
 
@@ -22,23 +23,8 @@ function Checkout({ ingredientsList, extraClass, buttonHandler }) {
   )
 }
 
-const ingredientObjectShape = PropTypes.shape({
-  __v: PropTypes.number,
-  _id: PropTypes.string,
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  proteins: PropTypes.number,
-  type: PropTypes.string
-});
-
 Checkout.propTypes = {
-  ingredientsList: PropTypes.arrayOf(ingredientObjectShape),
+  ingredientsList: PropTypes.arrayOf(ingredientType).isRequired,
   extraClass: PropTypes.string,
   buttonHandler: PropTypes.func.isRequired
 }
