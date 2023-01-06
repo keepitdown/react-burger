@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Checkout from '../checkout/checkout';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import ingredientType from '../../utils/types';
@@ -62,11 +61,9 @@ function BurgerConstructor({ selectedIngredients: { top, middle, bottom }, extra
         />
       </section>
       {modalIsOpen && (
-        <ModalOverlay setter={setModalIsOpen}>
-          <Modal setter={setModalIsOpen}>
-            <OrderDetails orderNumber="034536" />
-          </Modal>
-        </ModalOverlay>
+        <Modal setter={setModalIsOpen}>
+          <OrderDetails orderNumber="034536" />
+        </Modal>
       )}
     </>
   )

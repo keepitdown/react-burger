@@ -5,7 +5,6 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import TabSelector from '../tab-selector/tab-selector';
 import IngredientsList from '../ingredients-list/ingredients-list';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ingredientType from '../../utils/types';
@@ -52,11 +51,9 @@ function BurgerIngredients({ ingredientsData, extraClass }) {
         </IngredientsList>
       </section>
       {modalIsOpen && (
-        <ModalOverlay setter={setModalIsOpen}>
-          <Modal header="Детали ингредиента" setter={setModalIsOpen}>
-            <IngredientDetails ingredientData={selectedIngredient} />
-          </Modal>
-        </ModalOverlay>
+        <Modal header="Детали ингредиента" setter={setModalIsOpen}>
+          <IngredientDetails ingredientData={selectedIngredient} />
+        </Modal>
       )}
     </>
   )

@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { createPortal } from 'react-dom';
 import styles from './modal-overlay.module.css';
 
 function ModalOverlay({ children, setter }) {
-
-  const modalPortal = useRef(document.getElementById('modal-windows'));
 
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -13,11 +10,11 @@ function ModalOverlay({ children, setter }) {
     }
   }
 
-  return createPortal((
+  return (
     <div className={styles.overlay} onClick={handleClick}>
       {children}
     </div>
-  ), modalPortal.current)
+  )
 }
 
 ModalOverlay.propTypes = {
