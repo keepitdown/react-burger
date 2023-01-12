@@ -21,7 +21,7 @@ function AppHeader() {
           Лента заказов
         </NavItem>
         <NavItem icon={<ProfileIcon type="secondary" />} link='#'>
-            Личный кабинет
+          Личный кабинет
         </NavItem>
       </NavBar>
     </header>

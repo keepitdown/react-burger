@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
+import ingredientType from '../../utils/types';
 
 function IngredientsCategory({ children, categoryData, clickHandler }) {
 
@@ -14,7 +15,7 @@ function IngredientsCategory({ children, categoryData, clickHandler }) {
             categoryData && categoryData.map((itemData, index) => {
               return (
                 <IngredientCard
-                  key={index}
+                  key={itemData._id}
                   data={itemData}
                   quantity={1}
                   isEven={!!(index % 2)}
@@ -31,21 +32,7 @@ function IngredientsCategory({ children, categoryData, clickHandler }) {
 
 IngredientsCategory.propTypes= {
   children: PropTypes.string.isRequired,
-  categoryData:  PropTypes.arrayOf(
-    PropTypes.shape({
-      __v: PropTypes.number,
-      _id: PropTypes.string,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number,
-      proteins: PropTypes.number,
-      type: PropTypes.string
-      })),
+  categoryData:  PropTypes.arrayOf(ingredientType).isRequired,
   clickHandler: PropTypes.func.isRequired
 };
 

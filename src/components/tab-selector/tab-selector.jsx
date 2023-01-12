@@ -12,7 +12,7 @@ function TabSelector({ children }) {
           <li key={index} >
             {item}
           </li>
-          ))
+        ))
         ?? (<li>{children}</li>)
       }
     </ul>

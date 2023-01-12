@@ -19,7 +19,7 @@ function NavBar({ children, firstRightItem }) {
             >
               {item}
             </li>
-            ))
+          ))
           ?? (<li>{children}</li>)
         }
       </ul>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './app-main.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
+import ingredientType from '../../utils/types';
 
 import {testData as burgerData} from '../../data/test-burger-data'
 
@@ -18,20 +19,6 @@ function AppMain({ ingredientsData }) {
 
 AppMain.propTypes = {
   ingredientsData: PropTypes.objectOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        __v: PropTypes.number,
-        _id: PropTypes.string,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        fat: PropTypes.number,
-        image: PropTypes.string,
-        image_large: PropTypes.string,
-        image_mobile: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.number,
-        proteins: PropTypes.number,
-        type: PropTypes.string
-        })))};
+    PropTypes.arrayOf(ingredientType)).isRequired};
 
 export default AppMain;
