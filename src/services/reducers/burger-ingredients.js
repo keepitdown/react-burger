@@ -17,12 +17,12 @@ const burgerIngredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         dataIsLoaded: true
-      }
+      };
     case SET_FAILED_STATUS:
       return {
         ...state,
         requestHasFailed: true
-      }
+      };
     default:
       return state;
   }

@@ -9,7 +9,7 @@ const getIngredients = () => dispatch => {
   fetch(requestUrl)
     .then((response) => {
       if (response.ok) {
-        return response.json()
+        return response.json();
       }
       return Promise.reject(`Error ${response.status}`);
 

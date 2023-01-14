@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
@@ -9,9 +9,15 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { REMOVE_INGREDIENT_DETAILS, HIDE_DETAILS } from '../../services/actions/ingredient-details';
 
 
 function BurgerIngredients({ extraClass }) {
+
+  const defaultTab = 'bun';
+  const [currentTab, setCurrentTab] = useState(defaultTab);
+
+  const modalIsOpen = useSelector(state => state.ingredientDetails.showDetails);
 
   const dispatch = useDispatch();
 
@@ -19,15 +25,9 @@ function BurgerIngredients({ extraClass }) {
     dispatch(getIngredients());
   }, []);
 
-  const defaultTab = 'bun';
-
-  const [currentTab, setCurrentTab] = useState(defaultTab);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
-
-  const showDetails = (ingredientData) => {
-    setSelectedIngredient({ ...ingredientData });
-    setModalIsOpen(true);
+  const handleModalClose = () => {
+    dispatch({ type: HIDE_DETAILS });
+    dispatch({ type: REMOVE_INGREDIENT_DETAILS });
   }
 
   return (
@@ -46,20 +46,20 @@ function BurgerIngredients({ extraClass }) {
           </Tab>
         </TabSelector>
         <IngredientsList>
-          <IngredientsCategory categoryName="bun" clickHandler={showDetails}>
+          <IngredientsCategory categoryName="bun">
             Булки
           </IngredientsCategory>
-          <IngredientsCategory categoryName="sauce" clickHandler={showDetails}>
+          <IngredientsCategory categoryName="sauce">
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory categoryName="main" clickHandler={showDetails}>
+          <IngredientsCategory categoryName="main">
             Начинки
           </IngredientsCategory>
         </IngredientsList>
       </section>
       {modalIsOpen && (
-        <Modal header="Детали ингредиента" setter={setModalIsOpen}>
-          <IngredientDetails ingredientData={selectedIngredient} />
+        <Modal header="Детали ингредиента" closeHandler={handleModalClose}>
+          <IngredientDetails />
         </Modal>
       )}
     </>

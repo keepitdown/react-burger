@@ -1,13 +1,25 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
+import { SET_INGREDIENT_DETAILS, SHOW_DETAILS } from '../../services/actions/ingredient-details';
 
-function IngredientCard({ data, isEven, clickHandler }) {
+function IngredientCard({ data, isEven }) {
+
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    dispatch({
+      type: SET_INGREDIENT_DETAILS,
+      data
+    });
+    dispatch({ type: SHOW_DETAILS });
+  }
 
   return (
-    <li className={styles.container + (isEven ? ' ml-6' : '')} onClick={() => clickHandler(data)}>
+    <li className={styles.container + (isEven ? ' ml-6' : '')} onClick={clickHandler}>
       {!!data.quantity && <Counter count={data.quantity} size="default" />}
       <img src={data.image} alt={data.name} className={styles.image + ' pl-4 pr-4'} />
       <div className={styles['price-tag'] + ' mt-1 mb-1'}>
@@ -21,8 +33,7 @@ function IngredientCard({ data, isEven, clickHandler }) {
 
 IngredientCard.propTypes = {
   data: ingredientType.isRequired,
-  isEven: PropTypes.bool.isRequired,
-  clickHandler: PropTypes.func.isRequired
+  isEven: PropTypes.bool.isRequired
 };
 
 export default IngredientCard;

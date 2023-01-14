@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-function IngredientsCategory({ children, categoryName, clickHandler }) {
+function IngredientsCategory({ children, categoryName }) {
 
 const categoryData = useSelector(state => state.burgerIngredients.data[categoryName]);
 
@@ -20,7 +20,6 @@ const categoryData = useSelector(state => state.burgerIngredients.data[categoryN
                   key={itemData._id}
                   data={itemData}
                   isEven={!!(index % 2)}
-                  clickHandler={clickHandler}
                 />
               )
             })
@@ -33,8 +32,7 @@ const categoryData = useSelector(state => state.burgerIngredients.data[categoryN
 
 IngredientsCategory.propTypes= {
   children: PropTypes.string.isRequired,
-  categoryName:  PropTypes.string.isRequired,
-  clickHandler: PropTypes.func.isRequired
+  categoryName:  PropTypes.string.isRequired
 };
 
 export default IngredientsCategory;

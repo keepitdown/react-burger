@@ -5,13 +5,13 @@ import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
-function Modal({ children, header, setter }) {
+function Modal({ children, header, closeHandler }) {
 
   const modalPortal = useRef(document.getElementById('modal-windows'));
 
   const closeWithEsc = (e) => {
     if (e.key === 'Escape') {
-      setter(false);
+      closeHandler();
     }
   }
 
@@ -21,13 +21,13 @@ function Modal({ children, header, setter }) {
   }, []);
 
   return createPortal((
-    <ModalOverlay setter={setter}>
+    <ModalOverlay closeHandler={closeHandler}>
       <div className={styles.container}>
         <div className={styles.header + ' mt-10 ml-10 mr-10'}>
           {header && (<h2 className={styles.heading + ' text text_type_main-large'}>{header}</h2>)}
           <button
             className={styles['close-button'] + ' close-modal-btn'}
-            onClick={() => setter(false)}
+            onClick={closeHandler}
           >
             <CloseIcon type="primary" /></button>
         </div>
@@ -40,7 +40,7 @@ function Modal({ children, header, setter }) {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   header: PropTypes.string,
-  setter: PropTypes.func.isRequired
+  closeHandler: PropTypes.func.isRequired
 };
 
 export default Modal;
