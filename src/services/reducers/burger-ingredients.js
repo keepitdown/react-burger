@@ -1,6 +1,6 @@
 import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
-  INCREMENT_INGREDIENT_QUANTITY, DECREMENT_INGREDIENT_QUANTITY
+  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY
 } from "../actions/burger-ingredients";
 
 const initialState = {
@@ -26,11 +26,14 @@ const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         requestHasFailed: true
       };
-    case INCREMENT_INGREDIENT_QUANTITY: {
+    case INCREASE_INGREDIENT_QUANTITY: {
 
       const updatedData = Object.keys(state.data).reduce((processedData, categoryKey) => {
 
-        const updatedCategory = state.data[categoryKey].map(item => item._id === action.id ? { ...item, quantity: item.quantity + 1 } : { ...item });
+        const updatedCategory = state.data[categoryKey].map(
+          item => item._id === action.id
+            ? { ...item, quantity: item.quantity + action.increaseAmount }
+            : { ...item });
 
         return {
           ...processedData,
@@ -44,11 +47,15 @@ const burgerIngredientsReducer = (state = initialState, action) => {
         data: updatedData
       }
     }
-    case DECREMENT_INGREDIENT_QUANTITY: {
+    case DECREASE_INGREDIENT_QUANTITY: {
 
       const updatedData = Object.keys(state.data).reduce((processedData, categoryKey) => {
 
-        const updatedCategory = state.data[categoryKey].map(item => item._id === action.id ? { ...item, quantity: (item.quantity - 1) > 0 ? (item.quantity - 1) : 0 } : { ...item });
+        const updatedCategory = state.data[categoryKey].map(
+          item => item._id === action.id
+            ? { ...item, quantity: (item.quantity - action.decreaseAmount) > 0 ? (item.quantity - action.decreaseAmount) : 0 }
+            : { ...item }
+        );
 
         return {
           ...processedData,
