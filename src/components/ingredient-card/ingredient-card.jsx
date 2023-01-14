@@ -4,11 +4,11 @@ import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
 
-function IngredientCard({ data, quantity, isEven, clickHandler }) {
+function IngredientCard({ data, isEven, clickHandler }) {
 
   return (
     <li className={styles.container + (isEven ? ' ml-6' : '')} onClick={() => clickHandler(data)}>
-      {!!quantity && <Counter count={quantity} size="default" />}
+      {!!data.quantity && <Counter count={data.quantity} size="default" />}
       <img src={data.image} alt={data.name} className={styles.image + ' pl-4 pr-4'} />
       <div className={styles['price-tag'] + ' mt-1 mb-1'}>
         <p className="text text_type_digits-default mr-2">{data.price}</p>
@@ -21,7 +21,6 @@ function IngredientCard({ data, quantity, isEven, clickHandler }) {
 
 IngredientCard.propTypes = {
   data: ingredientType.isRequired,
-  quantity: PropTypes.number,
   isEven: PropTypes.bool.isRequired,
   clickHandler: PropTypes.func.isRequired
 };

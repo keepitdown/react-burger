@@ -24,7 +24,6 @@ function Checkout({ ingredientsList, extraClass, buttonHandler }) {
 }
 
 Checkout.propTypes = {
-  ingredientsList: PropTypes.arrayOf(ingredientType).isRequired,
   extraClass: PropTypes.string,
   buttonHandler: PropTypes.func.isRequired
 }

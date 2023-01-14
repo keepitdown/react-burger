@@ -12,7 +12,8 @@ const ingredientType = PropTypes.exact({
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   proteins: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired
 });
 
 export default ingredientType;

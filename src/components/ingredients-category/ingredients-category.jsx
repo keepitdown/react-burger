@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import ingredientType from '../../utils/types';
 
-function IngredientsCategory({ children, categoryData, clickHandler }) {
+function IngredientsCategory({ children, categoryName, clickHandler }) {
+
+const categoryData = useSelector(state => state.burgerIngredients.data[categoryName]);
 
   return (
     <article>
@@ -17,7 +19,6 @@ function IngredientsCategory({ children, categoryData, clickHandler }) {
                 <IngredientCard
                   key={itemData._id}
                   data={itemData}
-                  quantity={1}
                   isEven={!!(index % 2)}
                   clickHandler={clickHandler}
                 />
@@ -32,7 +33,7 @@ function IngredientsCategory({ children, categoryData, clickHandler }) {
 
 IngredientsCategory.propTypes= {
   children: PropTypes.string.isRequired,
-  categoryData:  PropTypes.arrayOf(ingredientType).isRequired,
+  categoryName:  PropTypes.string.isRequired,
   clickHandler: PropTypes.func.isRequired
 };
 

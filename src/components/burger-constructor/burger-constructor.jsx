@@ -70,11 +70,6 @@ function BurgerConstructor({ selectedIngredients: { top, middle, bottom }, extra
 }
 
 BurgerConstructor.propTypes = {
-  selectedIngredients: PropTypes.shape({
-    top: ingredientType,
-    middle: PropTypes.arrayOf(ingredientType),
-    bottom: ingredientType
-  }).isRequired,
   extraClass: PropTypes.string
 };
 

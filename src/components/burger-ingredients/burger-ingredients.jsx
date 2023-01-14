@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,10 +9,15 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import ingredientType from '../../utils/types';
 
 
-function BurgerIngredients({ ingredientsData, extraClass }) {
+function BurgerIngredients({ extraClass }) {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
 
   const defaultTab = 'bun';
 
@@ -39,13 +46,13 @@ function BurgerIngredients({ ingredientsData, extraClass }) {
           </Tab>
         </TabSelector>
         <IngredientsList>
-          <IngredientsCategory categoryData={ingredientsData.bun} clickHandler={showDetails}>
+          <IngredientsCategory categoryName="bun" clickHandler={showDetails}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory categoryData={ingredientsData.sauce} clickHandler={showDetails}>
+          <IngredientsCategory categoryName="sauce" clickHandler={showDetails}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory categoryData={ingredientsData.main} clickHandler={showDetails}>
+          <IngredientsCategory categoryName="main" clickHandler={showDetails}>
             Начинки
           </IngredientsCategory>
         </IngredientsList>
@@ -60,9 +67,6 @@ function BurgerIngredients({ ingredientsData, extraClass }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.objectOf(
-    PropTypes.arrayOf(ingredientType)
-  ).isRequired,
   extraClass: PropTypes.string
 };
 
