@@ -27,6 +27,7 @@ function IngredientCard({ data, isEven }) {
         <CurrencyIcon type="primary" />
       </div>
       <h3 className={styles['ingredient-name'] + ' text text_type_main-default'}>{data.name}</h3>
+      <button onClick={() => dispatch({ type: 'ADD_CONSTRUCTOR_INGREDIENT', data })}>Add</button>
     </li>
   )
 }

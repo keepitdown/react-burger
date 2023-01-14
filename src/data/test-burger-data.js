@@ -27,6 +27,7 @@ export const testData = {
       price: 80,
       proteins: 50,
       type: "sauce",
+      constructorId: 0
     },
     {
       __v: 0,
@@ -41,7 +42,8 @@ export const testData = {
       price: 424,
       proteins: 420,
       type: "main",
-    },
+      constructorId: 1
+    }/*,
     {
       __v: 0,
       _id: "60d3b41abdacab0026a733d1",
@@ -55,6 +57,7 @@ export const testData = {
       price: 874,
       proteins: 20,
       type: "main",
+      constructorId: 2
     },
     {
       __v: 0,
@@ -69,6 +72,7 @@ export const testData = {
       price: 80,
       proteins: 50,
       type: "sauce",
+      constructorId: 3
     },
     {
       __v: 0,
@@ -83,6 +87,7 @@ export const testData = {
       price: 424,
       proteins: 420,
       type: "main",
+      constructorId: 4
     },
     {
       __v: 0,
@@ -97,6 +102,7 @@ export const testData = {
       price: 874,
       proteins: 20,
       type: "main",
+      constructorId: 5
     },
     {
       __v: 0,
@@ -111,6 +117,7 @@ export const testData = {
       price: 80,
       proteins: 50,
       type: "sauce",
+      constructorId: 6
     },
     {
       __v: 0,
@@ -125,6 +132,7 @@ export const testData = {
       price: 424,
       proteins: 420,
       type: "main",
+      constructorId: 7
     },
     {
       __v: 0,
@@ -139,6 +147,7 @@ export const testData = {
       price: 874,
       proteins: 20,
       type: "main",
+      constructorId: 8
     },
     {
       __v: 0,
@@ -153,6 +162,7 @@ export const testData = {
       price: 80,
       proteins: 50,
       type: "sauce",
+      constructorId: 9
     },
     {
       __v: 0,
@@ -167,6 +177,7 @@ export const testData = {
       price: 424,
       proteins: 420,
       type: "main",
+      constructorId: 10
     },
     {
       __v: 0,
@@ -181,7 +192,8 @@ export const testData = {
       price: 874,
       proteins: 20,
       type: "main",
-    }
+      constructorId: 11
+    }*/
   ],
   bottom: {
             __v: 0,
