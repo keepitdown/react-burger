@@ -4,6 +4,8 @@ import { addProperty, groupByType } from "../../utils/functions";
 const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
 const SET_LOADED_STATUS = 'SET_LOADED_STATUS';
 const SET_FAILED_STATUS = 'SET_FAILED_STATUS';
+const INCREMENT_INGREDIENT_QUANTITY = 'INCREMENT_INGREDIENT_QUANTITY';
+const DECREMENT_INGREDIENT_QUANTITY = 'DECREMENT_INGREDIENT_QUANTITY';
 
 const getIngredients = () => dispatch => {
   fetch(requestUrl)
@@ -28,4 +30,5 @@ const getIngredients = () => dispatch => {
     });
 }
 
-export { SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS, getIngredients };
+export { SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS, getIngredients,
+  INCREMENT_INGREDIENT_QUANTITY, DECREMENT_INGREDIENT_QUANTITY };
