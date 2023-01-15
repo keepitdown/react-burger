@@ -1,5 +1,5 @@
-import { requestUrl } from "../../utils/constants";
-import { addProperty, groupByType } from "../../utils/functions";
+import { ingredientsRequestUrl } from "../../utils/constants";
+import { addProperty, checkApiResponse, groupByType } from "../../utils/functions";
 
 const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
 const SET_LOADED_STATUS = 'SET_LOADED_STATUS';
@@ -8,14 +8,8 @@ const INCREASE_INGREDIENT_QUANTITY = 'INCREASE_INGREDIENT_QUANTITY';
 const DECREASE_INGREDIENT_QUANTITY = 'DECREASE_INGREDIENT_QUANTITY';
 
 const getIngredients = () => dispatch => {
-  fetch(requestUrl)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Error ${response.status}`);
-
-    })
+  fetch(ingredientsRequestUrl)
+    .then(checkApiResponse)
     .then((serverData) => {
       const processedData = groupByType(addProperty(serverData.data, 'quantity', 0));
       dispatch({
@@ -24,7 +18,7 @@ const getIngredients = () => dispatch => {
       });
       dispatch({ type: SET_LOADED_STATUS });
     })
-    .catch((error) => {
+    .catch(error => {
       dispatch({ type: SET_FAILED_STATUS });
       console.log(error);
     });

@@ -1,3 +1,4 @@
-const requestUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const ingredientsRequestUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const orderDispatchUrl = 'https://norma.nomoreparties.space/api/orders';
 
-export { requestUrl };
+export { ingredientsRequestUrl, orderDispatchUrl };

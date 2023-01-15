@@ -1,0 +1,8 @@
+.info-icon {
+  line-height: 0;
+}
+
+.info-icon > svg {
+  width: 48px;
+  height: 48px;
+}

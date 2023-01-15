@@ -6,12 +6,18 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import OrderError from '../order-error/order-error';
 import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
 import { DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
+import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
 
 function BurgerConstructor({ extraClass }) {
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { modalIsOpen, sendingData, failedToSend } = useSelector(state => ({
+    modalIsOpen: state.orderDetails.showDetails,
+    sendingData: state.orderDetails.sendingData,
+    failedToSend: state.orderDetails.failedToSend
+  }));
 
   const { bun, middle } = useSelector(state => state.burgerConstructor.data);
 
@@ -28,6 +34,8 @@ function BurgerConstructor({ extraClass }) {
       decreaseAmount: 1
     })
   };
+
+  const handleModalClose = () => dispatch({ type: HIDE_ORDER_DETAILS });
 
   return (
     <>
@@ -74,14 +82,15 @@ function BurgerConstructor({ extraClass }) {
           )}
         </div>
         <Checkout
-          ingredientsList={[bun, ...middle]}
           extraClass="ml-4 mr-4"
-          buttonHandler={() => setModalIsOpen(true)}
         />
       </section>
-      {modalIsOpen && (
-        <Modal setter={setModalIsOpen}>
-          <OrderDetails orderNumber="034536" />
+      {modalIsOpen && !sendingData && (
+        <Modal closeHandler={handleModalClose}>
+          {!failedToSend
+            ? (<OrderDetails />)
+            : (<OrderError />)
+          }
         </Modal>
       )}
     </>

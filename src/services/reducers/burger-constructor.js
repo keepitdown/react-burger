@@ -2,7 +2,13 @@ import { ADD_CONSTRUCTOR_INGREDIENT, REMOVE_CONSTRUCTOR_INGREDIENT } from "../ac
 
 import { testData } from "../../data/test-burger-data";
 
-const initialState = { data: { bun: {}, middle: [] }, nextConstructorId: 2 };
+const initialState = {
+  data: {
+    bun: {},
+    middle: []
+  },
+  nextConstructorId: 2
+};
 
 const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,7 +20,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
             ...state.data,
             bun: { ...action.data }
           }
-        }
+        };
       }
       return {
         ...state,
@@ -23,7 +29,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
           middle: [...state.data.middle, { ...action.data, constructorId: state.nextConstructorId }]
         },
         nextConstructorId: state.nextConstructorId + 1
-      }
+      };
     }
     case REMOVE_CONSTRUCTOR_INGREDIENT:
       return {

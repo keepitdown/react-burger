@@ -6,6 +6,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientType from '../../utils/types';
 import { SET_INGREDIENT_DETAILS, SHOW_DETAILS } from '../../services/actions/ingredient-details';
 import { DECREASE_INGREDIENT_QUANTITY, INCREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
+import { ADD_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
 
 function IngredientCard({ data, isEven }) {
 
@@ -20,7 +21,7 @@ function IngredientCard({ data, isEven }) {
     dispatch({ type: SHOW_DETAILS });
   }
 
-  const addBtnHandler = (data) => {
+  const addBtnHandler = ({ quantity, ...data }) => {
 
     if (data.type === 'bun') {
       dispatch({
@@ -41,7 +42,7 @@ function IngredientCard({ data, isEven }) {
         increaseAmount: 1
       });
     }
-    dispatch({ type: 'ADD_CONSTRUCTOR_INGREDIENT', data })
+    dispatch({ type: ADD_CONSTRUCTOR_INGREDIENT, data })
   }
 
   return (

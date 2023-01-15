@@ -1,5 +1,12 @@
+function checkApiResponse(response) {
+  if (response.ok) {
+    return response.json();
+  }
+  return Promise.reject(`Error ${response.status}`);
+}
+
 function addProperty(ingredientsData, propertyName, initialValue) {
-  return ingredientsData.map(item => ({...item, [propertyName]: initialValue}))
+  return ingredientsData.map(item => ({ ...item, [propertyName]: initialValue }))
 }
 
 function groupByType(dataArray) {
@@ -12,4 +19,4 @@ function groupByType(dataArray) {
   }, {})
 }
 
-export { addProperty, groupByType };
+export { checkApiResponse, addProperty, groupByType };
