@@ -11,6 +11,13 @@
   flex-direction: column;
   min-height: 0;
   flex-grow: 1;
+  padding: 5px;
+}
+
+.hovered-container {
+  padding: 3px;
+  border: 2px solid #4c4cff73;
+  border-radius: 40px;
 }
 
 .scrollable-container {
