@@ -7,19 +7,25 @@ import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
+import { DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
 
 function BurgerConstructor({ extraClass }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { top, middle, bottom } = useSelector(state => state.burgerConstructor.data);
+  const { bun, middle } = useSelector(state => state.burgerConstructor.data);
 
   const dispatch = useDispatch();
 
-  const closeHandler = (constructorId) => {
+  const closeHandler = ({ constructorId, _id }) => {
     dispatch({
       type: REMOVE_CONSTRUCTOR_INGREDIENT,
       id: constructorId
+    })
+    dispatch({
+      type: DECREASE_INGREDIENT_QUANTITY,
+      id: _id,
+      decreaseAmount: 1
     })
   };
 
@@ -27,14 +33,14 @@ function BurgerConstructor({ extraClass }) {
     <>
       <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
         <div className={styles['ingredients-container'] + ' mt-25 mb-10'}>
-          {!!Object.keys(top).length && (
+          {!!Object.keys(bun).length && (
             <div className="pl-8 mb-4 ml-4 mr-4">
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={top.name + ' (верх)'}
-                price={top.price}
-                thumbnail={top.image}
+                text={bun.name + ' (верх)'}
+                price={bun.price}
+                thumbnail={bun.image}
               />
             </div>
           )}
@@ -49,26 +55,26 @@ function BurgerConstructor({ extraClass }) {
                     text={item.name}
                     price={item.price}
                     thumbnail={item.image}
-                    handleClose={() => closeHandler(item.constructorId)}
+                    handleClose={() => closeHandler(item)}
                   />
                 </div>
               ))
             }
           </div>
-          {!!Object.keys(bottom).length && (
+          {!!Object.keys(bun).length && (
             <div className="pl-8 mt-4 ml-4 mr-4">
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={bottom.name + ' (низ)'}
-                price={bottom.price}
-                thumbnail={bottom.image}
+                text={bun.name + ' (низ)'}
+                price={bun.price}
+                thumbnail={bun.image}
               />
             </div>
           )}
         </div>
         <Checkout
-          ingredientsList={[top, ...middle, bottom]}
+          ingredientsList={[bun, ...middle]}
           extraClass="ml-4 mr-4"
           buttonHandler={() => setModalIsOpen(true)}
         />
