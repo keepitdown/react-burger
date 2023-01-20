@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from "react-dnd";
+import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import DragableContainer from '../dragable-container/dragable-container';
+import ReorganizableContainer from '../reorganizable-container/reorganizable-container';
 import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import OrderError from '../order-error/order-error';
-import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
+import { REMOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
-import { ADD_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
+import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
 
 function BurgerConstructor({ extraClass }) {
@@ -27,7 +29,7 @@ function BurgerConstructor({ extraClass }) {
 
   const closeHandler = ({ constructorId, _id }) => {
     dispatch({
-      type: REMOVE_CONSTRUCTOR_INGREDIENT,
+      type: REMOVE_CONSTRUCTOR_ITEM,
       id: constructorId
     })
     dispatch({
@@ -71,7 +73,7 @@ function BurgerConstructor({ extraClass }) {
         });
       }
       dispatch({
-        type: ADD_CONSTRUCTOR_INGREDIENT,
+        type: ADD_CONSTRUCTOR_ITEM,
         data: droppedItem
       });
     }
@@ -81,8 +83,11 @@ function BurgerConstructor({ extraClass }) {
 
   return (
     <>
-      <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
-        <div className={styles['ingredients-container'] + ' mt-25 mb-10' + (isHovered ? (' ' + styles['hovered-container']) : '')} ref={dropTargetRef}>
+      <section
+        className={styles.section + (extraClass ? (' ' + extraClass) : '') + (isHovered ? (' ' + styles['hovered-container']) : '')}
+        ref={dropTargetRef}
+      >
+        <div className={styles['ingredients-container'] + ' mt-25 mb-10'}>
           {!!Object.keys(bun).length && (
             <div className="pl-8 mb-4 ml-4 mr-4">
               <ConstructorElement
@@ -94,23 +99,24 @@ function BurgerConstructor({ extraClass }) {
               />
             </div>
           )}
-          <div className={styles['scrollable-container'] + ' custom-scroll'}>
+          <ReorganizableContainer>
             {middle &&
               middle.map((item, index) => (
-                <div key={item.constructorId} className={styles['dragable-container'] + ' pl-4 pr-4' + ((index > 0) ? ' mt-4' : '')}>
-                  <div className={styles['icon-container']}>
-                    <DragIcon type="primary" />
-                  </div>
+                <DragableContainer
+                  key={item.constructorId}
+                  constructorId={item.constructorId}
+                  index={index}
+                >
                   <ConstructorElement
                     text={item.name}
                     price={item.price}
                     thumbnail={item.image}
                     handleClose={() => closeHandler(item)}
                   />
-                </div>
+                </DragableContainer>
               ))
             }
-          </div>
+          </ReorganizableContainer>
           {!!Object.keys(bun).length && (
             <div className="pl-8 mt-4 ml-4 mr-4">
               <ConstructorElement

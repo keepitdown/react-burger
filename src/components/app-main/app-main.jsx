@@ -8,7 +8,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 function AppMain() {
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main + ' pt-1 pb-1'}>
       <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
         <BurgerConstructor extraClass="ml-10" />

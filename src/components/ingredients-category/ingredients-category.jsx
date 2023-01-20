@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
