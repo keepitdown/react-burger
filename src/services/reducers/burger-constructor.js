@@ -1,3 +1,4 @@
+import { moveArrayItem } from "../../utils/functions";
 import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM } from "../actions/burger-constructor";
 
 const initialState = {
@@ -38,11 +39,13 @@ const burgerConstructorReducer = (state = initialState, action) => {
         }
       };
     case MOVE_CONSTRUCTOR_ITEM: {
+      const draggedItemIndex = state.data.middle.findIndex(item => item.constructorId === action.movedConstructorId);
+      const targetIndex = state.data.middle.findIndex(item => item.constructorId === action.targetConstructorId);
       return {
         ...state,
         data: {
           ...state.data,
-          middle: action.updatedArray
+          middle: moveArrayItem(draggedItemIndex, targetIndex, state.data.middle)
         }
       }
     }

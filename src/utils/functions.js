@@ -19,4 +19,11 @@ function groupByType(dataArray) {
   }, {})
 }
 
-export { checkApiResponse, addProperty, groupByType };
+function moveArrayItem(originalIndex, targetIndex, array) {
+  const updatedArray = [...array];
+  const movedItem = updatedArray.splice(originalIndex, 1)[0];
+  updatedArray.splice(targetIndex, 0, movedItem);
+  return updatedArray;
+}
+
+export { checkApiResponse, addProperty, groupByType, moveArrayItem };

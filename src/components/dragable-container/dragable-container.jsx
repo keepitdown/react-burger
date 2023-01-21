@@ -6,10 +6,12 @@ import styles from './dragable-container.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 
-function DragableContainer({ constructorId, index, children }) {
+function DragableContainer({ constructorId, children, index }) {
+
+  console.log('Компонент');
 
   const dispatch = useDispatch();
-  const draggableIngredinets = useSelector(state => state.burgerConstructor.data.middle);
+  //const draggableIngredinets = [...useSelector(state => state.burgerConstructor.data.middle)];
 
   const [{ isDragging }, dragRef, previewRef] = useDrag({
     type: 'movedIngredient',
@@ -19,22 +21,22 @@ function DragableContainer({ constructorId, index, children }) {
 
   const [, dropRef] = useDrop({
     accept: 'movedIngredient',
-    hover(dragContainer) {
+    hover(draggedItem) {
 
-        if (dragContainer.constructorId !== constructorId) {
-          console.log(index);
-          const movedIngredientIndex = draggableIngredinets.findIndex(item => item.constructorId === dragContainer.constructorId);
-          const movedIngredient = { ...draggableIngredinets[movedIngredientIndex] };
-          const updatedArray = [...draggableIngredinets];
-          updatedArray.splice(movedIngredientIndex, 1);
-          updatedArray.splice(index, 0, movedIngredient);
-          /*dispatch({
+        if (draggedItem.constructorId !== constructorId) {
+          console.log('Ховер');
+          //const draggedItemIndex = draggableIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
+          //const targetIndex = draggableIngredinets.findIndex(item => item.constructorId === constructorId);
+          //console.log(`moved: ${draggedItemIndex}`);
+          //console.log(`target: ${targetIndex}`);
+          dispatch({
             type: MOVE_CONSTRUCTOR_ITEM,
-            updatedArray
-          });*/
+            movedConstructorId: draggedItem.constructorId,
+            targetConstructorId: constructorId
+          });
         }
     }
-  });
+  }, [constructorId, dispatch]);
 
   return (
     <div className={styles.container + (isDragging ? (' ' + styles.dragging) : '') + ' pl-4 pr-4' + ((index > 0) ? ' mt-4' : '')} ref={(node) => previewRef(dropRef(node))}>
@@ -48,8 +50,8 @@ function DragableContainer({ constructorId, index, children }) {
 
 DragableContainer.propTypes = {
   constructorId: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  index: PropTypes.number.isRequired
 };
 
 export default DragableContainer;
