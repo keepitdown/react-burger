@@ -8,7 +8,6 @@ import { MOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor
 
 function DragableContainer({ constructorId, children, index }) {
 
-  console.log('Компонент');
 
   const dispatch = useDispatch();
   //const draggableIngredinets = [...useSelector(state => state.burgerConstructor.data.middle)];
@@ -17,14 +16,13 @@ function DragableContainer({ constructorId, children, index }) {
     type: 'movedIngredient',
     item: { constructorId },
     collect: monitor => ({ isDragging: monitor.isDragging() })
-  });
+  }, [constructorId]);
 
   const [, dropRef] = useDrop({
     accept: 'movedIngredient',
     hover(draggedItem) {
 
         if (draggedItem.constructorId !== constructorId) {
-          console.log('Ховер');
           //const draggedItemIndex = draggableIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
           //const targetIndex = draggableIngredinets.findIndex(item => item.constructorId === constructorId);
           //console.log(`moved: ${draggedItemIndex}`);
