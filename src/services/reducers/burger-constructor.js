@@ -39,13 +39,11 @@ const burgerConstructorReducer = (state = initialState, action) => {
         }
       };
     case MOVE_CONSTRUCTOR_ITEM: {
-      const draggedItemIndex = state.data.middle.findIndex(item => item.constructorId === action.movedConstructorId);
-      const targetIndex = state.data.middle.findIndex(item => item.constructorId === action.targetConstructorId);
       return {
         ...state,
         data: {
           ...state.data,
-          middle: moveArrayItem(draggedItemIndex, targetIndex, state.data.middle)
+          middle: moveArrayItem(action.movedItemIndex, action.targetIndex, state.data.middle)
         }
       }
     }

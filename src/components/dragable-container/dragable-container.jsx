@@ -10,31 +10,40 @@ function DragableContainer({ constructorId, children, index }) {
 
 
   const dispatch = useDispatch();
-  //const draggableIngredinets = [...useSelector(state => state.burgerConstructor.data.middle)];
+  const constructorIngredinets = useSelector(state => state.burgerConstructor.data.middle);
+
+  const originalIndex = constructorIngredinets.findIndex(item => item.constructorId === constructorId);
 
   const [{ isDragging }, dragRef, previewRef] = useDrag({
     type: 'movedIngredient',
-    item: { constructorId },
-    collect: monitor => ({ isDragging: monitor.isDragging() })
-  }, [constructorId]);
+    item: { constructorId, originalIndex },
+    collect: monitor => ({ isDragging: monitor.isDragging() }),
+    end: (draggedItem, monitor) => {
+      if (!monitor.didDrop()) {
+        const movedItemIndex = constructorIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
+        dispatch({
+          type: MOVE_CONSTRUCTOR_ITEM,
+          movedItemIndex,
+          targetIndex: draggedItem.originalIndex
+        });
+      }
+    }
+  }, [constructorId, originalIndex]);
 
   const [, dropRef] = useDrop({
     accept: 'movedIngredient',
     hover(draggedItem) {
-
-        if (draggedItem.constructorId !== constructorId) {
-          //const draggedItemIndex = draggableIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
-          //const targetIndex = draggableIngredinets.findIndex(item => item.constructorId === constructorId);
-          //console.log(`moved: ${draggedItemIndex}`);
-          //console.log(`target: ${targetIndex}`);
-          dispatch({
-            type: MOVE_CONSTRUCTOR_ITEM,
-            movedConstructorId: draggedItem.constructorId,
-            targetConstructorId: constructorId
-          });
-        }
+      if (draggedItem.constructorId !== constructorId) {
+        const movedItemIndex = constructorIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
+        const targetIndex = constructorIngredinets.findIndex(item => item.constructorId === constructorId);
+        dispatch({
+          type: MOVE_CONSTRUCTOR_ITEM,
+          movedItemIndex,
+          targetIndex
+        });
+      }
     }
-  }, [constructorId, dispatch]);
+  }, [constructorId, constructorIngredinets, dispatch, MOVE_CONSTRUCTOR_ITEM]);
 
   return (
     <div className={styles.container + (isDragging ? (' ' + styles.dragging) : '') + ' pl-4 pr-4' + ((index > 0) ? ' mt-4' : '')} ref={(node) => previewRef(dropRef(node))}>
