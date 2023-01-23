@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './order-error.module.css';
 import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function OrderError({ children }) {
+function OrderError() {
 
   return (
     <>
