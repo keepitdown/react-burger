@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useDragLayer } from 'react-dnd'
 import PropTypes from 'prop-types';
 import styles from './drag-layer.module.css';
-import { movedIngredient } from '../../utils/constants';
+import { addedIngredient, movedIngredient } from '../../utils/constants';
 import { useSelector } from 'react-redux';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -12,6 +12,7 @@ function DragLayer() {
   const layerPortal = useRef(document.getElementById('drag-preview'));
 
   const constructorIngredients = useSelector(state => state.burgerConstructor.data.middle);
+  const availableIngredients = useSelector(state => state.burgerIngredients.data);
 
   const { isDragging, draggedItem, type, position, position2 } = useDragLayer(monitor => ({
     isDragging: monitor.isDragging(),
@@ -27,9 +28,7 @@ function DragLayer() {
 
   const renderPreviewElement = () => {
     switch (type) {
-      case movedIngredient:
-        console.log('reg' + position.x + ' ' + position.y);
-        console.log(position2);
+      case movedIngredient: {
         const ingredientData = constructorIngredients.find(item => item.constructorId === draggedItem.constructorId);
         return (
           <div className={styles.container + ' pl-4 pr-4'}>
@@ -43,6 +42,16 @@ function DragLayer() {
             />
           </div>
         )
+      }
+      case addedIngredient: {
+        const ingredientData = Object.values(availableIngredients).flat().find(item => item._id === draggedItem.id);
+        return (
+          <li className={styles['container-add']}>
+            <img src={ingredientData.image} alt={ingredientData.name} className={styles['image-add'] + ' pl-4 pr-4'} />
+            <p className={styles['ingredient-name'] + ' text text_type_main-default'}>{ingredientData.name}</p>
+          </li>
+        )
+      }
     }
   }
 

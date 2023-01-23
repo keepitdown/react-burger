@@ -9,7 +9,7 @@
 .container {
   display: flex;
   align-items: center;
-  min-width: 600px;
+  width: 600px;
   min-height: 80px;
   margin: 0;
 }
@@ -25,4 +25,24 @@
 
 .icon-container:hover {
   cursor: move;
+}
+
+.image-add {
+  box-sizing: border-box;
+  max-width: 240px;
+}
+
+.ingredient-name {
+  text-align: center;
+  min-height: 48px;
+}
+
+.container-add {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  width: 280px;
+  height: 185px;
 }
