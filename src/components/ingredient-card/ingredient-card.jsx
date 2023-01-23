@@ -6,6 +6,7 @@ import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
 import { SET_INGREDIENT_DETAILS, SHOW_DETAILS } from '../../services/actions/ingredient-details';
+import { addedIngredient } from '../../utils/constants';
 
 function IngredientCard({ data, isEven }) {
 
@@ -20,7 +21,7 @@ function IngredientCard({ data, isEven }) {
   }
 
   const [, dragRef] = useDrag({
-    type: 'added-ingredient',
+    type: addedIngredient,
     item: { id: data._id }
   });
 

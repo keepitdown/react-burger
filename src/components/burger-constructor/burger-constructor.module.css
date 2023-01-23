@@ -7,6 +7,12 @@
   color: #f2f2f3;
 }
 
+.hovered-section {
+  outline: 1px solid #4c4cffb3;
+  border-radius: 40px;
+  box-shadow: 0 0 20px 5px #4c4cff73;
+}
+
 .ingredients-container {
   display: flex;
   flex-direction: column;
@@ -14,10 +20,9 @@
   flex-grow: 1;
 }
 
-.hovered-container {
-  outline: 1px solid #4c4cffb3;
-  border-radius: 40px;
-  box-shadow: 0 0 20px 5px #4c4cff73;
+.scrollable-container {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .checkout {

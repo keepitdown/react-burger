@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import DragableContainer from '../dragable-container/dragable-container';
-import ReorganizableContainer from '../reorganizable-container/reorganizable-container';
 import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -14,6 +13,7 @@ import { REMOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-construct
 import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
 import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
+import { addedIngredient } from '../../utils/constants';
 
 function BurgerConstructor({ extraClass }) {
 
@@ -45,7 +45,7 @@ function BurgerConstructor({ extraClass }) {
   }));
 
   const [{ isHovered }, dropTargetRef] = useDrop({
-    accept: 'added-ingredient',
+    accept: addedIngredient,
     collect: monitor => ({
       isHovered: monitor.isOver()
     }),
@@ -84,7 +84,7 @@ function BurgerConstructor({ extraClass }) {
   return (
     <>
       <section
-        className={styles.section + (extraClass ? (' ' + extraClass) : '') + (isHovered ? (' ' + styles['hovered-container']) : '')}
+        className={styles.section + (extraClass ? (' ' + extraClass) : '') + (isHovered ? (' ' + styles['hovered-section']) : '')}
         ref={dropTargetRef}
       >
         <div className={styles['ingredients-container'] + ' mt-25 mb-10'}>
@@ -99,7 +99,7 @@ function BurgerConstructor({ extraClass }) {
               />
             </div>
           )}
-          <ReorganizableContainer>
+          <div className={styles['scrollable-container'] + ' custom-scroll'}>
             {middle &&
               middle.map((item, index) => (
                 <DragableContainer
@@ -116,7 +116,7 @@ function BurgerConstructor({ extraClass }) {
                 </DragableContainer>
               ))
             }
-          </ReorganizableContainer>
+          </div>
           {!!Object.keys(bun).length && (
             <div className="pl-8 mt-4 ml-4 mr-4">
               <ConstructorElement

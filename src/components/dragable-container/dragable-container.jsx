@@ -5,6 +5,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import styles from './dragable-container.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
+import { movedIngredient } from '../../utils/constants';
 
 function DragableContainer({ constructorId, children, index }) {
 
@@ -14,7 +15,7 @@ function DragableContainer({ constructorId, children, index }) {
   const originalIndex = constructorIngredinets.findIndex(item => item.constructorId === constructorId);
 
   const [{ isDragging }, dragRef, previewRef] = useDrag({
-    type: 'movedIngredient',
+    type: movedIngredient,
     item: { constructorId, originalIndex },
     collect: monitor => ({ isDragging: monitor.isDragging() }),
     end: (draggedItem, monitor) => {
@@ -30,7 +31,7 @@ function DragableContainer({ constructorId, children, index }) {
   }, [constructorId, originalIndex]);
 
   const [, dropRef] = useDrop({
-    accept: 'movedIngredient',
+    accept: movedIngredient,
     hover(draggedItem) {
       if (draggedItem.constructorId !== constructorId) {
         const movedItemIndex = constructorIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
