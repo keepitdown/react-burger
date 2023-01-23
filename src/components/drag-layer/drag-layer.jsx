@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useDragLayer } from 'react-dnd'
-import PropTypes from 'prop-types';
 import styles from './drag-layer.module.css';
 import { addedIngredient, movedIngredient } from '../../utils/constants';
 import { useSelector } from 'react-redux';
