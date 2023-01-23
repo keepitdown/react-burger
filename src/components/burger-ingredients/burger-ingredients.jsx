@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
@@ -16,6 +16,29 @@ function BurgerIngredients({ extraClass }) {
 
   const defaultTab = 'bun';
   const [currentTab, setCurrentTab] = useState(defaultTab);
+
+  const ingredientsListRef = useRef();
+  const categoriesRef = useRef(new Map());
+
+  const getCategoryRef = (categoryName, element) => element && categoriesRef.current.set(categoryName, element);
+
+  const scrollHandler = () => {
+    const containerTop = ingredientsListRef.current.getBoundingClientRect().top;
+    const closestCategory = Array.from(categoriesRef.current).reduce(
+      ([closestName, closestDelta], [categoryName, element]) => {
+        const categoryTop = element.getBoundingClientRect().top;
+        const delta = Math.abs(categoryTop - containerTop);
+        return (delta < closestDelta) ? [categoryName, delta] : [closestName, closestDelta];
+      }, [null, Infinity]);
+    if (currentTab !== closestCategory) {
+      setCurrentTab(closestCategory[0]);
+    }
+  };
+
+  const tabClickHandler = (categoryName) => {
+    const categoryElement = categoriesRef.current.get(categoryName);
+    categoryElement.scrollIntoView();
+  }
 
   const modalIsOpen = useSelector(state => state.ingredientDetails.showDetails);
 
@@ -35,24 +58,24 @@ function BurgerIngredients({ extraClass }) {
       <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
         <TabSelector>
-          <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
+          <Tab value="bun" active={currentTab === 'bun'} onClick={() => tabClickHandler('bun')}>
             Булки
           </Tab>
-          <Tab value="sauce" active={currentTab === 'sauce'} onClick={setCurrentTab}>
+          <Tab value="sauce" active={currentTab === 'sauce'} onClick={() => tabClickHandler('sauce')}>
             Соусы
           </Tab>
-          <Tab value="main" active={currentTab === 'main'} onClick={setCurrentTab}>
+          <Tab value="main" active={currentTab === 'main'} onClick={() => tabClickHandler('main')}>
             Начинки
           </Tab>
         </TabSelector>
-        <IngredientsList>
-          <IngredientsCategory categoryName="bun">
+        <IngredientsList scrollHandler={scrollHandler} ref={ingredientsListRef}>
+          <IngredientsCategory categoryName="bun" ref={(element) => getCategoryRef('bun', element)}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory categoryName="sauce">
+          <IngredientsCategory categoryName="sauce" ref={(element) => getCategoryRef('sauce', element)}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory categoryName="main">
+          <IngredientsCategory categoryName="main" ref={(element) => getCategoryRef('main', element)}>
             Начинки
           </IngredientsCategory>
         </IngredientsList>
