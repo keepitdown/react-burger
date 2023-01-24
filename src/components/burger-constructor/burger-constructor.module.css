@@ -1,14 +1,23 @@
 .section {
+  box-sizing: border-box;
   max-width: 600px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   color: #f2f2f3;
+}
+
+.hovered-section {
+  outline: 1px solid #4c4cffb3;
+  border-radius: 40px;
+  box-shadow: 0 0 20px 5px #4c4cff73;
 }
 
 .ingredients-container {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  flex-grow: 1;
 }
 
 .scrollable-container {
@@ -16,21 +25,6 @@
   overflow-y: auto;
 }
 
-.dragable-container {
-  display: flex;
-  align-items: center;
-}
-
-.dragable-container > * {
-  flex-shrink: 0;
-}
-
-.icon-container {
-  width: 32px;
-  line-height: 0;
-}
-
 .checkout {
   display: flex;
 }
-

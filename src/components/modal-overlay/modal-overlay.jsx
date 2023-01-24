@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
 
-function ModalOverlay({ children, setter }) {
+function ModalOverlay({ children, closeHandler }) {
 
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
-      setter(false)
+      closeHandler();
     }
   }
 
@@ -19,7 +19,7 @@ function ModalOverlay({ children, setter }) {
 
 ModalOverlay.propTypes = {
   children: PropTypes.element.isRequired,
-  setter: PropTypes.func.isRequired
+  closeHandler: PropTypes.func.isRequired
 };
 
 export default ModalOverlay;

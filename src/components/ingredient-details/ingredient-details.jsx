@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './ingredient-details.module.css';
+import { useSelector } from 'react-redux';
 import ValueItem from '../value-item/value-item';
 import NutritionalValues from '../nutritional-values/nutritional-values';
-import ingredientType from '../../utils/types';
 
-function IngredientDetails({ ingredientData }) {
+function IngredientDetails() {
+
+  const ingredientData = useSelector(state => state.ingredientDetails.data);
+
   return (
     <>
       <img src={ingredientData.image_large} alt={ingredientData.name} />
@@ -19,9 +20,5 @@ function IngredientDetails({ ingredientData }) {
     </>
   )
 }
-
-IngredientDetails.propTypes = {
-  ingredientData: ingredientType.isRequired
-};
 
 export default IngredientDetails;

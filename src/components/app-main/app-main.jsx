@@ -1,24 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './app-main.module.css';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import ingredientType from '../../utils/types';
+import DragLayer from '../drag-layer/drag-layer';
 
-import {testData as burgerData} from '../../data/test-burger-data'
-
-function AppMain({ ingredientsData }) {
+function AppMain() {
 
   return (
-    <main className={styles.main}>
-      <BurgerIngredients ingredientsData={ingredientsData}/>
-      <BurgerConstructor selectedIngredients={burgerData}  extraClass="ml-10"/>
+    <main className={styles.main + ' pt-1 pb-1'}>
+      <DndProvider backend={HTML5Backend}>
+        <BurgerIngredients />
+        <BurgerConstructor extraClass="ml-10" />
+        <DragLayer />
+      </DndProvider>
     </main>
   )
 }
-
-AppMain.propTypes = {
-  ingredientsData: PropTypes.objectOf(
-    PropTypes.arrayOf(ingredientType)).isRequired};
 
 export default AppMain;

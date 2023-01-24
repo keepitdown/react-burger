@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,20 +9,48 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import ingredientType from '../../utils/types';
+import { REMOVE_INGREDIENT_DETAILS, HIDE_DETAILS } from '../../services/actions/ingredient-details';
 
 
-function BurgerIngredients({ ingredientsData, extraClass }) {
+function BurgerIngredients({ extraClass }) {
 
   const defaultTab = 'bun';
-
   const [currentTab, setCurrentTab] = useState(defaultTab);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
 
-  const showDetails = (ingredientData) => {
-    setSelectedIngredient({ ...ingredientData });
-    setModalIsOpen(true);
+  const ingredientsListRef = useRef();
+  const categoriesRef = useRef(new Map());
+
+  const getCategoryRef = (categoryName, element) => element && categoriesRef.current.set(categoryName, element);
+
+  const scrollHandler = () => {
+    const containerTop = ingredientsListRef.current.getBoundingClientRect().top;
+    const closestCategory = Array.from(categoriesRef.current).reduce(
+      ([closestName, closestDelta], [categoryName, element]) => {
+        const categoryTop = element.getBoundingClientRect().top;
+        const delta = Math.abs(categoryTop - containerTop);
+        return (delta < closestDelta) ? [categoryName, delta] : [closestName, closestDelta];
+      }, [null, Infinity]);
+    if (currentTab !== closestCategory) {
+      setCurrentTab(closestCategory[0]);
+    }
+  };
+
+  const tabClickHandler = (categoryName) => {
+    const categoryElement = categoriesRef.current.get(categoryName);
+    categoryElement.scrollIntoView();
+  }
+
+  const modalIsOpen = useSelector(state => state.ingredientDetails.showDetails);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
+
+  const handleModalClose = () => {
+    dispatch({ type: HIDE_DETAILS });
+    dispatch({ type: REMOVE_INGREDIENT_DETAILS });
   }
 
   return (
@@ -28,31 +58,31 @@ function BurgerIngredients({ ingredientsData, extraClass }) {
       <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
         <TabSelector>
-          <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
+          <Tab value="bun" active={currentTab === 'bun'} onClick={() => tabClickHandler('bun')}>
             Булки
           </Tab>
-          <Tab value="sauce" active={currentTab === 'sauce'} onClick={setCurrentTab}>
+          <Tab value="sauce" active={currentTab === 'sauce'} onClick={() => tabClickHandler('sauce')}>
             Соусы
           </Tab>
-          <Tab value="main" active={currentTab === 'main'} onClick={setCurrentTab}>
+          <Tab value="main" active={currentTab === 'main'} onClick={() => tabClickHandler('main')}>
             Начинки
           </Tab>
         </TabSelector>
-        <IngredientsList>
-          <IngredientsCategory categoryData={ingredientsData.bun} clickHandler={showDetails}>
+        <IngredientsList scrollHandler={scrollHandler} ref={ingredientsListRef}>
+          <IngredientsCategory categoryName="bun" ref={(element) => getCategoryRef('bun', element)}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory categoryData={ingredientsData.sauce} clickHandler={showDetails}>
+          <IngredientsCategory categoryName="sauce" ref={(element) => getCategoryRef('sauce', element)}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory categoryData={ingredientsData.main} clickHandler={showDetails}>
+          <IngredientsCategory categoryName="main" ref={(element) => getCategoryRef('main', element)}>
             Начинки
           </IngredientsCategory>
         </IngredientsList>
       </section>
       {modalIsOpen && (
-        <Modal header="Детали ингредиента" setter={setModalIsOpen}>
-          <IngredientDetails ingredientData={selectedIngredient} />
+        <Modal header="Детали ингредиента" closeHandler={handleModalClose}>
+          <IngredientDetails />
         </Modal>
       )}
     </>
@@ -60,9 +90,6 @@ function BurgerIngredients({ ingredientsData, extraClass }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.objectOf(
-    PropTypes.arrayOf(ingredientType)
-  ).isRequired,
   extraClass: PropTypes.string
 };
 

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.container:hover {
+  cursor: move;
+}
+
+.container>* {
+  flex-shrink: 0;
+}
+
+.icon-container {
+  width: 32px;
+  line-height: 0;
+}
+
+.dragging {
+  opacity: 0;
+}
