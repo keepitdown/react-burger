@@ -3,4 +3,5 @@
   justify-content: center;
   min-height: 0;
   flex-grow: 1;
+  overflow: hidden;
 }
