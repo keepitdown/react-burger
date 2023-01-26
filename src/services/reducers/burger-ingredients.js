@@ -1,6 +1,6 @@
 import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
-  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY
+  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
 } from "../actions/burger-ingredients";
 
 const initialState = {
@@ -62,6 +62,24 @@ const burgerIngredientsReducer = (state = initialState, action) => {
           [categoryKey]: updatedCategory
         }
 
+      }, {});
+
+      return {
+        ...state,
+        data: updatedData
+      }
+    }
+    case RESET_ALL_QUANTITIES: {
+
+      const updatedData = Object.keys(state.data).reduce((processedData, categoryKey) => {
+        const updatedCategory = state.data[categoryKey].map(
+          item => ({ ...item, quantity: 0 })
+        );
+
+        return {
+          ...processedData,
+          [categoryKey]: updatedCategory
+        }
       }, {});
 
       return {

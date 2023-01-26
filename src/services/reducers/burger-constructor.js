@@ -1,5 +1,5 @@
 import { moveArrayItem } from "../../utils/functions";
-import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR } from "../actions/burger-constructor";
+import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR, RESET_CONSTRUCTOR } from "../actions/burger-constructor";
 
 const initialState = {
   data: {
@@ -60,6 +60,16 @@ const burgerConstructorReducer = (state = initialState, action) => {
         showBunError: false
       }
     }
+    case RESET_CONSTRUCTOR:
+      return {
+        ...state,
+        data: {
+          bun: {},
+          middle: []
+        },
+        nextConstructorId: 0,
+        showBunError: false
+      }
     default:
       return state;
   }

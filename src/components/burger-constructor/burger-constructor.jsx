@@ -9,8 +9,8 @@ import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import OrderError from '../order-error/order-error';
-import { HIDE_BUN_ERROR, REMOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
-import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY } from '../../services/actions/burger-ingredients';
+import { HIDE_BUN_ERROR, REMOVE_CONSTRUCTOR_ITEM, RESET_CONSTRUCTOR } from '../../services/actions/burger-constructor';
+import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES } from '../../services/actions/burger-ingredients';
 import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
@@ -84,7 +84,13 @@ function BurgerConstructor({ extraClass }) {
     }
   }, [availableIngredients, INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, ADD_CONSTRUCTOR_ITEM, dispatch, bun, showBunError]);
 
-  const handleModalClose = () => dispatch({ type: HIDE_ORDER_DETAILS });
+  const handleModalClose = () => {
+    dispatch({ type: HIDE_ORDER_DETAILS })
+    if (!failedToSend) {
+      dispatch({ type: RESET_CONSTRUCTOR });
+      dispatch({type: RESET_ALL_QUANTITIES});
+    };
+  };
 
   return (
     <>
