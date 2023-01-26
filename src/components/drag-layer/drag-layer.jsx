@@ -55,7 +55,7 @@ function DragLayer() {
 
 
   return createPortal(
-    isDragging && (
+    isDragging && position && (
       <div className={styles.layer}>
         <div style={previewStyles}>
           {renderPreviewElement()}
