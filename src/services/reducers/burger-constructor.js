@@ -1,4 +1,3 @@
-import { moveArrayItem } from "../../utils/functions";
 import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR, RESET_CONSTRUCTOR } from "../actions/burger-constructor";
 
 const initialState = {
@@ -40,6 +39,14 @@ const burgerConstructorReducer = (state = initialState, action) => {
         }
       };
     case MOVE_CONSTRUCTOR_ITEM: {
+
+      function moveArrayItem(originalIndex, targetIndex, array) {
+        const updatedArray = [...array];
+        const movedItem = updatedArray.splice(originalIndex, 1)[0];
+        updatedArray.splice(targetIndex, 0, movedItem);
+        return updatedArray;
+      }
+
       return {
         ...state,
         data: {
