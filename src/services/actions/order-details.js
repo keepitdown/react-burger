@@ -1,4 +1,4 @@
-import { orderDispatchUrl } from "../../utils/constants";
+import { BASE_URL, ORDER_URL } from "../../utils/constants";
 import { checkApiResponse } from "../../utils/functions";
 
 const SENDING_ORDER_DATA = 'SENDING_ORDER_DATA';
@@ -13,7 +13,7 @@ const sendOrder = () => (dispatch, getState) => {
     type: SENDING_ORDER_DATA
   });
   const orderData = [getState().burgerConstructor.data.bun._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun._id];
-  fetch(orderDispatchUrl, {
+  fetch(`${BASE_URL}${ORDER_URL}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

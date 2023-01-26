@@ -1,4 +1,4 @@
-import { ingredientsRequestUrl } from "../../utils/constants";
+import { BASE_URL, INGREDIENTS_URL } from "../../utils/constants";
 import { addProperty, checkApiResponse, groupByType } from "../../utils/functions";
 
 const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
@@ -8,7 +8,7 @@ const INCREASE_INGREDIENT_QUANTITY = 'INCREASE_INGREDIENT_QUANTITY';
 const DECREASE_INGREDIENT_QUANTITY = 'DECREASE_INGREDIENT_QUANTITY';
 
 const getIngredients = () => dispatch => {
-  fetch(ingredientsRequestUrl)
+  fetch(`${BASE_URL}${INGREDIENTS_URL}`)
     .then(checkApiResponse)
     .then((serverData) => {
       const processedData = groupByType(addProperty(serverData.data, 'quantity', 0));
