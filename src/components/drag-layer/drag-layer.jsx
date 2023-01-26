@@ -13,15 +13,14 @@ function DragLayer() {
   const constructorIngredients = useSelector(state => state.burgerConstructor.data.middle);
   const availableIngredients = useSelector(state => state.burgerIngredients.data);
 
-  const { isDragging, draggedItem, type, position, position2 } = useDragLayer(monitor => ({
+  const { isDragging, draggedItem, type, position } = useDragLayer(monitor => ({
     isDragging: monitor.isDragging(),
     draggedItem: monitor.getItem(),
     type: monitor.getItemType(),
-    position: monitor.getSourceClientOffset(),
-    position2: monitor.getClientOffset()
+    position: monitor.getSourceClientOffset()
   }));
 
-  const previewStyles = isDragging && {
+  const previewStyles = isDragging && position && {
     transform: `translate(${position.x}px, ${position.y}px)`
   }
 
