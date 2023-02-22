@@ -1,12 +1,12 @@
-import { moveArrayItem } from "../../utils/functions";
-import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM } from "../actions/burger-constructor";
+import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR, RESET_CONSTRUCTOR } from "../actions/burger-constructor";
 
 const initialState = {
   data: {
     bun: {},
     middle: []
   },
-  nextConstructorId: 0
+  nextConstructorId: 0,
+  showBunError: false
 };
 
 const burgerConstructorReducer = (state = initialState, action) => {
@@ -39,6 +39,14 @@ const burgerConstructorReducer = (state = initialState, action) => {
         }
       };
     case MOVE_CONSTRUCTOR_ITEM: {
+
+      function moveArrayItem(originalIndex, targetIndex, array) {
+        const updatedArray = [...array];
+        const movedItem = updatedArray.splice(originalIndex, 1)[0];
+        updatedArray.splice(targetIndex, 0, movedItem);
+        return updatedArray;
+      }
+
       return {
         ...state,
         data: {
@@ -47,6 +55,28 @@ const burgerConstructorReducer = (state = initialState, action) => {
         }
       }
     }
+    case SHOW_BUN_ERROR: {
+      return {
+        ...state,
+        showBunError: true
+      }
+    }
+    case HIDE_BUN_ERROR: {
+      return {
+        ...state,
+        showBunError: false
+      }
+    }
+    case RESET_CONSTRUCTOR:
+      return {
+        ...state,
+        data: {
+          bun: {},
+          middle: []
+        },
+        nextConstructorId: 0,
+        showBunError: false
+      }
     default:
       return state;
   }

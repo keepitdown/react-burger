@@ -1,7 +1,8 @@
-const ingredientsRequestUrl = 'https://norma.nomoreparties.space/api/ingredients';
-const orderDispatchUrl = 'https://norma.nomoreparties.space/api/orders';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
+const INGREDIENTS_URL = '/ingredients'
+const ORDER_URL = '/orders';
 
 const addedIngredient = 'addedIngredient';
 const movedIngredient = 'movedIngredient';
 
-export { ingredientsRequestUrl, orderDispatchUrl, addedIngredient, movedIngredient };
+export { BASE_URL, INGREDIENTS_URL, ORDER_URL, addedIngredient, movedIngredient };
