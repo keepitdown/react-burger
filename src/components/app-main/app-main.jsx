@@ -4,8 +4,6 @@ import styles from './app-main.module.css';
 
 function AppMain({ children }) {
 
-
-  console.log(children);
   return (
     <main className={styles.main + ' pt-1 pb-1'}>
       {children}
