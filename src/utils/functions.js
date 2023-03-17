@@ -19,4 +19,8 @@ function groupByType(dataArray) {
   }, {})
 }
 
-export { checkApiResponse, addProperty, groupByType };
+function changePageTitle(title) {
+  document.title = `Stellar Burgers | ${title}`;
+}
+
+export { checkApiResponse, addProperty, groupByType, changePageTitle };
