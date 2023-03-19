@@ -1,0 +1,9 @@
+.container {
+  margin: 180px 0 0;
+  flex-grow: 1;
+  max-width: 480px;
+}
+
+.heading {
+  text-align: center;
+}

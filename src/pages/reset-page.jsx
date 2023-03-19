@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import AppHeader from '../components/app-header/app-header';
 import AppMain from '../components/app-main/app-main';
-import LoginForm from '../components/login-form/login-form';
 import { changePageTitle } from '../utils/functions';
+import ResetForm from '../components/reset-form/reset-form';
 
-function LoginPage() {
+function ResetPage() {
 
-  useEffect(() => changePageTitle('Вход'), []);
+  useEffect(() => changePageTitle('Восстановление пароля'), []);
 
   return (
     <>
       <AppHeader />
       <AppMain>
-        <LoginForm />
+        <ResetForm />
       </AppMain>
     </>
   )
 }
 
-export default LoginPage;
+export default ResetPage;

@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './login-form.module.css';
-import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './registration-form.module.css';
+import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
 
-function LoginForm() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+function RegistrationForm() {
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   return (
-    <FormContainer heading="Вход">
+    <FormContainer heading="Регистрация">
       <form className={styles.form}>
+        <Input
+          name="name"
+          placeholder="Имя"
+          value={formData.name}
+          onChange={handleChange}
+          extraClass="mb-6"
+        />
         <EmailInput
           name="email"
           value={formData.email}
@@ -32,19 +39,15 @@ function LoginForm() {
           size="medium"
           extraClass={styles.button + ' mb-20'}
         >
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
-      <p className={styles['other-action'] + ' text text_type_main-default text_color_inactive mb-4'}>
-        <span>Вы — новый пользователь?</span>
-        <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
-      </p>
       <p className={styles['other-action'] + ' text text_type_main-default text_color_inactive'}>
-        <span>Забыли пароль?</span>
-        <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link>
+        <span>Уже зарегистрированы?</span>
+        <Link to="/login" className={styles.link}>Войти</Link>
       </p>
     </FormContainer>
   )
 }
 
-export default LoginForm;
+export default RegistrationForm;

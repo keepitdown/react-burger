@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import AppHeader from '../components/app-header/app-header';
 import AppMain from '../components/app-main/app-main';
-import LoginForm from '../components/login-form/login-form';
 import { changePageTitle } from '../utils/functions';
+import RegistrationForm from '../components/registration-form/registration-form';
 
-function LoginPage() {
+function RegistrationPage() {
 
-  useEffect(() => changePageTitle('Вход'), []);
+  useEffect(() => changePageTitle('Регистрация'), []);
 
   return (
     <>
       <AppHeader />
       <AppMain>
-        <LoginForm />
+        <RegistrationForm />
       </AppMain>
     </>
   )
 }
 
-export default LoginPage;
+export default RegistrationPage;
