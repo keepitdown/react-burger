@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './app-header.module.css';
+import PropTypes from 'prop-types';
 import NavBar from '../nav-bar/nav-bar';
 import NavItem from '../nav-item/nav-item';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function AppHeader() {
+function AppHeader({ activeTab }) {
 
   return (
     <header className={styles.header + ' pt-4 pb-4'}>
@@ -14,18 +15,34 @@ function AppHeader() {
         </a>
       </div>
       <NavBar firstRightItem={3}>
-        <NavItem active icon={<BurgerIcon type="primary" />} link='#'>
+        <NavItem
+          active={activeTab === 'constructor'}
+          icon={<BurgerIcon type={activeTab === 'constructor' ? 'primary' : 'secondary'} />}
+          link='/'
+        >
           Конструктор
         </NavItem>
-        <NavItem icon={<ListIcon type="secondary" />} link='#'>
+        <NavItem
+          active={activeTab === 'orders'}
+          icon={<ListIcon type={activeTab === 'orders' ? 'primary' : 'secondary'} />}
+          link='#'
+        >
           Лента заказов
         </NavItem>
-        <NavItem icon={<ProfileIcon type="secondary" />} link='#'>
+        <NavItem
+          active={activeTab === 'profile'}
+          icon={<ProfileIcon type={activeTab === 'profile' ? 'primary' : 'secondary'} />}
+          link='/profile'
+        >
           Личный кабинет
         </NavItem>
       </NavBar>
     </header>
   )
 }
+
+AppHeader.propTypes = {
+  activeTab: PropTypes.string.isRequired
+};
 
 export default AppHeader;

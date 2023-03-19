@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import AppHeader from '../components/app-header/app-header';
 import AppMain from '../components/app-main/app-main';
+import Profile from '../components/profile/profile';
 import { changePageTitle } from '../utils/functions';
-import ResetForm from '../components/reset-form/reset-form';
 
-function ResetPage() {
+function ProfilePage() {
 
-  useEffect(() => changePageTitle('Восстановление пароля'), []);
+  useEffect(() => changePageTitle('Личный кабинет'), []);
 
   return (
     <>
       <AppHeader activeTab="profile"/>
       <AppMain>
-        <ResetForm />
+        <Profile/>
       </AppMain>
     </>
   )
 }
 
-export default ResetPage;
+export default ProfilePage;

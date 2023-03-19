@@ -18,7 +18,7 @@ function ConstructorPage() {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader activeTab="constructor" />
       {!requestHasFailed
         ? (
           <AppMain>

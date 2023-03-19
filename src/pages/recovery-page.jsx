@@ -10,7 +10,7 @@ function RecoveryPage() {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader activeTab="profile"/>
       <AppMain>
         <RecoveryForm />
       </AppMain>

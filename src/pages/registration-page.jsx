@@ -10,7 +10,7 @@ function RegistrationPage() {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader activeTab="profile"/>
       <AppMain>
         <RegistrationForm />
       </AppMain>

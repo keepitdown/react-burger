@@ -10,7 +10,7 @@ function LoginPage() {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader activeTab="profile"/>
       <AppMain>
         <LoginForm />
       </AppMain>
