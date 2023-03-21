@@ -42,7 +42,7 @@ function AppHeader({ activeTab }) {
 }
 
 AppHeader.propTypes = {
-  activeTab: PropTypes.string.isRequired
+  activeTab: PropTypes.string
 };
 
 export default AppHeader;

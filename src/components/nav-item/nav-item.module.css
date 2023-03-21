@@ -1,9 +1,12 @@
 .link {
   display: flex;
   align-items: center;
-  color: #f2f2f3;
   text-decoration: none;
   border-radius: 40px;
+}
+
+.link-active {
+  color: #f2f2f3;
 }
 
 .link-active:hover {
@@ -14,6 +17,7 @@
   transition: color .3s ease-in;
 }
 
-.link:hover .link-text, .link:hover .link-text:focus {
+.link:hover .link-text,
+.link:hover .link-text:focus {
   color: #fff;
 }

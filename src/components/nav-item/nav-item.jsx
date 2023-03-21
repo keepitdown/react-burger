@@ -11,7 +11,7 @@ function NavItem({ children, icon, active, link }) {
       className={
         styles.link
         + ' pl-5 pr-5 pt-4 pb-4'
-        + (active ? (' ' + styles['link-active']) : ' text_color_inactive ')
+        + (active ? (' ' + styles['link-active']) : '')
       }
     >
       {icon}

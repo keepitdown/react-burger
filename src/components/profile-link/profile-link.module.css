@@ -1,0 +1,17 @@
+.link {
+  text-decoration: none;
+  transition: color .3s ease-in;
+}
+
+.link:hover,
+.link:focus {
+  color: #fff;
+}
+
+.link-active {
+  color: #f2f2f3;
+}
+
+.link-active:hover {
+  cursor: default;
+}
