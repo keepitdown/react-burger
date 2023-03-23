@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
@@ -13,15 +13,18 @@ function App() {
 
   const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
+  const { state: locationState } = useLocation();
+
   return (
     <Routes>
       <Route path="/" element={<ConstructorPage />} />
+      <Route path="/ingredients/:id" element={!!locationState?.useModal ? <ConstructorPage /> : <IngredientPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegistrationPage />} />
       <Route path="/forgot-password" element={<RecoveryPage />} />
       <Route path="/reset-password" element={<ResetPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/ingredients/:id" element={<IngredientPage />} />
+
     </Routes>
   )
 }

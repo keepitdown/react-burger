@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
@@ -9,7 +10,7 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { REMOVE_INGREDIENT_DETAILS, HIDE_DETAILS } from '../../services/actions/ingredient-details';
+import { REMOVE_INGREDIENT_DETAILS, HIDE_DETAILS, SET_INGREDIENT_DETAILS, SHOW_DETAILS } from '../../services/actions/ingredient-details';
 
 
 function BurgerIngredients({ extraClass }) {
@@ -48,10 +49,34 @@ function BurgerIngredients({ extraClass }) {
     dispatch(getIngredients());
   }, []);
 
+  const navigate = useNavigate();
+
   const handleModalClose = () => {
     dispatch({ type: HIDE_DETAILS });
+    navigate(-1);
     dispatch({ type: REMOVE_INGREDIENT_DETAILS });
   }
+
+  const location = useLocation();
+  const { dataIsLoaded, ingredientsData } = useSelector(state => ({
+    dataIsLoaded: state.burgerIngredients.dataIsLoaded,
+    ingredientsData: state.burgerIngredients.data}));
+  const { id: modalIngredientId } = useParams();
+
+  useEffect(() => {
+    if (modalIsOpen && location.pathname === '/') {
+      dispatch({ type: HIDE_DETAILS });
+      dispatch({ type: REMOVE_INGREDIENT_DETAILS });
+    }
+    if (!modalIsOpen && location.pathname.includes('/ingredients/') && dataIsLoaded) {
+      const modalData = { ...Object.values(ingredientsData).flat().find(item => item._id === modalIngredientId) };
+      dispatch({
+        type: SET_INGREDIENT_DETAILS,
+        data: modalData
+      });
+      dispatch({ type: SHOW_DETAILS });
+    }
+  }, [modalIsOpen, location, dataIsLoaded, ingredientsData, modalIngredientId]);
 
   return (
     <>

@@ -7,10 +7,7 @@
 
 .link-active {
   color: #f2f2f3;
-}
-
-.link-active:hover {
-  cursor: default;
+  pointer-events: none;
 }
 
 .link-text {
