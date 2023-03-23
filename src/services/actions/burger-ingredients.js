@@ -11,8 +11,8 @@ const RESET_ALL_QUANTITIES = 'RESET_ALL_QUANTITIES';
 const getIngredients = () => dispatch => {
   fetch(`${BASE_URL}${INGREDIENTS_URL}`)
     .then(checkApiResponse)
-    .then((serverData) => {
-      const processedData = groupByType(addProperty(serverData.data, 'quantity', 0));
+    .then(({ data: serverData }) => {
+      const processedData = groupByType(addProperty(serverData, 'quantity', 0));
       dispatch({
         type: SET_BURGER_INGREDIENTS,
         data: processedData

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../profile-nav/profile-nav';

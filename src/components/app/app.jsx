@@ -7,6 +7,7 @@ import RegistrationPage from '../../pages/registration-page';
 import RecoveryPage from '../../pages/recovery-page';
 import ResetPage from '../../pages/reset-page';
 import ProfilePage from '../../pages/profile-page';
+import IngredientPage from '../../pages/ingredient-page';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
       <Route path="/forgot-password" element={<RecoveryPage />} />
       <Route path="/reset-password" element={<ResetPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/ingredients/:id" element={<IngredientPage />} />
     </Routes>
   )
 }
