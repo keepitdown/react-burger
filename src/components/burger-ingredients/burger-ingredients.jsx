@@ -53,8 +53,8 @@ function BurgerIngredients({ extraClass }) {
 
   const handleModalClose = () => {
     dispatch({ type: HIDE_DETAILS });
-    navigate(-1);
     dispatch({ type: REMOVE_INGREDIENT_DETAILS });
+    navigate(-1);
   }
 
   const location = useLocation();

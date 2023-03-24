@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
 import RegistrationPage from '../../pages/registration-page';
@@ -10,8 +9,6 @@ import ProfilePage from '../../pages/profile-page';
 import IngredientPage from '../../pages/ingredient-page';
 
 function App() {
-
-  const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
   const { state: locationState } = useLocation();
 

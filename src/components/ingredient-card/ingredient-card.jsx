@@ -20,8 +20,8 @@ function IngredientCard({ data, isEven }) {
       type: SET_INGREDIENT_DETAILS,
       data
     });
-    navigate(`ingredients/${data._id}`, { state: { useModal: true } });
     dispatch({ type: SHOW_DETAILS });
+    navigate(`ingredients/${data._id}`, { state: { useModal: true } });
   }
 
   const [, dragRef, preview] = useDrag({

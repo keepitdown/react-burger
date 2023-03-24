@@ -1,8 +1,7 @@
-import { SET_INGREDIENT_DETAILS, REMOVE_INGREDIENT_DETAILS, SHOW_DETAILS, HIDE_DETAILS, SET_DETAILS_FAILED_STATUS } from "../actions/ingredient-details";
+import { SET_INGREDIENT_DETAILS, REMOVE_INGREDIENT_DETAILS, SHOW_DETAILS, HIDE_DETAILS } from "../actions/ingredient-details";
 
 const initialState = {
   showDetails: false,
-  detailsRequestHasFailed: false,
   data: {}
 };
 
@@ -30,11 +29,6 @@ const ingredientDetailsReducer = (state = initialState, action) => {
       }
     default:
       return state
-    case SET_DETAILS_FAILED_STATUS:
-      return {
-        ...state,
-        detailsRequestHasFailed: true
-      }
   };
 }
 

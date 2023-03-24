@@ -10,12 +10,12 @@ function IngredientPage() {
 
   useEffect(() => changePageTitle('Детали ингредиента'), []);
 
-  const detailsRequestHasFailed = useSelector(state => state.ingredientDetails.detailsRequestHasFailed);
+  const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
   return (
     <>
       <AppHeader />
-      {!detailsRequestHasFailed
+      {!requestHasFailed
         ? (
           <AppMain>
             <IngredientSection />
