@@ -1,0 +1,3 @@
+const SET_PROFILE_DATA = 'SET_PROFILE_DATA';
+
+export { SET_PROFILE_DATA };

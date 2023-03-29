@@ -1,35 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
+import { sendLogInRequest } from '../../services/actions/auth';
 
 function LoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formIsValid, setFormIsValid] = useState(false);
+
+  const formRef = useRef();
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormIsValid(formRef.current.checkValidity());
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(sendLogInRequest(formData));
   }
 
   return (
     <FormContainer heading="Вход">
-      <form className={styles.form}>
+      <form
+        className={styles.form}
+        ref={formRef}
+        onSubmit={handleSubmit}
+      >
         <EmailInput
           name="email"
           value={formData.email}
           onChange={handleChange}
+          required
           extraClass="mb-6"
         />
         <PasswordInput
           name="password"
           value={formData.password}
           onChange={handleChange}
+          required
           extraClass="mb-6"
         />
         <Button
           htmlType="submit"
           type="primary"
           size="medium"
+          disabled={!formIsValid}
           extraClass={styles.button + ' mb-20'}
         >
           Войти

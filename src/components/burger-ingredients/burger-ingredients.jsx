@@ -94,13 +94,13 @@ function BurgerIngredients({ extraClass }) {
           </Tab>
         </TabSelector>
         <IngredientsList scrollHandler={scrollHandler} ref={ingredientsListRef}>
-          <IngredientsCategory categoryName="bun" ref={(element) => getCategoryRef('bun', element)}>
+          <IngredientsCategory categoryName="bun" ref={element => getCategoryRef('bun', element)}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory categoryName="sauce" ref={(element) => getCategoryRef('sauce', element)}>
+          <IngredientsCategory categoryName="sauce" ref={element => getCategoryRef('sauce', element)}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory categoryName="main" ref={(element) => getCategoryRef('main', element)}>
+          <IngredientsCategory categoryName="main" ref={element => getCategoryRef('main', element)}>
             Начинки
           </IngredientsCategory>
         </IngredientsList>
