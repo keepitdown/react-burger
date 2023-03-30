@@ -8,6 +8,7 @@ import ResetPage from '../../pages/reset-page';
 import ProfilePage from '../../pages/profile-page';
 import IngredientPage from '../../pages/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page';
+import ProtectedRoute from '../protected-route/protected-route';
 
 function App() {
 
@@ -24,7 +25,10 @@ function App() {
       <Route path="/register" element={<RegistrationPage />} />
       <Route path="/forgot-password" element={<RecoveryPage />} />
       <Route path="/reset-password" element={<ResetPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route
+        path="/profile"
+        element={<ProtectedRoute element={<ProfilePage />} />}
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

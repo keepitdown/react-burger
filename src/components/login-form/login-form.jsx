@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
@@ -12,7 +12,10 @@ function LoginForm() {
 
   const formRef = useRef();
 
+  const userIsLoggedIn = useSelector(state => state.auth.userIsLoggedIn)
   const dispatch = useDispatch();
+
+  const { state: locationState } = useLocation();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,6 +25,10 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(sendLogInRequest(formData));
+  }
+
+  if (userIsLoggedIn) {
+    return <Navigate to={locationState?.originalPath || '/'} replace/>
   }
 
   return (

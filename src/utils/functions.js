@@ -36,8 +36,4 @@ function removeCookie(name) {
   setCookie(name, '', 0);
 }
 
-//2592000
-
-//1200
-
 export { checkApiResponse, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie };
