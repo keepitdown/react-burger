@@ -9,6 +9,7 @@ import ProfilePage from '../../pages/profile-page';
 import IngredientPage from '../../pages/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page';
 import ProtectedRoute from '../protected-route/protected-route';
+import UnauthorizedRoute from '../unauthorized-route/unauthorized-route';
 
 function App() {
 
@@ -21,7 +22,10 @@ function App() {
         path="/ingredients/:id"
         element={!!locationState?.useModal ? <ConstructorPage /> : <IngredientPage />}
       />
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={<UnauthorizedRoute element={<LoginPage />} />}
+      />
       <Route path="/register" element={<RegistrationPage />} />
       <Route path="/forgot-password" element={<RecoveryPage />} />
       <Route path="/reset-password" element={<ResetPage />} />

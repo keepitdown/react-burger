@@ -1,18 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
-import { PasswordInput, Input, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../profile-nav/profile-nav';
 import ProfileLink from '../profile-link/profile-link';
 
 function Profile() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+
+  const serverUserData = useSelector(state => state.profile.data);
+
+  const [formData, setFormData] = useState({ name: serverUserData.name, email: serverUserData.email, password: '' });
+  const [formWasEdited, setFormWasEdited] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(true);
+  const formRef = useRef();
 
   const nameInputRef = useRef();
   const [nameInputIsLocked, setNameInputIsLocked] = useState(true);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleClick = () => {
     if (nameInputIsLocked) {
@@ -22,6 +25,21 @@ function Profile() {
   };
 
   const handleBlur = () => setNameInputIsLocked(true);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormIsValid(formRef.current.checkValidity());
+    !formWasEdited && setFormWasEdited(true);
+  };
+
+  const handleReset = () => {
+    setFormData({ ...serverUserData, password: '' });
+    setFormWasEdited(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <section className={styles.container + ' mt-30'}>
@@ -33,7 +51,11 @@ function Profile() {
         </ProfileNav>
         <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
       </div>
-      <form>
+      <form
+      ref={formRef}
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      >
         <Input
           name="name"
           placeholder="Имя"
@@ -44,6 +66,7 @@ function Profile() {
           icon="EditIcon"
           onIconClick={handleClick}
           onBlur={handleBlur}
+          required
           extraClass={styles['input-field'] + ' mb-6'}
         />
         <EmailInput
@@ -61,6 +84,16 @@ function Profile() {
           icon="EditIcon"
           extraClass={styles['input-field']}
         />
+        {formWasEdited && (
+          <div className={styles.buttons + ' mt-6'}>
+            <button type="reset" className={styles['reset-button'] + ' text text_type_main-default'}>
+              Отмена
+            </button>
+            <Button htmlType="submit" type="primary" size="medium" disabled={!formIsValid}>
+              Сохранить
+            </Button>
+          </div>
+        )}
       </form>
     </section >
   )

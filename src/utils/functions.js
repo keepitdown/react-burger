@@ -1,8 +1,26 @@
-function checkApiResponse(response) {
+import { BASE_URL } from "./constants";
+
+async function checkApiResponse(response) {
   if (response.ok) {
     return response.json();
   }
-  return Promise.reject(`Error ${response.status}: ${response.statusText}`);
+
+  const errorDetails = {
+    code: response.status,
+    description: response.statusText
+  }
+  
+  if (response.headers.get('content-type') === 'application/json') {
+    const responseContent = await response?.json();
+    errorDetails.message = responseContent.message;
+  }
+  
+  return Promise.reject(errorDetails);
+}
+
+function request(urlPath, options) {
+  return fetch(`${BASE_URL}${urlPath}`, options)
+    .then(checkApiResponse);
 }
 
 function addProperty(ingredientsData, propertyName, initialValue) {
@@ -36,4 +54,4 @@ function removeCookie(name) {
   setCookie(name, '', 0);
 }
 
-export { checkApiResponse, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie };
+export { request, checkApiResponse, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie };

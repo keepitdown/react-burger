@@ -1,5 +1,5 @@
-import { BASE_URL, INGREDIENTS_URL } from "../../utils/constants";
-import { addProperty, checkApiResponse, groupByType } from "../../utils/functions";
+import { INGREDIENTS_URL } from "../../utils/constants";
+import { addProperty, groupByType, request } from "../../utils/functions";
 
 const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
 const SET_LOADED_STATUS = 'SET_LOADED_STATUS';
@@ -17,8 +17,7 @@ const getIngredients = () => dispatch => {
     type: SET_FAILED_STATUS,
     status: false
   });
-  fetch(`${BASE_URL}${INGREDIENTS_URL}`)
-    .then(checkApiResponse)
+  request(INGREDIENTS_URL)
     .then(({ data: serverData }) => {
       const processedData = groupByType(addProperty(serverData, 'quantity', 0));
       dispatch({

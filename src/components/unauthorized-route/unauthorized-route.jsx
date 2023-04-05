@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getProfileData } from '../../services/actions/auth';
 
-function ProtectedRoute({ element }) {
+function UnauthorizedRoute({ element }) {
 
   const location = useLocation();
 
@@ -18,18 +18,20 @@ function ProtectedRoute({ element }) {
     dispatch(getProfileData());
   }, []);
 
+  //console.log(location);
+
   return authIsChecked && (
-    userIsLoggedIn
+    !userIsLoggedIn
       ? element
-      : <Navigate to='/login' state={{ originalPath: location.pathname }} replace />
+      : <Navigate to='/profile' replace />
   );
 }
 
-ProtectedRoute.propTypes = {
+UnauthorizedRoute.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
   ])
 };
 
-export default ProtectedRoute;
+export default UnauthorizedRoute;

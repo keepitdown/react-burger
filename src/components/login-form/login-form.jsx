@@ -28,7 +28,7 @@ function LoginForm() {
   }
 
   if (userIsLoggedIn) {
-    return <Navigate to={locationState?.originalPath || '/'} replace/>
+    return <Navigate to={locationState?.originalPath || '/'} replace />
   }
 
   return (
@@ -57,7 +57,7 @@ function LoginForm() {
           type="primary"
           size="medium"
           disabled={!formIsValid}
-          extraClass={styles.button + ' mb-20'}
+          extraClass="mb-20"
         >
           Войти
         </Button>
