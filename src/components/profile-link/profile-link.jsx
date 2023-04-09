@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styles from './profile-link.module.css';
 
-function ProfileLink({ children, link, clickHandler }) {
+function ProfileLink({ children, link, end }) {
 
   return (
     <NavLink
@@ -13,6 +13,7 @@ function ProfileLink({ children, link, clickHandler }) {
         + ' text text_type_main-medium'
         + (isActive ? (' ' + styles['link-active']) : ' text_color_inactive')
       }
+      end={end}
     >
       {children}
     </NavLink>
@@ -22,7 +23,7 @@ function ProfileLink({ children, link, clickHandler }) {
 ProfileLink.propTypes = {
   children: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+  end: PropTypes.bool
 };
 
 export default ProfileLink;

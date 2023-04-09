@@ -1,0 +1,11 @@
+.button {
+  border: none;
+  background-color: transparent;
+  transition: color .3s ease-in;
+}
+
+.button:hover,
+.button:focus {
+  color: #fff;
+  cursor: pointer;
+}

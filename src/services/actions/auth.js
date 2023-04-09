@@ -1,10 +1,12 @@
-import { SIGN_UP_URL, LOG_IN_URL, PROFILE_DATA_URL, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, REFRESH_TOKEN_URL } from "../../utils/constants";
-import { request, getCookie, setCookie } from "../../utils/functions";
+import { LOG_OUT_URL } from "../../utils/constants";
+import { SIGN_UP_URL, LOG_IN_URL, PROFILE_DATA_URL, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, REFRESH_TOKEN_URL, RESET_URL, RECOVER_URL } from "../../utils/constants";
+import { request, getCookie, setCookie, removeCookie, logError } from "../../utils/functions";
 import { SET_PROFILE_DATA } from "./profile";
 
 const SET_EXPECTING_RESPONSE = 'SET_EXPECTING_RESPONSE';
 const SET_AUTH_CHECK_STATUS = 'SET_AUTH_CHECK_STATUS';
 const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS';
+const SET_FORM_STATUS = 'SET_FORM_STATUS';
 
 const requestWithToken = (urlPath, options) => dispatch => {
   const retryFetch = () => dispatch(requestWithToken(urlPath, options));
@@ -69,18 +71,10 @@ const sendSignUpRequest = ({ email, password, name }) => dispatch => {
         status: true
       });
     })
-    .catch(error => console.log(error));
+    .catch(error => logError(error));
 };
 
 const sendLogInRequest = ({ email, password }) => dispatch => {
-  dispatch({
-    type: SET_LOGGED_IN_STATUS,
-    status: false
-  });
-  dispatch({
-    type: SET_AUTH_CHECK_STATUS,
-    status: false
-  });
   request(LOG_IN_URL, {
     method: 'POST',
     headers: {
@@ -89,6 +83,10 @@ const sendLogInRequest = ({ email, password }) => dispatch => {
     body: JSON.stringify({ email, password })
   })
     .then(response => {
+
+      setCookie(accessToken, response.accessToken.split('Bearer ')[1], accessTokenMaxAge);
+      setCookie(refreshToken, response.refreshToken, refreshTokenMaxAge);
+
       dispatch({
         type: SET_AUTH_CHECK_STATUS,
         status: true
@@ -97,23 +95,27 @@ const sendLogInRequest = ({ email, password }) => dispatch => {
         type: SET_LOGGED_IN_STATUS,
         status: true
       });
+
       dispatch({
         type: SET_PROFILE_DATA,
         data: response.user
-      })
-      setCookie(accessToken, response.accessToken.split('Bearer ')[1], accessTokenMaxAge);
-      setCookie(refreshToken, response.refreshToken, refreshTokenMaxAge);
+      });
+      dispatch({
+        type: SET_FORM_STATUS,
+        form: 'logIn',
+        status: true
+      });
     })
-    .catch(error => console.log(error));
+    .catch(error => logError(error));
 };
 
 const getProfileData = () => dispatch => {
   dispatch({
-    type: SET_AUTH_CHECK_STATUS,
+    type: SET_LOGGED_IN_STATUS,
     status: false
   });
   dispatch({
-    type: SET_LOGGED_IN_STATUS,
+    type: SET_AUTH_CHECK_STATUS,
     status: false
   });
   dispatch(requestWithToken(PROFILE_DATA_URL, { method: 'GET' }))
@@ -127,9 +129,7 @@ const getProfileData = () => dispatch => {
         status: true
       });
     })
-    .catch(error =>
-      console.log(`Error ${error.code}: ${error.description}\n${error.message ?? ''}`)
-    )
+    .catch(error => logError(error))
     .finally(() => {
       dispatch({
         type: SET_AUTH_CHECK_STATUS,
@@ -138,4 +138,70 @@ const getProfileData = () => dispatch => {
     });
 };
 
-export { SET_EXPECTING_RESPONSE, SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_PROFILE_DATA, sendSignUpRequest, sendLogInRequest, getProfileData };
+const sendRecoverRequest = ({ email }) => dispatch => {
+  request(RECOVER_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email })
+  })
+    .then(() => {
+      dispatch({
+        type: SET_FORM_STATUS,
+        form: 'recover',
+        status: true
+      })
+    })
+    .catch(error => logError(error));
+};
+
+const sendResetRequest = ({ email, token }) => dispatch => {
+  request(RESET_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, token })
+  })
+    .then(() => {
+      dispatch({
+        type: SET_FORM_STATUS,
+        form: 'reset',
+        status: true
+      })
+    })
+    .catch(error => logError(error));
+};
+
+const sendLogOurRequest = () => dispatch => {
+  const storedRefreshToken = getCookie(refreshToken);
+  if (!storedRefreshToken) {
+    return Promise.reject({ message: 'refresh token not found' });
+  }
+  return request(LOG_OUT_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ token: storedRefreshToken })
+  })
+    .then(() => {
+      dispatch({
+        type: SET_LOGGED_IN_STATUS,
+        status: false
+      });
+      dispatch({
+        type: SET_PROFILE_DATA,
+        data: {}
+      });
+      removeCookie(accessToken);
+      removeCookie(refreshToken);
+    })
+    .catch(error => logError(error));
+};
+
+export {
+  SET_EXPECTING_RESPONSE, SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_PROFILE_DATA, SET_FORM_STATUS,
+  sendSignUpRequest, sendLogInRequest, getProfileData, sendRecoverRequest, sendResetRequest, sendLogOurRequest
+};

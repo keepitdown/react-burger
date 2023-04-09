@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../profile-nav/profile-nav';
 import ProfileLink from '../profile-link/profile-link';
+import ProfileNavButton from '../profile-nav-button/profile-nav-button';
+import { sendLogOurRequest } from '../../services/actions/auth';
 
 function Profile() {
 
   const serverUserData = useSelector(state => state.profile.data);
+
+  const userWasLoggedOut = useSelector(state => state.auth.userWasLoggedOut);
 
   const [formData, setFormData] = useState({ name: serverUserData.name, email: serverUserData.email, password: '' });
   const [formWasEdited, setFormWasEdited] = useState(false);
@@ -41,18 +46,26 @@ function Profile() {
     e.preventDefault();
   };
 
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(sendLogOurRequest());
+  }
+
   return (
     <section className={styles.container + ' mt-30'}>
       <div className={styles.sidebar}>
         <ProfileNav>
-          <ProfileLink link="/profile">Профиль</ProfileLink>
+          <ProfileLink link="/profile" end>Профиль</ProfileLink>
           <ProfileLink link="/profile/orders">История заказов</ProfileLink>
-          <ProfileLink link="/">Выход</ProfileLink>
+          <ProfileNavButton clickHandler={handleLogOut}>
+            Выход
+          </ProfileNavButton>
         </ProfileNav>
         <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
       </div>
       <form
-      ref={formRef}
+        ref={formRef}
         onSubmit={handleSubmit}
         onReset={handleReset}
       >

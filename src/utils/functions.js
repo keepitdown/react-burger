@@ -9,13 +9,17 @@ async function checkApiResponse(response) {
     code: response.status,
     description: response.statusText
   }
-  
-  if (response.headers.get('content-type') === 'application/json') {
+
+  if (response.headers.get('content-type').includes('application/json')) {
     const responseContent = await response?.json();
     errorDetails.message = responseContent.message;
   }
-  
+
   return Promise.reject(errorDetails);
+}
+
+function logError(error) {
+  console.log(`Error ${error.code}: ${error.description}\n${error.message ?? ''}`);
 }
 
 function request(urlPath, options) {
@@ -42,7 +46,7 @@ function changePageTitle(title) {
 }
 
 function setCookie(name, value, maxAge) {
-  document.cookie = `${name}=${value};max-age=${maxAge};samesite=strict`;
+  document.cookie = `${name}=${value};max-age=${maxAge};path=/;samesite=strict`;
 }
 
 function getCookie(name) {
@@ -54,4 +58,4 @@ function removeCookie(name) {
   setCookie(name, '', 0);
 }
 
-export { request, checkApiResponse, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie };
+export { request, checkApiResponse, logError, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie };

@@ -1,18 +1,19 @@
-import { SET_EXPECTING_RESPONSE, SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS } from "../actions/auth";
+import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_STATUS } from "../actions/auth";
 
 const initialState = {
   userIsLoggedIn: false,
-  expectingRespone: false,
-  authIsChecked: false
+  authIsChecked: false,
+  forms: {
+    signUp: { isSubmitted: false },
+    logIn: { isSubmitted: false },
+    recover: { isSubmitted: false },
+    reset: { isSubmitted: false },
+    registration: { isSubmitted: false }
+  }
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_EXPECTING_RESPONSE:
-      return {
-        ...state,
-        expectingRespone: action.status
-      };
     case SET_AUTH_CHECK_STATUS:
       return {
         ...state,
@@ -23,6 +24,17 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userIsLoggedIn: action.status
       };
+    case SET_FORM_STATUS:
+      return {
+        ...state,
+        forms: {
+          ...state.forms,
+          [action.form]: {
+            ...state.forms[action.form],
+            isSubmitted: action.status
+          }
+        }
+      }
     default:
       return state
   };
