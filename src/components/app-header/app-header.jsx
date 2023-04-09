@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './app-header.module.css';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NavBar from '../nav-bar/nav-bar';
 import NavItem from '../nav-item/nav-item';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function AppHeader({ activeTab }) {
+function AppHeader() {
+
+  const { pathname: currentPath, state: locationState } = useLocation();
 
   return (
     <header className={styles.header + ' pt-4 pb-4'}>
@@ -16,22 +19,22 @@ function AppHeader({ activeTab }) {
       </div>
       <NavBar firstRightItem={3}>
         <NavItem
-          active={activeTab === 'constructor'}
-          icon={<BurgerIcon type={activeTab === 'constructor' ? 'primary' : 'secondary'} />}
+          active={currentPath === '/' || (currentPath.startsWith('/ingredients/') && locationState?.useModal)}
+          icon={<BurgerIcon type={(currentPath === '/' || (currentPath.startsWith('/ingredients/') && locationState?.useModal )) ? 'primary' : 'secondary'} />}
           link='/'
         >
           Конструктор
         </NavItem>
         <NavItem
-          active={activeTab === 'orders'}
-          icon={<ListIcon type={activeTab === 'orders' ? 'primary' : 'secondary'} />}
+          active={currentPath.startsWith('/orders')}
+          icon={<ListIcon type={currentPath.startsWith('/orders') ? 'primary' : 'secondary'} />}
           link='#'
         >
           Лента заказов
         </NavItem>
         <NavItem
-          active={activeTab === 'profile'}
-          icon={<ProfileIcon type={activeTab === 'profile' ? 'primary' : 'secondary'} />}
+          active={currentPath.startsWith('/profile')}
+          icon={<ProfileIcon type={currentPath.startsWith('/profile') ? 'primary' : 'secondary'} />}
           link='/profile'
         >
           Личный кабинет
@@ -40,9 +43,5 @@ function AppHeader({ activeTab }) {
     </header>
   )
 }
-
-AppHeader.propTypes = {
-  activeTab: PropTypes.string
-};
 
 export default AppHeader;
