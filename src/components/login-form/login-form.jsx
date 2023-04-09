@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
@@ -14,18 +14,6 @@ function LoginForm() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: SET_FORM_STATUS,
-        form: 'logIn',
-        status: false
-      });
-    };
-  }, []);
-
-  const formIsSubmitted = useSelector(state => state.auth.forms.logIn.isSubmitted)
-
   const { state: locationState } = useLocation();
 
   const handleChange = (e) => {
@@ -36,10 +24,6 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(sendLogInRequest(formData));
-  }
-
-  if (formIsSubmitted) {
-    return <Navigate to={locationState?.originalPath || '/'} replace />
   }
 
   return (
@@ -75,7 +59,13 @@ function LoginForm() {
       </form>
       <p className={styles['other-action'] + ' text text_type_main-default text_color_inactive mb-4'}>
         <span>Вы — новый пользователь?</span>
-        <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
+        <Link
+          to="/register"
+          state={locationState.originalPath && { originalPath: locationState.originalPath }}
+          className={styles.link}
+        >
+          Зарегистрироваться
+        </Link>
       </p>
       <p className={styles['other-action'] + ' text text_type_main-default text_color_inactive'}>
         <span>Забыли пароль?</span>

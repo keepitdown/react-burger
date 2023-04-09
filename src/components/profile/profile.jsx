@@ -6,15 +6,16 @@ import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-de
 import ProfileNav from '../profile-nav/profile-nav';
 import ProfileLink from '../profile-link/profile-link';
 import ProfileNavButton from '../profile-nav-button/profile-nav-button';
-import { sendLogOurRequest } from '../../services/actions/auth';
+import { editProfileData, sendLogOurRequest } from '../../services/actions/auth';
+import { SET_PROFILE_EDITED } from '../../services/actions/profile';
 
 function Profile() {
 
-  const serverUserData = useSelector(state => state.profile.data);
+  const dispatch = useDispatch();
 
-  const userWasLoggedOut = useSelector(state => state.auth.userWasLoggedOut);
+  const initialFormData = { ...useSelector(state => state.profile.data), password: '' };
 
-  const [formData, setFormData] = useState({ name: serverUserData.name, email: serverUserData.email, password: '' });
+  const [formData, setFormData] = useState({ ...initialFormData });
   const [formWasEdited, setFormWasEdited] = useState(false);
   const [formIsValid, setFormIsValid] = useState(true);
   const formRef = useRef();
@@ -38,15 +39,33 @@ function Profile() {
   };
 
   const handleReset = () => {
-    setFormData({ ...serverUserData, password: '' });
+    setFormData({ ...initialFormData });
     setFormWasEdited(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const profileChanges = Object.keys(formData).reduce(
+      (changes, fieldName) => (initialFormData[fieldName] !== formData[fieldName])
+        ? { ...changes, [fieldName]: formData[fieldName] }
+        : { ...changes }
+      , {});
+
+    dispatch(editProfileData(profileChanges));
   };
 
-  const dispatch = useDispatch();
+  const profileWasEdited = useSelector(state => state.profile.profileWasEdited);
+
+  useEffect(() => {
+    if (profileWasEdited) {
+      setFormData({ ...initialFormData });
+      setFormWasEdited(false);
+      dispatch({
+        type: SET_PROFILE_EDITED,
+        status: false
+      });
+    }
+  }, [profileWasEdited]);
 
   const handleLogOut = () => {
     dispatch(sendLogOurRequest());

@@ -4,11 +4,8 @@ const initialState = {
   userIsLoggedIn: false,
   authIsChecked: false,
   forms: {
-    signUp: { isSubmitted: false },
-    logIn: { isSubmitted: false },
     recover: { isSubmitted: false },
-    reset: { isSubmitted: false },
-    registration: { isSubmitted: false }
+    reset: { isSubmitted: false }
   }
 };
 
