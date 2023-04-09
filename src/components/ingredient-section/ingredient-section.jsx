@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ingredient-section.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { REMOVE_INGREDIENT_DETAILS, SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
@@ -10,7 +10,7 @@ function IngredientSection() {
 
   const dispatch = useDispatch();
 
-  const [ingredientWasFound, setIngredientWasFound] = useState(false);
+  const [ingredientNotFound, setIngredientNotFound] = useState(false);
 
   const { id: ingredientId } = useParams();
 
@@ -18,6 +18,8 @@ function IngredientSection() {
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
     availableIngredients: state.burgerIngredients.data
   }));
+
+  const ingredientData = useSelector(state => state.ingredientDetails.data);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -27,7 +29,7 @@ function IngredientSection() {
   useEffect(() => {
     if (dataIsLoaded) {
       const ingredientData = { ...Object.values(availableIngredients).flat().find(item => item._id === ingredientId) };
-      ingredientData && setIngredientWasFound(true);
+      !Object.keys(ingredientData).length && setIngredientNotFound(true);
       dispatch({
         type: SET_INGREDIENT_DETAILS,
         data: ingredientData
@@ -35,10 +37,13 @@ function IngredientSection() {
     }
   }, [ingredientId, dataIsLoaded, availableIngredients]);
 
-  /* Add redirect to 404 page if ingredientWasFound is false */
+  if (ingredientNotFound) {
+    return (<Navigate to={`/ingredients/${ingredientId}`} state={{ ingredientNotFound: true }} />);
+  }
+
   return (
     <section className={styles.container + ' mt-30'}>
-      {ingredientWasFound && (
+      {!!Object.keys(ingredientData).length && (
         <>
           <h1 className={styles.heading + ' text text_type_main-large'}>Детали ингредиента</h1>
           <IngredientDetails />

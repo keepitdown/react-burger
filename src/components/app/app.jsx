@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProfileData } from '../../services/actions/auth';
+import { getProfileData } from '../../services/actions/profile';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
@@ -29,7 +29,9 @@ function App() {
       <Route path="/" element={<ConstructorPage />} />
       <Route
         path="/ingredients/:id"
-        element={!!locationState?.useModal ? <ConstructorPage /> : <IngredientPage />}
+        element={!!locationState?.useModal
+          ? <ConstructorPage />
+          : !locationState?.ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
       />
       <Route
         path="/login"

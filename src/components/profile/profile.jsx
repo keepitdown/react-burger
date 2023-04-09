@@ -6,8 +6,8 @@ import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-de
 import ProfileNav from '../profile-nav/profile-nav';
 import ProfileLink from '../profile-link/profile-link';
 import ProfileNavButton from '../profile-nav-button/profile-nav-button';
-import { editProfileData, sendLogOurRequest } from '../../services/actions/auth';
-import { SET_PROFILE_EDITED } from '../../services/actions/profile';
+import { sendLogOurRequest } from '../../services/actions/auth';
+import { SET_PROFILE_EDITED, editProfileData } from '../../services/actions/profile';
 
 function Profile() {
 
