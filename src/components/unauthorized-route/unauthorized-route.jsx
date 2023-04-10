@@ -15,7 +15,7 @@ function UnauthorizedRoute({ element }) {
   return authIsChecked && (
     !userIsLoggedIn
       ? element
-      : <Navigate to={locationState.originalPath || '/'} replace />
+      : <Navigate to={locationState?.originalPath || '/'} replace />
   );
 }
 
