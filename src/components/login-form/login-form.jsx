@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_STATUS, sendLogInRequest } from '../../services/actions/auth';
+import { sendLogInRequest } from '../../services/actions/auth';
 
 function LoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -61,7 +61,7 @@ function LoginForm() {
         <span>Вы — новый пользователь?</span>
         <Link
           to="/register"
-          state={locationState.originalPath && { originalPath: locationState.originalPath }}
+          state={locationState?.originalPath && { originalPath: locationState.originalPath }}
           className={styles.link}
         >
           Зарегистрироваться

@@ -19,7 +19,7 @@ async function checkApiResponse(response) {
 }
 
 function logError(error) {
-  console.log(`Error ${error.code}: ${error.description}\n${error.message ?? ''}`);
+  console.log(`Error${error.code ? (' ' + error.code) : ''}: ${error.description ? (error.description + '\n') : ''}${error.message ?? ''}`);
 }
 
 function request(urlPath, options) {

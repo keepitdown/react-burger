@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './app-header.module.css';
 import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import NavBar from '../nav-bar/nav-bar';
 import NavItem from '../nav-item/nav-item';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,7 +19,7 @@ function AppHeader() {
       <NavBar firstRightItem={3}>
         <NavItem
           active={currentPath === '/' || (currentPath.startsWith('/ingredients/') && locationState?.useModal)}
-          icon={<BurgerIcon type={(currentPath === '/' || (currentPath.startsWith('/ingredients/') && locationState?.useModal )) ? 'primary' : 'secondary'} />}
+          icon={<BurgerIcon type={(currentPath === '/' || (currentPath.startsWith('/ingredients/') && locationState?.useModal)) ? 'primary' : 'secondary'} />}
           link='/'
         >
           Конструктор
