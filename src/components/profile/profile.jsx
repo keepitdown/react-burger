@@ -65,7 +65,7 @@ function Profile() {
         status: false
       });
     }
-  }, [profileWasEdited]);
+  }, [profileWasEdited, initialFormData]);
 
   const handleLogOut = () => {
     dispatch(sendLogOurRequest());

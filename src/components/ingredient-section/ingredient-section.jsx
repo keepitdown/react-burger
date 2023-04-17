@@ -4,7 +4,6 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { REMOVE_INGREDIENT_DETAILS, SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
-import { getIngredients } from '../../services/actions/burger-ingredients';
 
 function IngredientSection() {
 
@@ -22,7 +21,6 @@ function IngredientSection() {
   const ingredientData = useSelector(state => state.ingredientDetails.data);
 
   useEffect(() => {
-    dispatch(getIngredients());
     return () => dispatch({ type: REMOVE_INGREDIENT_DETAILS });
   }, []);
 

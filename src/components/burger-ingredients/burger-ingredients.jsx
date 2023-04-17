@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { getIngredients } from '../../services/actions/burger-ingredients';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -44,10 +43,6 @@ function BurgerIngredients({ extraClass }) {
   const modalIsOpen = useSelector(state => state.ingredientDetails.showDetails);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, []);
 
   const navigate = useNavigate();
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProfileData } from '../../services/actions/profile';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
@@ -24,6 +25,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProfileData());
+    dispatch(getIngredients());
   }, []);
 
   return (
