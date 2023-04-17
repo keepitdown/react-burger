@@ -19,12 +19,12 @@ const burgerIngredientsReducer = (state = initialState, action) => {
     case SET_LOADED_STATUS:
       return {
         ...state,
-        dataIsLoaded: true
+        dataIsLoaded: action.status
       };
     case SET_FAILED_STATUS:
       return {
         ...state,
-        requestHasFailed: true
+        requestHasFailed: action.status
       };
     case INCREASE_INGREDIENT_QUANTITY: {
 

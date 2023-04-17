@@ -1,19 +1,20 @@
 .link {
   display: flex;
   align-items: center;
-  color: #f2f2f3;
   text-decoration: none;
   border-radius: 40px;
 }
 
-.link-active:hover {
-  cursor: default;
+.link-active {
+  color: #f2f2f3;
+  pointer-events: none;
 }
 
 .link-text {
   transition: color .3s ease-in;
 }
 
-.link:hover .link-text, .link:hover .link-text:focus {
+.link:hover .link-text,
+.link:hover .link-text:focus {
   color: #fff;
 }

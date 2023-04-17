@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import PropTypes from 'prop-types';
@@ -12,6 +13,7 @@ import { addedIngredient } from '../../utils/constants';
 function IngredientCard({ data, isEven }) {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const clickHandler = () => {
     dispatch({
@@ -19,6 +21,7 @@ function IngredientCard({ data, isEven }) {
       data
     });
     dispatch({ type: SHOW_DETAILS });
+    navigate(`ingredients/${data._id}`, { state: { useModal: true } });
   }
 
   const [, dragRef, preview] = useDrag({

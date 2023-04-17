@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.other-action {
+  display: flex;
+  justify-content: center;
+  column-gap: 8px;
+}
+
+.link {
+  color: #4c4cff;
+  text-decoration: none;
+  transition: color .4s ease-out, text-shadow .4s ease-out;
+}
+
+.link:hover,
+.link:focus {
+  color: #aeaedb;
+  text-shadow: 0 0 15px #9f9fea;
+}

@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+}
+
+.sidebar {
+  max-width: 320px;
+  position: absolute;
+  left: -380px;
+}
+
+.input-field input {
+  color: #8585ad;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 20px;
+}
+
+.reset-button {
+  min-width: 74px;
+  min-height: 56px;
+  background-color: transparent;
+  border: none;
+  transition: color .4s ease-out, text-shadow .4s ease-out;
+  color: #4c4cff;
+  cursor: pointer;
+}
+
+.reset-button:hover,
+.reset-button:focus {
+  color: #aeaedb;
+  text-shadow: 0 0 15px #9f9fea;
+}

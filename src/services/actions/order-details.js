@@ -1,5 +1,5 @@
-import { BASE_URL, ORDER_URL } from "../../utils/constants";
-import { checkApiResponse } from "../../utils/functions";
+import { ORDER_URL } from "../../utils/constants";
+import { request } from "../../utils/functions";
 
 const SENDING_ORDER_DATA = 'SENDING_ORDER_DATA';
 const ORDER_IS_SECCESSFUL = 'ORDER_IS_SECCESSFUL';
@@ -13,14 +13,13 @@ const sendOrder = () => (dispatch, getState) => {
     type: SENDING_ORDER_DATA
   });
   const orderData = [getState().burgerConstructor.data.bun._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun._id];
-  fetch(`${BASE_URL}${ORDER_URL}`, {
+  request(ORDER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ ingredients: orderData })
   })
-    .then(checkApiResponse)
     .then(orderData => {
       dispatch({
         type: ORDER_IS_SECCESSFUL

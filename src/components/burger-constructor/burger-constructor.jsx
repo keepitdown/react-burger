@@ -82,7 +82,7 @@ function BurgerConstructor({ extraClass }) {
         data: droppedItem
       });
     }
-  }, [availableIngredients, INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, ADD_CONSTRUCTOR_ITEM, dispatch, bun, showBunError]);
+  }, [availableIngredients, dispatch, bun, showBunError]);
 
   const handleModalClose = () => {
     dispatch({ type: HIDE_ORDER_DETAILS })

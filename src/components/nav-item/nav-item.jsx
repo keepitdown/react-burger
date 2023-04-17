@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styles from './nav-item.module.css';
 
 function NavItem({ children, icon, active, link }) {
 
   return (
-    <a
-      href={link}
+    <Link
+      to={link}
       className={
         styles.link
         + ' pl-5 pr-5 pt-4 pb-4'
-        + (active ? (' ' + styles['link-active']) : ' text_color_inactive ')
+        + (active ? (' ' + styles['link-active']) : '')
       }
     >
       {icon}
@@ -24,7 +25,7 @@ function NavItem({ children, icon, active, link }) {
       >
         {children}
       </span>
-    </a>
+    </Link>
   )
 }
 

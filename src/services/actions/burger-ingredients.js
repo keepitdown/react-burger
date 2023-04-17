@@ -1,5 +1,5 @@
-import { BASE_URL, INGREDIENTS_URL } from "../../utils/constants";
-import { addProperty, checkApiResponse, groupByType } from "../../utils/functions";
+import { INGREDIENTS_URL } from "../../utils/constants";
+import { addProperty, groupByType, request } from "../../utils/functions";
 
 const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
 const SET_LOADED_STATUS = 'SET_LOADED_STATUS';
@@ -9,18 +9,31 @@ const DECREASE_INGREDIENT_QUANTITY = 'DECREASE_INGREDIENT_QUANTITY';
 const RESET_ALL_QUANTITIES = 'RESET_ALL_QUANTITIES';
 
 const getIngredients = () => dispatch => {
-  fetch(`${BASE_URL}${INGREDIENTS_URL}`)
-    .then(checkApiResponse)
-    .then((serverData) => {
-      const processedData = groupByType(addProperty(serverData.data, 'quantity', 0));
+  dispatch({
+    type: SET_LOADED_STATUS,
+    status: false
+  });
+  dispatch({
+    type: SET_FAILED_STATUS,
+    status: false
+  });
+  request(INGREDIENTS_URL)
+    .then(({ data: serverData }) => {
+      const processedData = groupByType(addProperty(serverData, 'quantity', 0));
       dispatch({
         type: SET_BURGER_INGREDIENTS,
         data: processedData
       });
-      dispatch({ type: SET_LOADED_STATUS });
+      dispatch({
+        type: SET_LOADED_STATUS,
+        status: true
+      });
     })
     .catch(error => {
-      dispatch({ type: SET_FAILED_STATUS });
+      dispatch({
+        type: SET_FAILED_STATUS,
+        status: true
+      });
       console.log(error);
     });
 }

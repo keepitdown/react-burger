@@ -44,7 +44,7 @@ function DragableContainer({ constructorId, children, index }) {
         });
       }
     }
-  }, [constructorId, constructorIngredinets, dispatch, MOVE_CONSTRUCTOR_ITEM]);
+  }, [constructorId, constructorIngredinets, dispatch]);
 
   useEffect(() => {
     preview(getEmptyImage())

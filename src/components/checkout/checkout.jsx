@@ -5,19 +5,30 @@ import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { sendOrder, SHOW_ORDER_DETAILS } from '../../services/actions/order-details';
 import { SHOW_BUN_ERROR } from '../../services/actions/burger-constructor';
+import { useNavigate } from 'react-router-dom';
 
 function Checkout({ extraClass }) {
 
   const ingredientsList = useSelector(state => state.burgerConstructor.data);
 
+  const { userIsLoggedIn, authIsChecked } = useSelector(state => ({
+    userIsLoggedIn: state.auth.userIsLoggedIn,
+    authIsChecked: state.auth.authIsChecked
+  }));
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (Object.keys(ingredientsList.bun).length) {
-      dispatch({ type: SHOW_ORDER_DETAILS });
-      dispatch(sendOrder());
+    if (!userIsLoggedIn) {
+      navigate('/login', { state: { originalPath: '/' } });
     } else {
-      dispatch({ type: SHOW_BUN_ERROR});
+      if (Object.keys(ingredientsList.bun).length) {
+        dispatch({ type: SHOW_ORDER_DETAILS });
+        dispatch(sendOrder());
+      } else {
+        dispatch({ type: SHOW_BUN_ERROR });
+      }
     }
   }
 
@@ -33,7 +44,13 @@ function Checkout({ extraClass }) {
         <span className="text text_type_digits-medium mr-2">{totalPrice}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="large" onClick={handleClick}>
+      <Button
+        htmlType="button"
+        type="primary"
+        size="large"
+        disabled={!authIsChecked}
+        onClick={handleClick}
+      >
         Оформить заказ
       </Button>
     </div>
