@@ -6,11 +6,7 @@ function RegistrationPage() {
 
   useEffect(() => changePageTitle('Регистрация'), []);
 
-  return (
-    <>
-      <RegistrationForm />
-    </>
-  )
+  return (<RegistrationForm />);
 }
 
 export default RegistrationPage;

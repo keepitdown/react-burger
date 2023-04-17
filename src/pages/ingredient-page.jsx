@@ -11,15 +11,12 @@ function IngredientPage() {
   const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
   return (
-    <>
-      {!requestHasFailed
-        ? (
-          <IngredientSection />
-        )
-        : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
-      }
-    </>
-  )
+    !requestHasFailed
+      ? (
+        <IngredientSection />
+      )
+      : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
+  );
 }
 
 export default IngredientPage;

@@ -6,11 +6,7 @@ function ProfilePage() {
 
   useEffect(() => changePageTitle('Личный кабинет'), []);
 
-  return (
-    <>
-      <Profile />
-    </>
-  )
+  return (<Profile />);
 }
 
 export default ProfilePage;

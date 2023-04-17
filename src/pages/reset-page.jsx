@@ -6,11 +6,7 @@ function ResetPage() {
 
   useEffect(() => changePageTitle('Восстановление пароля'), []);
 
-  return (
-    <>
-      <ResetForm />
-    </>
-  )
+  return (<ResetForm />);
 }
 
 export default ResetPage;

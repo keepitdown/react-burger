@@ -6,11 +6,7 @@ function OrdersPage() {
 
   useEffect(() => changePageTitle('История заказов'), []);
 
-  return (
-    <>
-      <OrdersHistory />
-    </>
-  )
+  return (<OrdersHistory />);
 }
 
 export default OrdersPage;

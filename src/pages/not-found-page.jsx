@@ -9,11 +9,7 @@ function NotFoundPage() {
 
   const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
-  return (
-    <>
-      <ErrorMessage>Страница по указанному Вами адресу недоступна или не существует</ErrorMessage>
-    </>
-  )
+  return (<ErrorMessage>Страница по указанному Вами адресу недоступна или не существует</ErrorMessage>);
 }
 
 export default NotFoundPage;

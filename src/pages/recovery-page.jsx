@@ -6,11 +6,7 @@ function RecoveryPage() {
 
   useEffect(() => changePageTitle('Восстановление пароля'), []);
 
-  return (
-    <>
-      <RecoveryForm />
-    </>
-  )
+  return (<RecoveryForm />);
 }
 
 export default RecoveryPage;

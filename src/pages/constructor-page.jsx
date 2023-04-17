@@ -15,19 +15,16 @@ function ConstructorPage() {
   const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
   return (
-    <>
-      {!requestHasFailed
-        ? (
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor extraClass="ml-10" />
-            <DragLayer />
-          </DndProvider>
-        )
-        : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
-      }
-    </>
-  )
+    !requestHasFailed
+      ? (
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor extraClass="ml-10" />
+          <DragLayer />
+        </DndProvider>
+      )
+      : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
+  );
 }
 
 export default ConstructorPage;

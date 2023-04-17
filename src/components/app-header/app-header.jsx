@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './app-header.module.css';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NavBar from '../nav-bar/nav-bar';
 import NavItem from '../nav-item/nav-item';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,9 +12,9 @@ function AppHeader() {
   return (
     <header className={styles.header + ' pt-4 pb-4'}>
       <div className={styles['logo-container']}>
-        <a href="#" className={styles['logo-link']}>
+        <Link to="/" className={styles['logo-link']}>
           <Logo />
-        </a>
+        </Link>
       </div>
       <NavBar firstRightItem={3}>
         <NavItem

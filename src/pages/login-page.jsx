@@ -6,11 +6,7 @@ function LoginPage() {
 
   useEffect(() => changePageTitle('Вход'), []);
 
-  return (
-    <>
-      <LoginForm />
-    </>
-  )
+  return (<LoginForm />);
 }
 
 export default LoginPage;
