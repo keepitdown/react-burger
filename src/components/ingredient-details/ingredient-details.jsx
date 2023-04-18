@@ -10,8 +10,8 @@ function IngredientDetails() {
 
   return (
     <>
-      <img src={ingredientData.image_large} alt={ingredientData.name} className={styles.image}/>
-      <h3 className="text text_type_main-medium mt-4 mb-8">{ingredientData.name}</h3>
+      <img src={ingredientData.image_large} alt={ingredientData.name} className={styles.image} />
+      <h3 className={styles.name + ' text text_type_main-medium mt-4 mb-8'}>{ingredientData.name}</h3>
       <NutritionalValues>
         <ValueItem value={ingredientData.calories}>Калории,ккал</ValueItem>
         <ValueItem value={ingredientData.proteins}>Белки, г</ValueItem>

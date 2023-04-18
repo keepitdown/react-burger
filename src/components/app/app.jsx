@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProfileData } from '../../services/actions/profile';
 import { getIngredients } from '../../services/actions/burger-ingredients';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
 import RegistrationPage from '../../pages/registration-page';
@@ -16,12 +16,19 @@ import UnauthorizedRoute from '../unauthorized-route/unauthorized-route';
 import OrdersPage from '../../pages/orders-page';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
 
-  const { state: locationState } = useLocation();
+  const location = useLocation();
+  const locationState = location.state;
+  const background = locationState?.background;
+  const ingredientNotFound = locationState?.ingredientNotFound;
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProfileData());
@@ -32,13 +39,14 @@ function App() {
     <>
       <AppHeader />
       <AppMain>
-        <Routes>
-          <Route path="/" element={<ConstructorPage />} />
+        <Routes location={background || location}>
+          <Route
+            path="/"
+            element={<ConstructorPage />}
+          />
           <Route
             path="/ingredients/:id"
-            element={!!locationState?.useModal
-              ? <ConstructorPage />
-              : !locationState?.ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
+            element={!ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
           />
           <Route
             path="/login"
@@ -64,6 +72,21 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppMain>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={(
+              <Modal
+                header="Детали ингредиента"
+                closeHandler={() => navigate(-1)}
+              >
+                <IngredientDetails />
+              </Modal>
+            )}
+          />
+        </Routes>
+      )}
     </>
   )
 }

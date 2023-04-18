@@ -1,11 +1,12 @@
 import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
-  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
+  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES, SET_DETAILS_SEARCH_STATUS
 } from "../actions/burger-ingredients";
 
 const initialState = {
   dataIsLoaded: false,
   requestHasFailed: false,
+  detailsSearchIsComplete: false,
   data: {}
 };
 
@@ -26,6 +27,12 @@ const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         requestHasFailed: action.status
       };
+    case SET_DETAILS_SEARCH_STATUS: {
+      return {
+        ...state,
+        detailsSearchIsComplete: action.status
+      }
+    }
     case INCREASE_INGREDIENT_QUANTITY: {
 
       const updatedData = Object.keys(state.data).reduce((processedData, categoryKey) => {
