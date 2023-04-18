@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ingredient-section.module.css';
-import { useParams, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { REMOVE_INGREDIENT_DETAILS, SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
 
 function IngredientSection() {
 
-  const dispatch = useDispatch();
+  const [ingredientData, setIngredientData] = useState({});
 
-  const [ingredientNotFound, setIngredientNotFound] = useState(false);
+  const navigate = useNavigate();
 
   const { id: ingredientId } = useParams();
 
@@ -18,37 +17,23 @@ function IngredientSection() {
     availableIngredients: state.burgerIngredients.data
   }));
 
-  const ingredientData = useSelector(state => state.ingredientDetails.data);
-
-  useEffect(() => {
-    return () => dispatch({ type: REMOVE_INGREDIENT_DETAILS });
-  }, []);
-
   useEffect(() => {
     if (dataIsLoaded) {
       const ingredientData = { ...Object.values(availableIngredients).flat().find(item => item._id === ingredientId) };
-      !Object.keys(ingredientData).length && setIngredientNotFound(true);
-      dispatch({
-        type: SET_INGREDIENT_DETAILS,
-        data: ingredientData
-      });
+      if (!Object.keys(ingredientData).length) {
+        navigate(`/ingredients/${ingredientId}`, { state: { ingredientNotFound: true }, replace: true });
+      } else {
+        setIngredientData(ingredientData);
+      }
     }
   }, [ingredientId, dataIsLoaded, availableIngredients]);
 
-  if (ingredientNotFound) {
-    return (<Navigate to={`/ingredients/${ingredientId}`} state={{ ingredientNotFound: true }} />);
-  }
-
-  return (
+  return (!!Object.keys(ingredientData).length && (
     <section className={styles.container + ' mt-30'}>
-      {!!Object.keys(ingredientData).length && (
-        <>
-          <h1 className={styles.heading + ' text text_type_main-large'}>Детали ингредиента</h1>
-          <IngredientDetails />
-        </>
-      )}
+      <h1 className={styles.heading + ' text text_type_main-large'}>Детали ингредиента</h1>
+      <IngredientDetails ingredientData={ingredientData} />
     </section>
-  )
+  ));
 }
 
 export default IngredientSection;

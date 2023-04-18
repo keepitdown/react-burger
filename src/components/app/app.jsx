@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProfileData } from '../../services/actions/profile';
 import { getIngredients } from '../../services/actions/burger-ingredients';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
 import LoginPage from '../../pages/login-page';
 import RegistrationPage from '../../pages/registration-page';
@@ -16,8 +16,7 @@ import UnauthorizedRoute from '../unauthorized-route/unauthorized-route';
 import OrdersPage from '../../pages/orders-page';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import IngredientModal from '../../modals/ingredient-modal';
 
 function App() {
 
@@ -27,8 +26,6 @@ function App() {
   const ingredientNotFound = locationState?.ingredientNotFound;
 
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProfileData());
@@ -76,14 +73,7 @@ function App() {
         <Routes>
           <Route
             path="/ingredients/:id"
-            element={(
-              <Modal
-                header="Детали ингредиента"
-                closeHandler={() => navigate(-1)}
-              >
-                <IngredientDetails />
-              </Modal>
-            )}
+            element={<IngredientModal />}
           />
         </Routes>
       )}

@@ -1,26 +1,19 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
-import { SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
 import { addedIngredient } from '../../utils/constants';
 
 function IngredientCard({ data, isEven }) {
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const clickHandler = () => {
-    dispatch({
-      type: SET_INGREDIENT_DETAILS,
-      data
-    });
     navigate(`ingredients/${data._id}`, { state: { background: location } });
   };
 

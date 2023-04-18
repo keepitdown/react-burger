@@ -1,12 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 import ValueItem from '../value-item/value-item';
 import NutritionalValues from '../nutritional-values/nutritional-values';
 
-function IngredientDetails() {
-
-  const ingredientData = useSelector(state => state.ingredientDetails.data);
+function IngredientDetails({ ingredientData }) {
 
   return (
     <>
