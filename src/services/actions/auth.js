@@ -135,13 +135,13 @@ const sendRecoverRequest = ({ email }) => dispatch => {
     .catch(error => logError(error));
 };
 
-const sendResetRequest = ({ email, token }) => dispatch => {
+const sendResetRequest = ({ token, password }) => dispatch => {
   request(RESET_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, token })
+    body: JSON.stringify({ token, password })
   })
     .then(() => {
       dispatch({
