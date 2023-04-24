@@ -1,12 +1,12 @@
 import { BASE_URL } from "./constants";
-import { IIngredient, IErrorDetails } from "./types";
+import { TIngredient, TErrorDetails, TAvaliableIngredients, TRawIngredient } from "./types";
 
 async function checkApiResponse<T>(response: Response): Promise<T> {
   if (response.ok) {
     return response.json();
   }
 
-  const errorDetails: IErrorDetails = {
+  const errorDetails: TErrorDetails = {
     code: response.status,
     description: response.statusText
   }
@@ -19,7 +19,7 @@ async function checkApiResponse<T>(response: Response): Promise<T> {
   return Promise.reject(errorDetails);
 }
 
-function logError(error: IErrorDetails): void {
+function logError(error: TErrorDetails): void {
   console.log(`Error${error.code ? (' ' + error.code) : ''}: ${error.description ? (error.description + '\n') : ''}${error.message ?? ''}`);
 }
 
@@ -28,12 +28,12 @@ function request(urlPath: string, options: RequestInit | undefined) {
     .then(checkApiResponse);
 }
 
-function addProperty<T>(ingredientsData: IIngredient[], propertyName: string, initialValue: T): object {
+function addProperty<T>(ingredientsData: TRawIngredient[], propertyName: string, initialValue: T): object {
   return ingredientsData.map(item => ({ ...item, [propertyName]: initialValue }))
 }
 
-function groupByType(dataArray: IIngredient[]): { [groupName: string]: IIngredient[] } {
-  return dataArray.reduce((processedData: { [groupName: string]: IIngredient[] }, currentItem: IIngredient): { [groupName: string]: IIngredient[] } => {
+function groupByType(dataArray: TIngredient[]): TAvaliableIngredients {
+  return dataArray.reduce((processedData: TAvaliableIngredients, currentItem: TIngredient): TAvaliableIngredients => {
     const itemType = currentItem.type;
     const updatedGroup = itemType in processedData
       ? [...processedData[itemType], currentItem]
