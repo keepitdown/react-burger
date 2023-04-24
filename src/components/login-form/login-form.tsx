@@ -1,15 +1,17 @@
 import React, { FC, useState, useRef, SyntheticEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { sendLogInRequest } from '../../services/actions/auth';
+import { SET_FORM_FAIL_STATUS, sendLogInRequest } from '../../services/actions/auth';
 import { TLocationState, TSignInForm } from '../../utils/types';
 
 const LoginForm: FC = () => {
   const [formData, setFormData] = useState<TSignInForm>({ email: '', password: '' });
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
+
+  const logInHasFaild = useSelector<any, boolean>(state => state.auth.forms.login.hasFailed);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -20,12 +22,22 @@ const LoginForm: FC = () => {
   const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
-  }
+  };
+
+  const handleFocus = (): void => {
+    if (logInHasFaild) {
+      dispatch({
+        type: SET_FORM_FAIL_STATUS,
+        form: 'login',
+        status: false
+      });
+    }
+  };
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch<any>(sendLogInRequest(formData));
-  }
+  };
 
   return (
     <FormContainer heading="Вход">
@@ -38,6 +50,7 @@ const LoginForm: FC = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
+          onFocus={handleFocus}
           required
           extraClass="mb-6"
         />
@@ -45,6 +58,7 @@ const LoginForm: FC = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
+          onFocus={handleFocus}
           required
           extraClass="mb-6"
         />
@@ -62,7 +76,7 @@ const LoginForm: FC = () => {
         <span>Вы — новый пользователь?</span>
         <Link
           to="/register"
-          state={locationState.originalPath && { originalPath: locationState.originalPath }}
+          state={locationState?.originalPath && { originalPath: locationState.originalPath }}
           className={styles.link}
         >
           Зарегистрироваться

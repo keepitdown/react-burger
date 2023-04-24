@@ -23,7 +23,7 @@ const UnauthorizedRoute: FC<TUnauthorizedRoute> = ({ element }) => {
   return (
     !userIsLoggedIn
       ? element
-      : <Navigate to={locationState.originalPath || '/'} replace />
+      : <Navigate to={locationState?.originalPath || '/'} replace />
   );
 };
 

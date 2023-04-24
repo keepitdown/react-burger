@@ -37,7 +37,7 @@ type TLocationState = {
   readonly background?: Location;
   readonly originalPath?: string;
   readonly ingredientNotFound?: boolean;
-};
+} | null;
 
 type TAuthData = {
   name: string;

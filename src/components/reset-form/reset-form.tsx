@@ -4,7 +4,7 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './reset-form.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_STATUS, sendResetRequest } from '../../services/actions/auth';
+import { SET_FORM_FAIL_STATUS, SET_FORM_SUBMIT_STATUS, sendResetRequest } from '../../services/actions/auth';
 import { TLocationState, TResetForm } from '../../utils/types';
 
 const ResetForm: FC = () => {
@@ -15,12 +15,15 @@ const ResetForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const formIsSubmitted = useSelector<any, boolean>(state => state.auth.forms.reset.isSubmitted);
+  const { formIsSubmitted, resetHasFailed } = useSelector<any, { formIsSubmitted: boolean, resetHasFailed: boolean }>(state => ({
+    formIsSubmitted: state.auth.forms.reset.isSubmitted,
+    resetHasFailed: state.auth.forms.reset.hasFailed
+  }));
 
   useEffect(() => {
     return () => {
       dispatch({
-        type: SET_FORM_STATUS,
+        type: SET_FORM_SUBMIT_STATUS,
         form: 'reset',
         status: false
       });
@@ -32,14 +35,24 @@ const ResetForm: FC = () => {
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
-  }
+  };
+
+  const handleFocus = () => {
+    if (resetHasFailed) {
+      dispatch({
+        type: SET_FORM_FAIL_STATUS,
+        form: 'reset',
+        status: false
+      });
+    }
+  };
 
   const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch<any>(sendResetRequest(formData));
   };
 
-  if (locationState.originalPath !== '/forgot-password') {
+  if (locationState?.originalPath !== '/forgot-password') {
     return (<Navigate to='/forgot-password' replace />);
   }
 
@@ -59,6 +72,7 @@ const ResetForm: FC = () => {
           placeholder="Введите новый пароль"
           value={formData.password}
           onChange={handleChange}
+          onFocus={handleFocus}
           required
           extraClass="mb-6"
         />
@@ -67,6 +81,7 @@ const ResetForm: FC = () => {
           placeholder="Введите код из письма"
           value={formData.token}
           onChange={handleChange}
+          onFocus={handleFocus}
           required
           extraClass="mb-6"
         />

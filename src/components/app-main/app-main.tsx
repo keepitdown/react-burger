@@ -8,7 +8,7 @@ type TAppMain = {
 const AppMain: FC<TAppMain> = ({ children }) => {
 
   return (
-    <main className={styles.main + ' pt-1 pb-1'}>
+    <main id="app-main" className={styles.main + ' pt-1 pb-1'}>
       {children}
     </main>
   )

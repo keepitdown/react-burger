@@ -13,7 +13,7 @@ import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_Q
 import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
-import MessageBar from '../message-bar/message-bar';
+import Notification from '../notification/notification';
 import { TAddedIngredients, TAvaliableIngredients, TIngredientsItemDragData } from '../../utils/types';
 
 type TBurgerConstructor = {
@@ -102,7 +102,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
         className={styles.section + (extraClass ? (' ' + extraClass) : '') + (isHovered ? (' ' + styles['hovered-section']) : '')}
         ref={dropTargetRef}
       >
-        {showBunError && (<MessageBar />)}
+        {showBunError && (<Notification>Выберите булку для Вашего бургера</Notification>)}
         <div className={styles['ingredients-container'] + ' mt-25 mb-10'}>
           {bun && (
             <div className="pl-8 mb-4 ml-4 mr-4">

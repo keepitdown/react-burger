@@ -26,6 +26,7 @@ const App: FC = () => {
   const background = locationState?.background;
   const ingredientNotFound = locationState?.ingredientNotFound;
 
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
