@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { sendOrder, SHOW_ORDER_DETAILS } from '../../services/actions/order-details';
-import { SHOW_BUN_ERROR } from '../../services/actions/burger-constructor';
+import { showBunError } from '../../services/actions/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import { TAddedIngredients, TConstructorIngredient, TIngredient } from '../../utils/types';
 
@@ -31,7 +31,7 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
         dispatch({ type: SHOW_ORDER_DETAILS });
         dispatch<any>(sendOrder());
       } else {
-        dispatch({ type: SHOW_BUN_ERROR });
+        dispatch(showBunError());
       }
     }
   }

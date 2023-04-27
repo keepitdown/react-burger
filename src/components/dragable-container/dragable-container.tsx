@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import styles from './dragable-container.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { MOVE_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
+import { moveConstructorItem } from '../../services/actions/burger-constructor';
 import { movedIngredient } from '../../utils/constants';
 import { TConstructorItemDragData, TConstructorIngredient } from '../../utils/types';
 
@@ -28,11 +28,7 @@ const DragableContainer: FC<TDragableContainer> = ({ constructorId, children, in
     end: (draggedItem, monitor) => {
       if (!monitor.didDrop()) {
         const movedItemIndex = constructorIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
-        dispatch({
-          type: MOVE_CONSTRUCTOR_ITEM,
-          movedItemIndex,
-          targetIndex: draggedItem.originalIndex
-        });
+        dispatch(moveConstructorItem(movedItemIndex, draggedItem.originalIndex));
       }
     }
   }, [constructorId, originalIndex]);
@@ -43,11 +39,7 @@ const DragableContainer: FC<TDragableContainer> = ({ constructorId, children, in
       if (draggedItem.constructorId !== constructorId) {
         const movedItemIndex = constructorIngredinets.findIndex(item => item.constructorId === draggedItem.constructorId);
         const targetIndex = constructorIngredinets.findIndex(item => item.constructorId === constructorId);
-        dispatch({
-          type: MOVE_CONSTRUCTOR_ITEM,
-          movedItemIndex,
-          targetIndex
-        });
+        dispatch(moveConstructorItem(movedItemIndex, targetIndex));
       }
     }
   }, [constructorId, constructorIngredinets, dispatch]);

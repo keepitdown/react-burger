@@ -8,9 +8,8 @@ import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import OrderError from '../order-error/order-error';
-import { HIDE_BUN_ERROR, REMOVE_CONSTRUCTOR_ITEM, RESET_CONSTRUCTOR } from '../../services/actions/burger-constructor';
+import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
 import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES } from '../../services/actions/burger-ingredients';
-import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
 import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
@@ -38,15 +37,12 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
   const dispatch = useDispatch();
 
   const closeHandler = ({ constructorId, _id }: { constructorId: number, _id: string }) => {
-    dispatch({
-      type: REMOVE_CONSTRUCTOR_ITEM,
-      id: constructorId
-    })
+    dispatch(removeConstructorItem(constructorId));
     dispatch({
       type: DECREASE_INGREDIENT_QUANTITY,
       id: _id,
       decreaseAmount: 1
-    })
+    });
   };
 
   const [{ isHovered }, dropTargetRef] = useDrop<TIngredientsItemDragData, any, { isHovered: boolean }>({
@@ -70,9 +66,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
               decreaseAmont: 2
             });
           showBunError &&
-            dispatch({
-              type: HIDE_BUN_ERROR
-            });
+            dispatch(hideBunError());
         }
       } else {
         dispatch({
@@ -81,17 +75,14 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
           increaseAmount: 1
         });
       }
-      dispatch({
-        type: ADD_CONSTRUCTOR_ITEM,
-        data: droppedItem
-      });
+      dispatch(addConstructorItem(droppedItem));
     }
   }, [availableIngredients, dispatch, bun, showBunError]);
 
   const handleModalClose = (): void => {
     dispatch({ type: HIDE_ORDER_DETAILS })
     if (!failedToSend) {
-      dispatch({ type: RESET_CONSTRUCTOR });
+      dispatch(resetConstructor());
       dispatch({ type: RESET_ALL_QUANTITIES });
     };
   };
