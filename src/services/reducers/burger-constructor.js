@@ -71,7 +71,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         data: {
-          bun: {},
+          bun: null,
           middle: []
         },
         nextConstructorId: 0,
