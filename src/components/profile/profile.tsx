@@ -6,14 +6,15 @@ import ProfileNav from '../profile-nav/profile-nav';
 import ProfileLink from '../profile-link/profile-link';
 import ProfileNavButton from '../profile-nav-button/profile-nav-button';
 import { sendLogOurRequest } from '../../services/actions/auth';
-import { SET_PROFILE_EDITED, editProfileData } from '../../services/actions/profile';
+import { editProfileData, setProfileEdited } from '../../services/actions/profile';
 import { TProfile, TProfileChanges, TAuthData } from '../../utils/types';
 
 const Profile: FC = () => {
 
   const dispatch = useDispatch();
 
-  const initialFormData: TAuthData = { ...useSelector<any, TProfile>(state => state.profile.data), password: '' };
+  const storedUserData = useSelector<any, TProfile | null>(state => state.profile.data);
+  const initialFormData: TAuthData = storedUserData ? { ...storedUserData, password: '' } : { name: '', email: '', password: '' };
 
   const [formData, setFormData] = useState<TAuthData>({ ...initialFormData });
   const [formWasEdited, setFormWasEdited] = useState<boolean>(false);
@@ -47,7 +48,7 @@ const Profile: FC = () => {
     e.preventDefault();
     const profileChanges: TProfileChanges = Object.keys(formData).reduce<TProfileChanges>(
       (changes, fieldName) => (initialFormData[fieldName as keyof TAuthData] !== formData[fieldName as keyof TAuthData])
-        ? { ...changes, [fieldName]: formData[fieldName  as keyof TAuthData] }
+        ? { ...changes, [fieldName]: formData[fieldName as keyof TAuthData] }
         : { ...changes }
       , {});
 
@@ -60,10 +61,7 @@ const Profile: FC = () => {
     if (profileWasEdited) {
       setFormData({ ...initialFormData });
       setFormWasEdited(false);
-      dispatch({
-        type: SET_PROFILE_EDITED,
-        status: false
-      });
+      dispatch(setProfileEdited(false));
     }
   }, [profileWasEdited, initialFormData]);
 

@@ -1,7 +1,7 @@
 import { SET_PROFILE_DATA, SET_PROFILE_EDITED } from "../actions/profile";
 
 const initialState = {
-  data: {},
+  data: null,
   profileWasEdited: false
 };
 

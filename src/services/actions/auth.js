@@ -1,6 +1,6 @@
 import { SIGN_UP_URL, LOG_IN_URL, LOG_OUT_URL, login, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, REFRESH_TOKEN_URL, RESET_URL, RECOVER_URL, recover, reset } from "../../utils/constants";
 import { request, getCookie, setCookie, removeCookie, logError } from "../../utils/functions";
-import { SET_PROFILE_DATA } from "./profile";
+import { setProfileData } from "./profile";
 
 const SET_AUTH_CHECK_STATUS = 'SET_AUTH_CHECK_STATUS';
 const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS';
@@ -86,10 +86,7 @@ const sendSignUpRequest = ({ email, password, name }) => dispatch => {
 
       dispatch(setAuthCheckStatus(true));
       dispatch(setLoggedInStatus(true));
-      dispatch({
-        type: SET_PROFILE_DATA,
-        data: response.user
-      });
+      dispatch(setProfileData(response.user));
     })
     .catch(error => logError(error));
 };
@@ -110,10 +107,7 @@ const sendLogInRequest = ({ email, password }) => dispatch => {
       dispatch(setAuthCheckStatus(true));
       dispatch(setLoggedInStatus(true));
 
-      dispatch({
-        type: SET_PROFILE_DATA,
-        data: response.user
-      });
+      dispatch(setProfileData(response.user));
     })
     .catch(error => {
       if (error?.message === 'email or password are incorrect') {
@@ -170,10 +164,7 @@ const sendLogOurRequest = () => dispatch => {
   })
     .then(() => {
       dispatch(setLoggedInStatus(false));
-      dispatch({
-        type: SET_PROFILE_DATA,
-        data: {}
-      });
+      dispatch(setProfileData({}));
       removeCookie(accessToken);
       removeCookie(refreshToken);
     })
