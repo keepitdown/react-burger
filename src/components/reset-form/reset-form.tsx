@@ -4,8 +4,9 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './reset-form.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_FAIL_STATUS, SET_FORM_SUBMIT_STATUS, sendResetRequest } from '../../services/actions/auth';
+import { sendResetRequest, setFormFailStatus, setFormSubmitStatus } from '../../services/actions/auth';
 import { TLocationState, TResetForm } from '../../utils/types';
+import { reset } from '../../utils/constants';
 
 const ResetForm: FC = () => {
   const [formData, setFormData] = useState<TResetForm>({ password: '', token: '' });
@@ -22,11 +23,8 @@ const ResetForm: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({
-        type: SET_FORM_SUBMIT_STATUS,
-        form: 'reset',
-        status: false
-      });
+      dispatch(setFormSubmitStatus(reset, false));
+      dispatch(setFormFailStatus(reset, false));
     };
   }, []);
 
@@ -39,11 +37,7 @@ const ResetForm: FC = () => {
 
   const handleFocus = () => {
     if (resetHasFailed) {
-      dispatch({
-        type: SET_FORM_FAIL_STATUS,
-        form: 'reset',
-        status: false
-      });
+      dispatch(setFormFailStatus(reset, false));
     }
   };
 

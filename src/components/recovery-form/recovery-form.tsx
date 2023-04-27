@@ -4,8 +4,9 @@ import { Link, Navigate } from 'react-router-dom';
 import styles from './recovery-form.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_SUBMIT_STATUS, sendRecoverRequest } from '../../services/actions/auth';
+import { sendRecoverRequest, setFormSubmitStatus } from '../../services/actions/auth';
 import { TRecoveryForm } from '../../utils/types';
+import { recover } from '../../utils/constants';
 
 const RecoveryForm: FC = () => {
   const [formData, setFormData] = useState<TRecoveryForm>({ email: '' });
@@ -19,11 +20,7 @@ const RecoveryForm: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({
-        type: SET_FORM_SUBMIT_STATUS,
-        form: 'recover',
-        status: false
-      });
+      dispatch(setFormSubmitStatus(recover, false));
     };
   }, []);
 

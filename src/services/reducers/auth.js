@@ -1,4 +1,4 @@
-import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_AUTH_ERROR_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
+import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
 
 const initialState = {
   userIsLoggedIn: false,

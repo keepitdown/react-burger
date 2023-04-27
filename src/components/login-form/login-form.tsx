@@ -1,11 +1,12 @@
-import React, { FC, useState, useRef, SyntheticEvent } from 'react';
+import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_FAIL_STATUS, sendLogInRequest } from '../../services/actions/auth';
+import { sendLogInRequest, setFormFailStatus } from '../../services/actions/auth';
 import { TLocationState, TSignInForm } from '../../utils/types';
+import { login } from '../../utils/constants';
 
 const LoginForm: FC = () => {
   const [formData, setFormData] = useState<TSignInForm>({ email: '', password: '' });
@@ -17,6 +18,12 @@ const LoginForm: FC = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(setFormFailStatus(login, false));
+    };
+  }, []);
+
   const { state: locationState }: { state: TLocationState } = useLocation();
 
   const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
@@ -26,11 +33,7 @@ const LoginForm: FC = () => {
 
   const handleFocus = (): void => {
     if (logInHasFaild) {
-      dispatch({
-        type: SET_FORM_FAIL_STATUS,
-        form: 'login',
-        status: false
-      });
+      dispatch(setFormFailStatus(login, false));
     }
   };
 
