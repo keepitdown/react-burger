@@ -9,8 +9,8 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import OrderError from '../order-error/order-error';
 import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
-import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES } from '../../services/actions/burger-ingredients';
-import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
+import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities } from '../../services/actions/burger-ingredients';
+import { hideOrderDetails } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
 import { TAddedIngredients, TAvaliableIngredients, TIngredientsItemDragData } from '../../utils/types';
@@ -38,11 +38,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
   const closeHandler = ({ constructorId, _id }: { constructorId: number, _id: string }) => {
     dispatch(removeConstructorItem(constructorId));
-    dispatch({
-      type: DECREASE_INGREDIENT_QUANTITY,
-      id: _id,
-      decreaseAmount: 1
-    });
+    dispatch(decreaseIngredientQuantity(_id, 1));
   };
 
   const [{ isHovered }, dropTargetRef] = useDrop<TIngredientsItemDragData, any, { isHovered: boolean }>({
@@ -54,36 +50,22 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       const droppedItem = { ...Object.values(availableIngredients).flat().find(item => item._id === droppedItemId.id) };
       if (droppedItem.type === 'bun') {
         if (!bun || (droppedItem._id !== bun._id)) {
-          dispatch({
-            type: INCREASE_INGREDIENT_QUANTITY,
-            id: droppedItem._id,
-            increaseAmount: 2
-          });
-          bun &&
-            dispatch({
-              type: DECREASE_INGREDIENT_QUANTITY,
-              id: bun._id,
-              decreaseAmont: 2
-            });
-          showBunError &&
-            dispatch(hideBunError());
+          dispatch(increaseIngredientQuantity(droppedItem._id, 2));
+          bun && dispatch(decreaseIngredientQuantity(bun._id, 2));
+          showBunError && dispatch(hideBunError());
         }
       } else {
-        dispatch({
-          type: INCREASE_INGREDIENT_QUANTITY,
-          id: droppedItem._id,
-          increaseAmount: 1
-        });
+        dispatch(increaseIngredientQuantity(droppedItem._id, 1));
       }
       dispatch(addConstructorItem(droppedItem));
     }
   }, [availableIngredients, dispatch, bun, showBunError]);
 
   const handleModalClose = (): void => {
-    dispatch({ type: HIDE_ORDER_DETAILS })
+    dispatch(hideOrderDetails());
     if (!failedToSend) {
       dispatch(resetConstructor());
-      dispatch({ type: RESET_ALL_QUANTITIES });
+      dispatch(resetAllQuantities());
     };
   };
 

@@ -8,6 +8,37 @@ const INCREASE_INGREDIENT_QUANTITY = 'INCREASE_INGREDIENT_QUANTITY';
 const DECREASE_INGREDIENT_QUANTITY = 'DECREASE_INGREDIENT_QUANTITY';
 const RESET_ALL_QUANTITIES = 'RESET_ALL_QUANTITIES';
 
+const setBurgerIngredients = (data) => ({
+  type: SET_BURGER_INGREDIENTS,
+  data
+});
+
+const setLoadedStatus = (status) => ({
+  type: SET_LOADED_STATUS,
+  status
+});
+
+const setFailedStatus = (status) => ({
+  type: SET_FAILED_STATUS,
+  status
+});
+
+const increaseIngredientQuantity = (id, increaseAmount) => ({
+  type: INCREASE_INGREDIENT_QUANTITY,
+  id,
+  increaseAmount
+});
+
+const decreaseIngredientQuantity = (id, decreaseAmount) => ({
+  type: DECREASE_INGREDIENT_QUANTITY,
+  id,
+  decreaseAmount
+});
+
+const resetAllQuantities = () => ({
+  type: RESET_ALL_QUANTITIES
+});
+
 const getIngredients = () => dispatch => {
   dispatch({
     type: SET_LOADED_STATUS,
@@ -20,25 +51,18 @@ const getIngredients = () => dispatch => {
   request(INGREDIENTS_URL)
     .then(({ data: serverData }) => {
       const processedData = groupByType(addProperty(serverData, 'quantity', 0));
-      dispatch({
-        type: SET_BURGER_INGREDIENTS,
-        data: processedData
-      });
-      dispatch({
-        type: SET_LOADED_STATUS,
-        status: true
-      });
+      dispatch(setBurgerIngredients(processedData));
+      dispatch(setLoadedStatus(true));
     })
     .catch(error => {
-      dispatch({
-        type: SET_FAILED_STATUS,
-        status: true
-      });
+      dispatch(setFailedStatus(true));
       console.log(error);
     });
 }
 
 export {
-  SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS, getIngredients,
-  INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
+  SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS, INCREASE_INGREDIENT_QUANTITY,
+  DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES, setBurgerIngredients, setLoadedStatus,
+  setFailedStatus, increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities,
+  getIngredients
 };

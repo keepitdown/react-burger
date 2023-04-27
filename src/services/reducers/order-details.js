@@ -1,4 +1,4 @@
-import { SENDING_ORDER_DATA, ORDER_IS_SECCESSFUL, FAILED_TO_SEND, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
+import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
 
 const initialState = {
   sendingData: false,
@@ -9,18 +9,18 @@ const initialState = {
 
 const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SENDING_ORDER_DATA:
+    case SET_SENDING_ORDER:
       return {
         ...state,
         sendingData: true,
         failedToSend: false
       }
-    case ORDER_IS_SECCESSFUL:
+    case SET_ORDER_SUCCEEDED:
       return {
         ...state,
         sendingData: false
       }
-    case FAILED_TO_SEND:
+    case SET_ORDER_FAILED:
       return {
         ...state,
         failedToSend: true,
