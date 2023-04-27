@@ -6,7 +6,8 @@ import { SET_PROFILE_DATA } from "./profile";
 const SET_EXPECTING_RESPONSE = 'SET_EXPECTING_RESPONSE';
 const SET_AUTH_CHECK_STATUS = 'SET_AUTH_CHECK_STATUS';
 const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS';
-const SET_FORM_STATUS = 'SET_FORM_STATUS';
+const SET_FORM_SUBMIT_STATUS = 'SET_FORM_SUBMIT_STATUS';
+const SET_FORM_FAIL_STATUS = 'SET_FORM_FAIL_STATUS';
 
 const requestWithToken = (urlPath, options) => dispatch => {
   const retryFetch = () => dispatch(requestWithToken(urlPath, options));
@@ -108,13 +109,17 @@ const sendLogInRequest = ({ email, password }) => dispatch => {
         type: SET_PROFILE_DATA,
         data: response.user
       });
-      dispatch({
-        type: SET_FORM_STATUS,
-        form: 'logIn',
-        status: true
-      });
     })
-    .catch(error => logError(error));
+    .catch(error => {
+      if (error?.message === 'email or password are incorrect') {
+        dispatch({
+          type: SET_FORM_FAIL_STATUS,
+          form: 'login',
+          status: true
+        });
+      }
+      logError(error);
+    });
 };
 
 const sendRecoverRequest = ({ email }) => dispatch => {
@@ -127,7 +132,7 @@ const sendRecoverRequest = ({ email }) => dispatch => {
   })
     .then(() => {
       dispatch({
-        type: SET_FORM_STATUS,
+        type: SET_FORM_SUBMIT_STATUS,
         form: 'recover',
         status: true
       })
@@ -135,22 +140,31 @@ const sendRecoverRequest = ({ email }) => dispatch => {
     .catch(error => logError(error));
 };
 
-const sendResetRequest = ({ email, token }) => dispatch => {
+const sendResetRequest = ({ token, password }) => dispatch => {
   request(RESET_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, token })
+    body: JSON.stringify({ token, password })
   })
     .then(() => {
       dispatch({
-        type: SET_FORM_STATUS,
+        type: SET_FORM_SUBMIT_STATUS,
         form: 'reset',
         status: true
       })
     })
-    .catch(error => logError(error));
+    .catch(error => {
+      if (error?.message === 'Incorrect reset token') {
+        dispatch({
+          type: SET_FORM_FAIL_STATUS,
+          form: 'reset',
+          status: true
+        });
+      }
+      logError(error);
+    });
 };
 
 const sendLogOurRequest = () => dispatch => {
@@ -181,7 +195,7 @@ const sendLogOurRequest = () => dispatch => {
 };
 
 export {
-  SET_EXPECTING_RESPONSE, SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_STATUS,
+  SET_EXPECTING_RESPONSE, SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS,
   requestWithToken, sendSignUpRequest, sendLogInRequest, sendRecoverRequest, sendResetRequest,
   sendLogOurRequest
 };

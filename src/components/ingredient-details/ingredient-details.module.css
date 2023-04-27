@@ -1,3 +1,7 @@
 .image {
   min-height: 240px;
 }
+
+.name {
+  min-height: 30px;
+}

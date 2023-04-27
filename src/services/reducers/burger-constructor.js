@@ -2,7 +2,7 @@ import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, S
 
 const initialState = {
   data: {
-    bun: {},
+    bun: null,
     middle: []
   },
   nextConstructorId: 0,

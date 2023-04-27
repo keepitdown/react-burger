@@ -1,11 +1,12 @@
-import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_STATUS } from "../actions/auth";
+import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_AUTH_ERROR_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
 
 const initialState = {
   userIsLoggedIn: false,
   authIsChecked: false,
   forms: {
+    login: { hasFailed: false },
     recover: { isSubmitted: false },
-    reset: { isSubmitted: false }
+    reset: { isSubmitted: false, hasFailed: false }
   }
 };
 
@@ -21,7 +22,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userIsLoggedIn: action.status
       };
-    case SET_FORM_STATUS:
+    case SET_FORM_SUBMIT_STATUS:
       return {
         ...state,
         forms: {
@@ -29,6 +30,17 @@ const authReducer = (state = initialState, action) => {
           [action.form]: {
             ...state.forms[action.form],
             isSubmitted: action.status
+          }
+        }
+      }
+    case SET_FORM_FAIL_STATUS:
+      return {
+        ...state,
+        forms: {
+          ...state.forms,
+          [action.form]: {
+            ...state.forms[action.form],
+            hasFailed: action.status
           }
         }
       }
