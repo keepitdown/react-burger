@@ -1,5 +1,14 @@
-import { TIngredient } from "../../utils/types";
+import { TConstructorIngredient, TIngredient } from "../../utils/types";
 import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR, RESET_CONSTRUCTOR } from "../actions/burger-constructor";
+
+type TBurgerConstructorState = {
+  data: {
+    bun: TIngredient | null;
+    middle: TConstructorIngredient[];
+  };
+  nextConstructorId: number;
+  showBunError: boolean;
+};
 
 type TAddConstructorItemAction = {
   readonly type: typeof ADD_CONSTRUCTOR_ITEM;
@@ -38,6 +47,7 @@ type TBurgerConstructorActions =
   | TResetConstructorAction;
 
 export type {
-  TAddConstructorItemAction, TRemoveConstructorItemAction, TMoveConstructorItemAction,
-  TShowBunErrorAction, THideBunErrorAction, TResetConstructorAction, TBurgerConstructorActions
+  TBurgerConstructorState, TAddConstructorItemAction, TRemoveConstructorItemAction,
+  TMoveConstructorItemAction, TShowBunErrorAction, THideBunErrorAction, TResetConstructorAction,
+  TBurgerConstructorActions
 };

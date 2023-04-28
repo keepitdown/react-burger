@@ -2,6 +2,7 @@ import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
   INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
 } from "../actions/burger-ingredients";
+import { TBurgerIngredientsActions, TBurgerIngredientsState } from "../types/burger-ingredients";
 
 const initialState = {
   dataIsLoaded: false,
@@ -9,7 +10,7 @@ const initialState = {
   data: {}
 };
 
-const burgerIngredientsReducer = (state = initialState, action) => {
+const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState, action: TBurgerIngredientsActions) => {
   switch (action.type) {
     case SET_BURGER_INGREDIENTS:
       return {

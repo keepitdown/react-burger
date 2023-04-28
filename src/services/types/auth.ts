@@ -1,6 +1,15 @@
 import { login, recover, reset } from "../../utils/constants";
 import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
 
+type TAuthState = {
+  userIsLoggedIn: boolean;
+  authIsChecked: boolean;
+  forms: {
+    login: { hasFailed: boolean };
+    recover: { isSubmitted: boolean };
+    reset: { isSubmitted: boolean, hasFailed: boolean };
+  };
+};
 
 type TSetAuthCheckStatusAction = {
   readonly type: typeof SET_AUTH_CHECK_STATUS;
@@ -30,4 +39,4 @@ type TAuthActions =
   | TSetFormSubmitStatusAction
   | TSetFormFailStatusAction;
 
-export type { TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction, TSetFormFailStatusAction, TAuthActions };
+export type { TAuthState, TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction, TSetFormFailStatusAction, TAuthActions };

@@ -4,6 +4,12 @@ import {
   INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
 } from "../actions/burger-ingredients";
 
+type TBurgerIngredientsState = {
+  dataIsLoaded: boolean;
+  requestHasFailed: boolean;
+  data: TAvaliableIngredients;
+};
+
 type TSetBurgerIngredientsAction = {
   readonly type: typeof SET_BURGER_INGREDIENTS;
   readonly data: TAvaliableIngredients;
@@ -44,7 +50,7 @@ type TBurgerIngredientsActions =
   | TResetAllQuantitiesAction;
 
 export type {
-  TSetBurgerIngredientsAction, TSetLoadedStatusAction, TSetFailedStatusAction,
+  TBurgerIngredientsState, TSetBurgerIngredientsAction, TSetLoadedStatusAction, TSetFailedStatusAction,
   TIncreaseIngredientQuantityAction, TDecreaseIngredientQuantityAction, TResetAllQuantitiesAction,
   TBurgerIngredientsActions
 };

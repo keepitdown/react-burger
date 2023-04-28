@@ -1,4 +1,5 @@
 import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
+import { TOrderDetailsActions, TOrderDetailsState } from '../types/order-details';
 
 const initialState = {
   sendingData: false,
@@ -7,7 +8,7 @@ const initialState = {
   showDetails: false
 };
 
-const orderDetailsReducer = (state = initialState, action) => {
+const orderDetailsReducer = (state: TOrderDetailsState = initialState, action: TOrderDetailsActions) => {
   switch (action.type) {
     case SET_SENDING_ORDER:
       return {
