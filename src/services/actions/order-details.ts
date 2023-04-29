@@ -1,5 +1,10 @@
 import { ORDER_URL } from "../../utils/constants";
 import { request } from "../../utils/functions";
+import {
+  TSetSendingOrderAction, TSetOrderSucceededAction, TSetOrderFailedAction,
+  TSetOrderNumberAction, TShowOrderDetailsAction, THideOrderDetailsAction, TOrderResponseBody
+} from '../types/order-details';
+import { AppThunk } from "../types";
 
 const SET_SENDING_ORDER = 'SET_SENDING_ORDER';
 const SET_ORDER_SUCCEEDED = 'SET_ORDER_SUCCEEDED';
@@ -8,42 +13,43 @@ const SET_ORDER_NUMBER = 'SET_ORDER_NUMBER';
 const SHOW_ORDER_DETAILS = 'SHOW_ORDER_DETAILS';
 const HIDE_ORDER_DETAILS = 'HIDE_ORDER_DETAILS';
 
-const setSendingOrder = () => ({
+const setSendingOrder = (): TSetSendingOrderAction => ({
   type: SET_SENDING_ORDER
 });
 
-const setOrderSucceeded = () => ({
+const setOrderSucceeded = (): TSetOrderSucceededAction => ({
   type: SET_ORDER_SUCCEEDED
 });
 
-const setOrderFailed = () => ({
+const setOrderFailed = (): TSetOrderFailedAction => ({
   type: SET_ORDER_FAILED
 });
 
-const setOrderNumber = (number) => ({
+const setOrderNumber = (number: number | null): TSetOrderNumberAction => ({
   type: SET_ORDER_NUMBER,
   number
 });
 
-const showOrderDetails = () => ({
+const showOrderDetails = (): TShowOrderDetailsAction => ({
   type: SHOW_ORDER_DETAILS
 });
 
-const hideOrderDetails = () => ({
+const hideOrderDetails = (): THideOrderDetailsAction => ({
   type: HIDE_ORDER_DETAILS
 });
 
-const sendOrder = () => (dispatch, getState) => {
+const sendOrder: AppThunk = () => (dispatch, getState) => {
   dispatch(setSendingOrder());
-  const orderData = [getState().burgerConstructor.data.bun._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun._id];
-  request(ORDER_URL, {
+  const orderData = [getState().burgerConstructor.data.bun!._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun!._id];
+  request<TOrderResponseBody>(ORDER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ ingredients: orderData })
   })
-    .then(orderData => {
+    .then((orderData: TOrderResponseBody) => {
+      console.log(orderData)
       dispatch(setOrderSucceeded());
       dispatch(setOrderNumber(orderData.order.number));
     })

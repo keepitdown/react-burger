@@ -40,9 +40,9 @@ type TLocationState = {
 } | null;
 
 type TAuthData = {
-  name: string;
-  email: string;
-  password: string;
+  readonly name: string;
+  readonly email: string;
+  readonly password: string;
 };
 
 type TProfile = Omit<TAuthData, 'password'>;
@@ -56,8 +56,8 @@ type TRecoveryForm = Pick<TAuthData, 'email'>;
 type TResetForm = Pick<TAuthData, 'password'> & { token: string };
 
 type TConstructorItemDragData = {
-  constructorId: number;
-  originalIndex: number;
+  readonly constructorId: number;
+  readonly originalIndex: number;
 };
 
 type TIngredientsItemDragData = {
@@ -66,8 +66,22 @@ type TIngredientsItemDragData = {
 
 type TItemDragData = TIngredientsItemDragData | TConstructorItemDragData;
 
+type TResponseBody = {
+  readonly success: boolean;
+};
+
+type TResponseBodyWithMessage = TResponseBody & {
+  readonly message: string;
+};
+
+type TUpdateTokensResponseBody = TResponseBody & {
+  readonly accessToken: string;
+  readonly refreshToken: string;
+};
+
 export type {
   TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients,
   TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
-  TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData
+  TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
+  TResponseBodyWithMessage, TUpdateTokensResponseBody
 };

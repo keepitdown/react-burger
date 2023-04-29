@@ -13,7 +13,7 @@ import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantit
 import { hideOrderDetails } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
-import { TAddedIngredients, TAvaliableIngredients, TIngredientsItemDragData } from '../../utils/types';
+import { TAddedIngredients, TAvaliableIngredients, TIngredient, TIngredientsItemDragData } from '../../utils/types';
 
 type TBurgerConstructor = {
   extraClass?: string;
@@ -47,7 +47,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       isHovered: monitor.isOver()
     }),
     drop(droppedItemId) {
-      const droppedItem = { ...Object.values(availableIngredients).flat().find(item => item._id === droppedItemId.id) };
+      const droppedItem = { ...Object.values(availableIngredients).flat().find(item => item._id === droppedItemId.id)} as TIngredient;
       if (droppedItem.type === 'bun') {
         if (!bun || (droppedItem._id !== bun._id)) {
           dispatch(increaseIngredientQuantity(droppedItem._id, 2));

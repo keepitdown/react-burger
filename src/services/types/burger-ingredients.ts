@@ -1,4 +1,4 @@
-import { TAvaliableIngredients } from "../../utils/types";
+import { TAvaliableIngredients, TRawIngredient, TResponseBody } from "../../utils/types";
 import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
   INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
@@ -49,8 +49,12 @@ type TBurgerIngredientsActions =
   | TDecreaseIngredientQuantityAction
   | TResetAllQuantitiesAction;
 
+type TBurgerIngredientsResponseBody = TResponseBody & {
+  data: TRawIngredient[];
+}
+
 export type {
   TBurgerIngredientsState, TSetBurgerIngredientsAction, TSetLoadedStatusAction, TSetFailedStatusAction,
   TIncreaseIngredientQuantityAction, TDecreaseIngredientQuantityAction, TResetAllQuantitiesAction,
-  TBurgerIngredientsActions
+  TBurgerIngredientsActions, TBurgerIngredientsResponseBody
 };

@@ -1,4 +1,5 @@
 import { login, recover, reset } from "../../utils/constants";
+import { TProfile, TResponseBody, TUpdateTokensResponseBody } from "../../utils/types";
 import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
 
 type TAuthState = {
@@ -39,4 +40,11 @@ type TAuthActions =
   | TSetFormSubmitStatusAction
   | TSetFormFailStatusAction;
 
-export type { TAuthState, TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction, TSetFormFailStatusAction, TAuthActions };
+type TLogInResponseBody = TUpdateTokensResponseBody & {
+  readonly user: TProfile;
+};
+
+export type {
+  TAuthState, TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction,
+  TSetFormFailStatusAction, TAuthActions, TLogInResponseBody
+};

@@ -1,3 +1,4 @@
+import { TResponseBody } from '../../utils/types';
 import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
 
 type TOrderDetailsState = {
@@ -21,7 +22,7 @@ type TSetOrderFailedAction = {
 
 type TSetOrderNumberAction = {
   readonly type: typeof SET_ORDER_NUMBER;
-  readonly number: number;
+  readonly number: number | null;
 };
 
 type TShowOrderDetailsAction = {
@@ -40,8 +41,13 @@ type TOrderDetailsActions =
   | TShowOrderDetailsAction
   | THideOrderDetailsAction;
 
+type TOrderResponseBody = TResponseBody & {
+  name: string;
+  order: { number: number };
+}
+
 export type {
   TOrderDetailsState, TSetSendingOrderAction, TSetOrderSucceededAction,
   TSetOrderFailedAction, TSetOrderNumberAction, TShowOrderDetailsAction,
-  THideOrderDetailsAction, TOrderDetailsActions
+  THideOrderDetailsAction, TOrderDetailsActions, TOrderResponseBody
 };

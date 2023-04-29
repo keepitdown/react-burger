@@ -30,3 +30,5 @@ root.render(
 );
 
 reportWebVitals();
+
+export { store };

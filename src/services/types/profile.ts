@@ -1,4 +1,4 @@
-import { TProfile } from "../../utils/types";
+import { TProfile, TResponseBody } from "../../utils/types";
 import { SET_PROFILE_DATA, SET_PROFILE_EDITED } from "../actions/profile";
 
 type TProfileState = {
@@ -8,7 +8,7 @@ type TProfileState = {
 
 type TSetProfileDataAction = {
   readonly type: typeof SET_PROFILE_DATA;
-  readonly data: TProfile;
+  readonly data: TProfile | null;
 };
 
 type TSetProfileEditedAction = {
@@ -20,4 +20,8 @@ type TProfileActions =
   | TSetProfileDataAction
   | TSetProfileEditedAction;
 
-export type { TProfileState, TSetProfileDataAction, TSetProfileEditedAction, TProfileActions };
+type TProfileDataResponseBody = TResponseBody & {
+  readonly user: TProfile;
+};
+
+export type { TProfileState, TSetProfileDataAction, TSetProfileEditedAction, TProfileActions, TProfileDataResponseBody };

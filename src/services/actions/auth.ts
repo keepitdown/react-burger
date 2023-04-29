@@ -1,85 +1,47 @@
-import { SIGN_UP_URL, LOG_IN_URL, LOG_OUT_URL, login, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, REFRESH_TOKEN_URL, RESET_URL, RECOVER_URL, recover, reset } from "../../utils/constants";
+import { SIGN_UP_URL, LOG_IN_URL, LOG_OUT_URL, login, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, RESET_URL, RECOVER_URL, recover, reset } from "../../utils/constants";
 import { request, getCookie, setCookie, removeCookie, logError } from "../../utils/functions";
 import { setProfileData } from "./profile";
+import { TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction, TSetFormFailStatusAction, TLogInResponseBody } from '../types/auth';
+import { AppThunk } from "../types";
+import { TAuthData, TRecoveryForm, TResetForm, TResponseBodyWithMessage, TSignInForm } from "../../utils/types";
 
 const SET_AUTH_CHECK_STATUS = 'SET_AUTH_CHECK_STATUS';
 const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS';
 const SET_FORM_SUBMIT_STATUS = 'SET_FORM_SUBMIT_STATUS';
 const SET_FORM_FAIL_STATUS = 'SET_FORM_FAIL_STATUS';
 
-const setAuthCheckStatus = (status) => ({
+const setAuthCheckStatus = (status: boolean): TSetAuthCheckStatusAction => ({
   type: SET_AUTH_CHECK_STATUS,
   status
 });
 
-const setLoggedInStatus = (status) => ({
+const setLoggedInStatus = (status: boolean): TSetLoggedInStatusAction => ({
   type: SET_LOGGED_IN_STATUS,
   status
 });
 
-const setFormSubmitStatus = (form, status) => ({
+const setFormSubmitStatus = (form: typeof recover | typeof reset, status: boolean): TSetFormSubmitStatusAction => ({
   type: SET_FORM_SUBMIT_STATUS,
   form,
   status
 });
 
-const setFormFailStatus = (form, status) => ({
+const setFormFailStatus = (form: typeof login | typeof reset, status: boolean): TSetFormFailStatusAction => ({
   type: SET_FORM_FAIL_STATUS,
   form,
   status
 });
 
-const requestWithToken = (urlPath, options) => dispatch => {
-  const retryFetch = () => dispatch(requestWithToken(urlPath, options));
-  const storedAccessToken = getCookie(accessToken);
-  if (!storedAccessToken) {
-    return dispatch(updateTokens(retryFetch)).then(retryFetch);
-  }
-
-  return request(urlPath, {
-    ...options,
-    headers: {
-      ...options.headers,
-      authorization: `Bearer ${storedAccessToken}`
-    }
-  })
-    .catch(error => {
-      if (error.message === 'jwt expired') {
-        return dispatch((updateTokens(retryFetch))).then(retryFetch);
-      } else {
-        return Promise.reject(error);
-      }
-    });
-};
-
-const updateTokens = () => () => {
-  const storedRefreshToken = getCookie(refreshToken);
-  if (!storedRefreshToken) {
-    return Promise.reject({ message: 'tokens not found' });
-  }
-  return request(REFRESH_TOKEN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ token: storedRefreshToken })
-  })
-    .then(response => {
-      setCookie(accessToken, response.accessToken.split('Bearer ')[1], accessTokenMaxAge);
-      setCookie(refreshToken, response.refreshToken, refreshTokenMaxAge);
-    });
-}
-
-const sendSignUpRequest = ({ email, password, name }) => dispatch => {
+const sendSignUpRequest: AppThunk = ({ email, password, name }: TAuthData) => dispatch => {
   dispatch(setAuthCheckStatus(false));
-  request(SIGN_UP_URL, {
+  request<TLogInResponseBody>(SIGN_UP_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ email, password, name })
   })
-    .then((response) => {
+    .then((response: TLogInResponseBody) => {
 
       setCookie(accessToken, response.accessToken.split('Bearer ')[1], accessTokenMaxAge);
       setCookie(refreshToken, response.refreshToken, refreshTokenMaxAge);
@@ -91,15 +53,15 @@ const sendSignUpRequest = ({ email, password, name }) => dispatch => {
     .catch(error => logError(error));
 };
 
-const sendLogInRequest = ({ email, password }) => dispatch => {
-  request(LOG_IN_URL, {
+const sendLogInRequest: AppThunk = ({ email, password }: TSignInForm) => dispatch => {
+  request<TLogInResponseBody>(LOG_IN_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ email, password })
   })
-    .then(response => {
+    .then((response: TLogInResponseBody) => {
 
       setCookie(accessToken, response.accessToken.split('Bearer ')[1], accessTokenMaxAge);
       setCookie(refreshToken, response.refreshToken, refreshTokenMaxAge);
@@ -117,8 +79,8 @@ const sendLogInRequest = ({ email, password }) => dispatch => {
     });
 };
 
-const sendRecoverRequest = ({ email }) => dispatch => {
-  request(RECOVER_URL, {
+const sendRecoverRequest: AppThunk = ({ email }: TRecoveryForm) => dispatch => {
+  request<TResponseBodyWithMessage>(RECOVER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -131,8 +93,8 @@ const sendRecoverRequest = ({ email }) => dispatch => {
     .catch(error => logError(error));
 };
 
-const sendResetRequest = ({ token, password }) => dispatch => {
-  request(RESET_URL, {
+const sendResetRequest: AppThunk = ({ token, password }: TResetForm) => dispatch => {
+  request<TResponseBodyWithMessage>(RESET_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -150,12 +112,12 @@ const sendResetRequest = ({ token, password }) => dispatch => {
     });
 };
 
-const sendLogOurRequest = () => dispatch => {
+const sendLogOurRequest: AppThunk = () => dispatch => {
   const storedRefreshToken = getCookie(refreshToken);
   if (!storedRefreshToken) {
     return Promise.reject({ message: 'refresh token not found' });
   }
-  return request(LOG_OUT_URL, {
+  return request<TResponseBodyWithMessage>(LOG_OUT_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -164,7 +126,7 @@ const sendLogOurRequest = () => dispatch => {
   })
     .then(() => {
       dispatch(setLoggedInStatus(false));
-      dispatch(setProfileData({}));
+      dispatch(setProfileData(null));
       removeCookie(accessToken);
       removeCookie(refreshToken);
     })
@@ -173,7 +135,7 @@ const sendLogOurRequest = () => dispatch => {
 
 export {
   SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS,
-  setAuthCheckStatus, setLoggedInStatus, setFormSubmitStatus, setFormFailStatus, requestWithToken,
+  setAuthCheckStatus, setLoggedInStatus, setFormSubmitStatus, setFormFailStatus,
   sendSignUpRequest, sendLogInRequest, sendRecoverRequest, sendResetRequest,
   sendLogOurRequest
 };

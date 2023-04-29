@@ -1,25 +1,28 @@
 import { PROFILE_DATA_URL } from '../../utils/constants';
-import { logError } from '../../utils/functions';
-import { requestWithToken, setAuthCheckStatus, setLoggedInStatus } from './auth';
+import { logError, requestWithToken } from '../../utils/functions';
+import { setLoggedInStatus, setAuthCheckStatus } from './auth';
+import { TProfileDataResponseBody, TSetProfileDataAction, TSetProfileEditedAction } from '../types/profile';
+import { AppThunk } from "../types";
+import { TProfile, TProfileChanges } from '../../utils/types';
 
 const SET_PROFILE_DATA = 'SET_PROFILE_DATA';
 const SET_PROFILE_EDITED = 'SET_PROFILE_EDITED';
 
-const setProfileData = (data) => ({
+const setProfileData = (data: TProfile | null): TSetProfileDataAction => ({
   type: SET_PROFILE_DATA,
   data
 });
 
-const setProfileEdited = (status) => ({
+const setProfileEdited = (status: boolean): TSetProfileEditedAction => ({
   type: SET_PROFILE_EDITED,
   status
 });
 
-const getProfileData = () => dispatch => {
+const getProfileData: AppThunk = () => dispatch => {
   dispatch(setLoggedInStatus(false));
   dispatch(setAuthCheckStatus(false));
-  dispatch(requestWithToken(PROFILE_DATA_URL, { method: 'GET' }))
-    .then(response => {
+  requestWithToken<TProfileDataResponseBody>(PROFILE_DATA_URL, { method: 'GET' })
+    .then((response: TProfileDataResponseBody) => {
       dispatch(setProfileData(response.user));
       dispatch(setLoggedInStatus(true));
     })
@@ -29,15 +32,15 @@ const getProfileData = () => dispatch => {
     });
 };
 
-const editProfileData = changes => dispatch => {
-  dispatch(requestWithToken(PROFILE_DATA_URL, {
+const editProfileData: AppThunk = (changes: TProfileChanges) => dispatch => {
+  requestWithToken<TProfileDataResponseBody>(PROFILE_DATA_URL, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(changes)
-  }))
-    .then(response => {
+  })
+    .then((response: TProfileDataResponseBody) => {
       dispatch(setProfileData(response.user));
       dispatch(setProfileEdited(true));
     })
