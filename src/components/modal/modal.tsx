@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useRef } from 'react';
+import React, { FC, ReactNode, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,16 +14,16 @@ const Modal: FC<TModal> = ({ children, header, closeHandler }) => {
 
   const modalPortal = useRef(document.getElementById('modal-windows') as HTMLDivElement);
 
-  const closeWithEsc = (e: KeyboardEvent) => {
+  const closeWithEsc = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeHandler();
     }
-  }
+  }, [closeHandler]);
 
   useEffect(() => {
     window.addEventListener('keydown', closeWithEsc);
     return () => window.removeEventListener('keydown', closeWithEsc);
-  }, []);
+  }, [closeWithEsc]);
 
   return createPortal((
     <ModalOverlay closeHandler={closeHandler}>
