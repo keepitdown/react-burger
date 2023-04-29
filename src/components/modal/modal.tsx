@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, SyntheticEvent, useEffect, useRef } from 'react';
+import React, { FC, ReactNode, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 type TModal = {
   children: ReactNode;
   header?: string;
-  closeHandler: (e?: SyntheticEvent) => any;
+  closeHandler: () => any;
 }
 
 const Modal: FC<TModal> = ({ children, header, closeHandler }) => {

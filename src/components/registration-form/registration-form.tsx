@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, SyntheticEvent } from 'react';
+import React, { FC, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from '../../services/hooks';
 import { Link } from 'react-router-dom';
 import styles from './registration-form.module.css';
@@ -15,12 +15,12 @@ const RegistrationForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   }
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(sendSignUpRequest(formData));
   }

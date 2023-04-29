@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, SyntheticEvent } from 'react';
+import React, { FC, MouseEvent, ReactNode } from 'react';
 import styles from './modal-overlay.module.css';
 
 type TModalOverlay = {
@@ -8,7 +8,7 @@ type TModalOverlay = {
 
 const ModalOverlay: FC<TModalOverlay> = ({ children, closeHandler }) => {
 
-  const handleClick = (e: SyntheticEvent<HTMLDivElement>) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeHandler();
     }

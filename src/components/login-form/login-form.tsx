@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
+import React, { FC, useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
@@ -26,7 +26,7 @@ const LoginForm: FC = () => {
 
   const { state: locationState }: { state: TLocationState } = useLocation();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   };
@@ -37,7 +37,7 @@ const LoginForm: FC = () => {
     }
   };
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(sendLogInRequest(formData));
   };

@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect, SyntheticEvent } from 'react';
+import React, { FC, useState, useRef, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate } from 'react-router-dom';
 import styles from './recovery-form.module.css';
@@ -24,12 +24,12 @@ const RecoveryForm: FC = () => {
     };
   }, [dispatch]);
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   }
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(sendRecoverRequest(formData));
   };

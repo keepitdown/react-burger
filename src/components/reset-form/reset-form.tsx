@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
+import React, { FC, useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './reset-form.module.css';
@@ -30,7 +30,7 @@ const ResetForm: FC = () => {
 
   const { state: locationState }: { state: TLocationState } = useLocation();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   };
@@ -41,7 +41,7 @@ const ResetForm: FC = () => {
     }
   };
 
-  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(sendResetRequest(formData));
   };

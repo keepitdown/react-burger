@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState, useRef, SyntheticEvent } from 'react';
+import React, { FC, useEffect, useMemo, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -35,7 +35,7 @@ const Profile: FC = () => {
 
   const handleBlur = (): void => setNameInputIsLocked(true);
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
     !formWasEdited && setFormWasEdited(true);
@@ -46,7 +46,7 @@ const Profile: FC = () => {
     setFormWasEdited(false);
   };
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const profileChanges: TProfileChanges = Object.keys(formData).reduce<TProfileChanges>(
       (changes, fieldName) => (initialFormData[fieldName as keyof TAuthData] !== formData[fieldName as keyof TAuthData])
