@@ -1,16 +1,21 @@
 import { PROFILE_DATA_URL } from '../../utils/constants';
 import { logError, requestWithToken } from '../../utils/functions';
 import { setLoggedInStatus, setAuthCheckStatus } from './auth';
-import { TProfileDataResponseBody, TSetProfileDataAction, TSetProfileEditedAction } from '../types/profile';
+import { TProfileDataResponseBody, TSetProfileDataAction, TRemoveProfileDataAction, TSetProfileEditedAction } from '../types/profile';
 import { AppThunk } from "../types";
 import { TProfile, TProfileChanges } from '../../utils/types';
 
 const SET_PROFILE_DATA = 'SET_PROFILE_DATA';
+const REMOVE_PROFILE_DATA = 'REMOVE_PROFILE_DATA';
 const SET_PROFILE_EDITED = 'SET_PROFILE_EDITED';
 
-const setProfileData = (data: TProfile | null): TSetProfileDataAction => ({
+const setProfileData = (data: TProfile): TSetProfileDataAction => ({
   type: SET_PROFILE_DATA,
   data
+});
+
+const removeProfileData = (): TRemoveProfileDataAction => ({
+  type: REMOVE_PROFILE_DATA
 });
 
 const setProfileEdited = (status: boolean): TSetProfileEditedAction => ({
@@ -47,4 +52,4 @@ const editProfileData: AppThunk = (changes: TProfileChanges) => dispatch => {
     .catch(error => logError(error));
 };
 
-export { SET_PROFILE_DATA, SET_PROFILE_EDITED, setProfileData, setProfileEdited, getProfileData, editProfileData };
+export { SET_PROFILE_DATA, REMOVE_PROFILE_DATA, SET_PROFILE_EDITED, setProfileData, removeProfileData, setProfileEdited, getProfileData, editProfileData };

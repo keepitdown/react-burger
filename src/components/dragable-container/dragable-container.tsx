@@ -1,12 +1,12 @@
 import React, { FC, ReactNode, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import styles from './dragable-container.module.css';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorItem } from '../../services/actions/burger-constructor';
 import { movedIngredient } from '../../utils/constants';
-import { TConstructorItemDragData, TConstructorIngredient } from '../../utils/types';
+import { TConstructorItemDragData } from '../../utils/types';
 
 type TDragableContainer = {
   constructorId: number;
@@ -17,7 +17,7 @@ type TDragableContainer = {
 const DragableContainer: FC<TDragableContainer> = ({ constructorId, children, index }) => {
 
   const dispatch = useDispatch();
-  const constructorIngredinets = useSelector<any, TConstructorIngredient[]>(state => state.burgerConstructor.data.middle);
+  const constructorIngredinets = useSelector(state => state.burgerConstructor.data.middle);
 
   const originalIndex = constructorIngredinets.findIndex(item => item.constructorId === constructorId);
 

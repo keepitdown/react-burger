@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/hooks';
 import LoginForm from '../components/login-form/login-form';
 import { changePageTitle } from '../utils/functions';
 import MainNotification from '../components/main-notification/main-notification';
@@ -8,7 +8,7 @@ const LoginPage: FC = () => {
 
   useEffect(() => changePageTitle('Вход'), []);
 
-  const showErrorMessage = useSelector<any, boolean>(state => state.auth.forms.login.hasFailed);
+  const showErrorMessage = useSelector(state => state.auth.forms.login.hasFailed);
 
   return (
     <>

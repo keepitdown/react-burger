@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/hooks';
 import { useParams, useNavigate } from 'react-router';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import Modal from '../components/modal/modal';
@@ -9,7 +9,7 @@ const IngredientModal: FC = () => {
 
   const [ingredientData, setIngredientData] = useState<TIngredient>();
 
-  const { dataIsLoaded, availableIngredients } = useSelector<any, { dataIsLoaded: boolean, availableIngredients: TIngredient[] }>(state => ({
+  const { dataIsLoaded, availableIngredients } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
     availableIngredients: state.burgerIngredients.data
   }));

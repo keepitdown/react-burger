@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './reset-form.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,7 +16,7 @@ const ResetForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { formIsSubmitted, resetHasFailed } = useSelector<any, { formIsSubmitted: boolean, resetHasFailed: boolean }>(state => ({
+  const { formIsSubmitted, resetHasFailed } = useSelector(state => ({
     formIsSubmitted: state.auth.forms.reset.isSubmitted,
     resetHasFailed: state.auth.forms.reset.hasFailed
   }));
@@ -26,7 +26,7 @@ const ResetForm: FC = () => {
       dispatch(setFormSubmitStatus(reset, false));
       dispatch(setFormFailStatus(reset, false));
     };
-  }, []);
+  }, [dispatch]);
 
   const { state: locationState }: { state: TLocationState } = useLocation();
 
@@ -43,7 +43,7 @@ const ResetForm: FC = () => {
 
   const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendResetRequest(formData));
+    dispatch(sendResetRequest(formData));
   };
 
   if (locationState?.originalPath !== '/forgot-password') {

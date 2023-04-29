@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,7 +12,7 @@ const LoginForm: FC = () => {
   const [formData, setFormData] = useState<TSignInForm>({ email: '', password: '' });
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
 
-  const logInHasFaild = useSelector<any, boolean>(state => state.auth.forms.login.hasFailed);
+  const logInHasFaild = useSelector(state => state.auth.forms.login.hasFailed);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -22,7 +22,7 @@ const LoginForm: FC = () => {
     return () => {
       dispatch(setFormFailStatus(login, false));
     };
-  }, []);
+  }, [dispatch]);
 
   const { state: locationState }: { state: TLocationState } = useLocation();
 
@@ -39,7 +39,7 @@ const LoginForm: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendLogInRequest(formData));
+    dispatch(sendLogInRequest(formData));
   };
 
   return (

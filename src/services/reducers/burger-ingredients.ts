@@ -1,3 +1,4 @@
+import { TAvaliableIngredients } from "../../utils/types";
 import {
   SET_BURGER_INGREDIENTS, SET_LOADED_STATUS, SET_FAILED_STATUS,
   INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES
@@ -41,7 +42,7 @@ const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState,
           [categoryKey]: updatedCategory
         }
 
-      }, {});
+      }, {} as TAvaliableIngredients);
 
       return {
         ...state,
@@ -63,7 +64,7 @@ const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState,
           [categoryKey]: updatedCategory
         }
 
-      }, {});
+      }, {} as TAvaliableIngredients);
 
       return {
         ...state,
@@ -81,7 +82,7 @@ const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState,
           ...processedData,
           [categoryKey]: updatedCategory
         }
-      }, {});
+      }, {} as TAvaliableIngredients);
 
       return {
         ...state,

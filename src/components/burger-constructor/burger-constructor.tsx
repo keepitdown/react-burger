@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,7 +13,7 @@ import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantit
 import { hideOrderDetails } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
-import { TAddedIngredients, TAvaliableIngredients, TIngredient, TIngredientsItemDragData } from '../../utils/types';
+import { TIngredient, TIngredientsItemDragData } from '../../utils/types';
 
 type TBurgerConstructor = {
   extraClass?: string;
@@ -21,15 +21,15 @@ type TBurgerConstructor = {
 
 const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
-  const { modalIsOpen, sendingData, failedToSend } = useSelector<any, { modalIsOpen: boolean, sendingData: boolean, failedToSend: boolean }>(state => ({
+  const { modalIsOpen, sendingData, failedToSend } = useSelector(state => ({
     modalIsOpen: state.orderDetails.showDetails,
     sendingData: state.orderDetails.sendingData,
     failedToSend: state.orderDetails.failedToSend
   }));
 
-  const { bun, middle } = useSelector<any, TAddedIngredients>(state => state.burgerConstructor.data);
+  const { bun, middle } = useSelector(state => state.burgerConstructor.data);
 
-  const { availableIngredients, showBunError } = useSelector<any, { availableIngredients: TAvaliableIngredients, showBunError: boolean }>(state => ({
+  const { availableIngredients, showBunError } = useSelector(state => ({
     availableIngredients: state.burgerIngredients.data,
     showBunError: state.burgerConstructor.showBunError
   }));

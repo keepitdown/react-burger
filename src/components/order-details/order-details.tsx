@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import styles from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderDetails: FC = () => {
 
-  const orderNumber = useSelector<any, number>(state => state.orderDetails.orderNumber);
+  const orderNumber = useSelector(state => state.orderDetails.orderNumber);
 
   return (
     <>

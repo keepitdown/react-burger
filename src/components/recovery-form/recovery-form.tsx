@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useEffect, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate } from 'react-router-dom';
 import styles from './recovery-form.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,13 +16,13 @@ const RecoveryForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const formIsSubmitted = useSelector<any, boolean>(state => state.auth.forms.recover.isSubmitted);
+  const formIsSubmitted = useSelector(state => state.auth.forms.recover.isSubmitted);
 
   useEffect(() => {
     return () => {
       dispatch(setFormSubmitStatus(recover, false));
     };
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
@@ -31,7 +31,7 @@ const RecoveryForm: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendRecoverRequest(formData));
+    dispatch(sendRecoverRequest(formData));
   };
 
   if (formIsSubmitted) {

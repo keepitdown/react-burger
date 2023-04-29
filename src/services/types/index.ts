@@ -1,6 +1,6 @@
 import { store } from "../../index";
 import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator } from 'redux';
+import { ActionCreator } from 'redux';
 import { TAuthActions } from "./auth";
 import { TBurgerConstructorActions } from "./burger-constructor";
 import { TBurgerIngredientsActions } from "./burger-ingredients";
@@ -17,7 +17,7 @@ type TAppActions =
   | TProfileActions;
 
 type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, RootState, Action, TAppActions>
+  ThunkAction<TReturn, RootState, unknown, TAppActions>
 >;
 
 type AppDispatch = typeof store.dispatch;

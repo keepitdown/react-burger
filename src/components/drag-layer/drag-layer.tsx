@@ -3,17 +3,17 @@ import { createPortal } from 'react-dom';
 import { useDragLayer } from 'react-dnd'
 import styles from './drag-layer.module.css';
 import { addedIngredient, movedIngredient } from '../../utils/constants';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TAvaliableIngredients, TConstructorIngredient, TItemDragData, TConstructorItemDragData, TIngredientsItemDragData, TIngredient } from '../../utils/types';
+import { TConstructorIngredient, TItemDragData, TConstructorItemDragData, TIngredientsItemDragData, TIngredient } from '../../utils/types';
 import { XYCoord, Identifier } from 'dnd-core';
 
 const DragLayer: FC = () => {
 
   const layerPortal = useRef(document.getElementById('drag-preview') as HTMLDivElement);
 
-  const constructorIngredients = useSelector<any, TConstructorIngredient[]>(state => state.burgerConstructor.data.middle);
-  const availableIngredients = useSelector<any, TAvaliableIngredients>(state => state.burgerIngredients.data);
+  const constructorIngredients = useSelector(state => state.burgerConstructor.data.middle);
+  const availableIngredients = useSelector(state => state.burgerIngredients.data);
 
   const { draggedItem, type, position } = useDragLayer<{ draggedItem: TItemDragData; type: Identifier | null; position: XYCoord | null }>(monitor => ({
     draggedItem: monitor.getItem(),

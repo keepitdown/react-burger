@@ -1,6 +1,6 @@
 import { SIGN_UP_URL, LOG_IN_URL, LOG_OUT_URL, login, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge, RESET_URL, RECOVER_URL, recover, reset } from "../../utils/constants";
 import { request, getCookie, setCookie, removeCookie, logError } from "../../utils/functions";
-import { setProfileData } from "./profile";
+import { removeProfileData, setProfileData } from "./profile";
 import { TSetAuthCheckStatusAction, TSetLoggedInStatusAction, TSetFormSubmitStatusAction, TSetFormFailStatusAction, TLogInResponseBody } from '../types/auth';
 import { AppThunk } from "../types";
 import { TAuthData, TRecoveryForm, TResetForm, TResponseBodyWithMessage, TSignInForm } from "../../utils/types";
@@ -126,7 +126,7 @@ const sendLogOurRequest: AppThunk = () => dispatch => {
   })
     .then(() => {
       dispatch(setLoggedInStatus(false));
-      dispatch(setProfileData(null));
+      dispatch(removeProfileData());
       removeCookie(accessToken);
       removeCookie(refreshToken);
     })

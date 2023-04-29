@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, SyntheticEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { Link } from 'react-router-dom';
 import styles from './registration-form.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -22,7 +22,7 @@ const RegistrationForm: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendSignUpRequest(formData));
+    dispatch(sendSignUpRequest(formData));
   }
 
   return (

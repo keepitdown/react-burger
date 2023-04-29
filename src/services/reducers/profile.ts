@@ -1,4 +1,4 @@
-import { SET_PROFILE_DATA, SET_PROFILE_EDITED } from "../actions/profile";
+import { SET_PROFILE_DATA, REMOVE_PROFILE_DATA, SET_PROFILE_EDITED } from "../actions/profile";
 import { TProfileActions, TProfileState } from "../types/profile";
 
 const initialState = {
@@ -13,6 +13,11 @@ const profileReducer = (state: TProfileState = initialState, action: TProfileAct
         ...state,
         data: { ...action.data }
       };
+    case REMOVE_PROFILE_DATA:
+      return {
+        ...state,
+        data: null
+      }
     case SET_PROFILE_EDITED: {
       return {
         ...state,

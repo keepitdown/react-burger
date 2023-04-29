@@ -1,11 +1,11 @@
 import React, { FC, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { sendOrder, showOrderDetails } from '../../services/actions/order-details';
 import { showBunError } from '../../services/actions/burger-constructor';
 import { useNavigate } from 'react-router-dom';
-import { TAddedIngredients, TConstructorIngredient, TIngredient } from '../../utils/types';
+import { TConstructorIngredient, TIngredient } from '../../utils/types';
 
 type TCheckout = {
   extraClass?: string;
@@ -13,9 +13,9 @@ type TCheckout = {
 
 const Checkout: FC<TCheckout> = ({ extraClass }) => {
 
-  const addedIngredients = useSelector<any, TAddedIngredients>(state => state.burgerConstructor.data);
+  const addedIngredients = useSelector(state => state.burgerConstructor.data);
 
-  const { userIsLoggedIn, authIsChecked } = useSelector<any, { userIsLoggedIn: boolean, authIsChecked: boolean }>(state => ({
+  const { userIsLoggedIn, authIsChecked } = useSelector(state => ({
     userIsLoggedIn: state.auth.userIsLoggedIn,
     authIsChecked: state.auth.authIsChecked
   }));
@@ -29,7 +29,7 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
     } else {
       if (addedIngredients.bun) {
         dispatch(showOrderDetails());
-        dispatch<any>(sendOrder());
+        dispatch(sendOrder());
       } else {
         dispatch(showBunError());
       }

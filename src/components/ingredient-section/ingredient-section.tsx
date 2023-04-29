@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './ingredient-section.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { TIngredient } from '../../utils/types';
 
@@ -13,7 +13,7 @@ const IngredientSection: FC = () => {
 
   const { id: ingredientId } = useParams();
 
-  const { dataIsLoaded, availableIngredients } = useSelector<any, { dataIsLoaded: boolean, availableIngredients: TIngredient[] }>(state => ({
+  const { dataIsLoaded, availableIngredients } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
     availableIngredients: state.burgerIngredients.data
   }));

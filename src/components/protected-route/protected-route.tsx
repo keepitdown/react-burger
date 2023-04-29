@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, ReactElement } from 'react';
+import { useSelector } from '../../services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 
 type TProtectedRoute = {
@@ -10,7 +10,7 @@ const ProtectedRoute: FC<TProtectedRoute> = ({ element }) => {
 
   const location = useLocation();
 
-  const { authIsChecked, userIsLoggedIn } = useSelector<any, { authIsChecked: boolean, userIsLoggedIn: boolean }>(state => ({
+  const { authIsChecked, userIsLoggedIn } = useSelector(state => ({
     authIsChecked: state.auth.authIsChecked,
     userIsLoggedIn: state.auth.userIsLoggedIn
   }));

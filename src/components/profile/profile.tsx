@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState, useRef, SyntheticEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC, useEffect, useMemo, useState, useRef, SyntheticEvent } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../profile-nav/profile-nav';
@@ -7,14 +7,16 @@ import ProfileLink from '../profile-link/profile-link';
 import ProfileNavButton from '../profile-nav-button/profile-nav-button';
 import { sendLogOurRequest } from '../../services/actions/auth';
 import { editProfileData, setProfileEdited } from '../../services/actions/profile';
-import { TProfile, TProfileChanges, TAuthData } from '../../utils/types';
+import { TProfileChanges, TAuthData } from '../../utils/types';
 
 const Profile: FC = () => {
 
   const dispatch = useDispatch();
 
-  const storedUserData = useSelector<any, TProfile | null>(state => state.profile.data);
-  const initialFormData: TAuthData = storedUserData ? { ...storedUserData, password: '' } : { name: '', email: '', password: '' };
+  const storedUserData = useSelector(state => state.profile.data);
+  const initialFormData = useMemo<TAuthData>(() => (
+    storedUserData ? { ...storedUserData, password: '' } : { name: '', email: '', password: '' }
+  ), [storedUserData]);
 
   const [formData, setFormData] = useState<TAuthData>({ ...initialFormData });
   const [formWasEdited, setFormWasEdited] = useState<boolean>(false);
@@ -52,10 +54,10 @@ const Profile: FC = () => {
         : { ...changes }
       , {});
 
-    dispatch<any>(editProfileData(profileChanges));
+    dispatch(editProfileData(profileChanges));
   };
 
-  const profileWasEdited = useSelector<any, boolean>(state => state.profile.profileWasEdited);
+  const profileWasEdited = useSelector(state => state.profile.profileWasEdited);
 
   useEffect(() => {
     if (profileWasEdited) {
@@ -63,10 +65,10 @@ const Profile: FC = () => {
       setFormWasEdited(false);
       dispatch(setProfileEdited(false));
     }
-  }, [profileWasEdited, initialFormData]);
+  }, [profileWasEdited, initialFormData, dispatch]);
 
   const handleLogOut = () => {
-    dispatch<any>(sendLogOurRequest());
+    dispatch(sendLogOurRequest());
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { getProfileData } from '../../services/actions/profile';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { Routes, Route, useLocation } from 'react-router-dom';
@@ -30,8 +30,8 @@ const App: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch<any>(getProfileData());
-    dispatch<any>(getIngredients());
+    dispatch(getProfileData());
+    dispatch(getIngredients());
   }, []);
 
   return (
