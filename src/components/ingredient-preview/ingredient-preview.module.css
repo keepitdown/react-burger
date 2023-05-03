@@ -1,0 +1,38 @@
+.gradient {
+  box-sizing: border-box;
+  padding: 2px;
+  height: 64px;
+  width: 64px;
+  background-image: linear-gradient(45deg, #801ab2, #4c4cff);
+  border-radius: 50%;
+}
+
+.background {
+  box-sizing: border-box;
+  padding: 2px 0;
+  background-color: #131316;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  position: relative;
+}
+
+.image {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
+.overlay {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ background-color: #1c1c2199;
+ border-radius: 50%;
+ top: 0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}

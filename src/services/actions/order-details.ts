@@ -49,7 +49,6 @@ const sendOrder: AppThunk = () => (dispatch, getState) => {
     body: JSON.stringify({ ingredients: orderData })
   })
     .then((orderData: TOrderResponseBody) => {
-      console.log(orderData)
       dispatch(setOrderSucceeded());
       dispatch(setOrderNumber(orderData.order.number));
     })

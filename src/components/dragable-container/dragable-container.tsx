@@ -49,7 +49,10 @@ const DragableContainer: FC<TDragableContainer> = ({ constructorId, children, in
   }, [])
 
   return (
-    <div className={styles.container + (isDragging ? (' ' + styles.dragging) : '') + ' pl-4 pr-4' + ((index > 0) ? ' mt-4' : '')} ref={(node) => dragRef(dropRef(node))}>
+    <div
+      className={styles.container + (isDragging ? (' ' + styles.dragging) : '') + ' pl-4 pr-4' + ((index > 0) ? ' mt-4' : '')}
+      ref={(node) => dragRef(dropRef(node))}
+    >
       <div className={styles['icon-container']}>
         <DragIcon type="primary" />
       </div>

@@ -26,9 +26,9 @@ const AppHeader: FC = () => {
           Конструктор
         </NavItem>
         <NavItem
-          active={currentPath.startsWith('/orders')}
-          icon={<ListIcon type={currentPath.startsWith('/orders') ? 'primary' : 'secondary'} />}
-          link='#'
+          active={currentPath.startsWith('/feed')}
+          icon={<ListIcon type={currentPath.startsWith('/feed') ? 'primary' : 'secondary'} />}
+          link='/feed'
         >
           Лента заказов
         </NavItem>

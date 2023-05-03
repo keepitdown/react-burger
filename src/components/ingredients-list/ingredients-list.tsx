@@ -10,7 +10,7 @@ const IngredientsList = forwardRef<HTMLDivElement, TIngredientsList>(
   function ({ children, scrollHandler }, passedRef) {
 
     return (
-      <div className={styles.container + " mt-10 custom-scroll"} onScroll={scrollHandler} ref={passedRef}>
+      <div className={styles.container + ' mt-10 custom-scroll'} onScroll={scrollHandler} ref={passedRef}>
         {children}
       </div>
     )

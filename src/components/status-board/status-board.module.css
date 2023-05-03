@@ -1,0 +1,5 @@
+.container {
+  max-width: 580px;
+  display: flex;
+  min-height: 0;
+}

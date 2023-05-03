@@ -4,6 +4,7 @@ import { getProfileData } from '../../services/actions/profile';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
+import FeedPage from '../../pages/feed-page';
 import LoginPage from '../../pages/login-page';
 import RegistrationPage from '../../pages/registration-page';
 import RecoveryPage from '../../pages/recovery-page';
@@ -26,13 +27,13 @@ const App: FC = () => {
   const background = locationState?.background;
   const ingredientNotFound = locationState?.ingredientNotFound;
 
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProfileData());
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -47,6 +48,7 @@ const App: FC = () => {
             path="/ingredients/:id"
             element={!ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
           />
+          <Route path="/feed" element={<FeedPage />} />
           <Route
             path="/login"
             element={<UnauthorizedRoute element={<LoginPage />} />}
