@@ -2,7 +2,7 @@ import { ORDER_URL } from "../../utils/constants";
 import { request } from "../../utils/functions";
 import {
   TSetSendingOrderAction, TSetOrderSucceededAction, TSetOrderFailedAction,
-  TSetOrderNumberAction, TShowOrderDetailsAction, THideOrderDetailsAction, TOrderResponseBody
+  TSetOrderNumberAction, TShowOrderConfirmationAction, THideOrderConfirmationAction, TOrderResponseBody
 } from '../types/order-details';
 import { AppThunk } from "../types";
 
@@ -30,11 +30,11 @@ const setOrderNumber = (number: number | null): TSetOrderNumberAction => ({
   number
 });
 
-const showOrderDetails = (): TShowOrderDetailsAction => ({
+const showOrderConfirmation = (): TShowOrderConfirmationAction => ({
   type: SHOW_ORDER_DETAILS
 });
 
-const hideOrderDetails = (): THideOrderDetailsAction => ({
+const hideOrderConfirmation = (): THideOrderConfirmationAction => ({
   type: HIDE_ORDER_DETAILS
 });
 
@@ -61,5 +61,5 @@ const sendOrder: AppThunk = () => (dispatch, getState) => {
 
 export {
   SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS,
-  setSendingOrder, setOrderSucceeded, setOrderFailed, setOrderNumber, showOrderDetails, hideOrderDetails, sendOrder
+  setSendingOrder, setOrderSucceeded, setOrderFailed, setOrderNumber, showOrderConfirmation, hideOrderConfirmation, sendOrder
 };

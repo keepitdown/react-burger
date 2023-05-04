@@ -16,6 +16,10 @@ const login = 'login';
 const recover = 'recover';
 const reset = 'reset';
 
+const done = 'done';
+const pending = 'pending';
+const created = 'created';
+
 const accessToken = 'accessToken';
 const refreshToken = 'refreshToken';
 const accessTokenMaxAge = '1200';
@@ -23,5 +27,6 @@ const refreshTokenMaxAge = '2592000';
 
 export {
   BASE_URL, INGREDIENTS_URL, ORDER_URL, SIGN_UP_URL, RESET_URL, RECOVER_URL, LOG_IN_URL, LOG_OUT_URL, REFRESH_TOKEN_URL,
-  PROFILE_DATA_URL, addedIngredient, movedIngredient, login, recover, reset, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge
+  PROFILE_DATA_URL, addedIngredient, movedIngredient, login, recover, reset, done, pending, created, accessToken, refreshToken,
+  accessTokenMaxAge, refreshTokenMaxAge
 };

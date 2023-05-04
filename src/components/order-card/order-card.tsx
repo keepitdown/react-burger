@@ -2,8 +2,10 @@ import React, { FC, CSSProperties } from 'react';
 import styles from './order-card.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type TOrderCard = {
+  orderId: number;
   ingredients: any[];
   timestamp: string;
   status?: string;
@@ -11,7 +13,7 @@ type TOrderCard = {
   extraClass?: string;
 };
 
-const OrderCard: FC<TOrderCard> = ({ ingredients, timestamp, status, ingredientsDisplayed = 6, extraClass }) => {
+const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, ingredientsDisplayed = 6, extraClass }) => {
 
   const getPreviewItemStyles = (index: number): CSSProperties => ({
     position: 'absolute',
@@ -26,21 +28,31 @@ const OrderCard: FC<TOrderCard> = ({ ingredients, timestamp, status, ingredients
     return `+${ingredients.length - ingredientsDisplayed}`
   };
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const clickHandler = (): void => {
+    navigate(`/feed/${orderId}`, { state: { background: location } });
+  };
+
   return (
-    <article className={styles.container + ' pt-6 pr-6 pb-6 pl-6' + (extraClass ? (' ' + extraClass) : '')}>
+    <article
+      className={styles.container + ' pt-6 pr-6 pb-6 pl-6' + (extraClass ? (' ' + extraClass) : '')}
+      onClick={clickHandler}
+      >
       <div className={styles.identifiers}>
-        <span className="text text_type_digits-default">
-          #034535
-        </span>
+        <h2 className="text text_type_digits-default">
+          {`#${orderId}`}
+        </h2>
         <FormattedDate
           className="text text_type_main-default text_color_inactive"
           date={new Date(timestamp)}
         />
       </div>
       <div className="mt-6 mb-6">
-        <h2 className="text text_type_main-medium">
+        <p className="text text_type_main-medium">
           Death Star Starship Main бургер
-        </h2>
+        </p>
         {status && (
           <p className="text text_type_main-default mt-2">
             {status}

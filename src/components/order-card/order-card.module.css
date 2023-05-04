@@ -2,6 +2,7 @@
   background-color: #1c1c21;
   border-radius: 40px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .identifiers {
@@ -19,7 +20,8 @@
   margin: 0;
   padding: 0;
   flex-grow: 1;
-  position: relative
+  position: relative;
+  z-index: 0;
 }
 
 .total-price {

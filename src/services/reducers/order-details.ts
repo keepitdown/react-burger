@@ -1,5 +1,5 @@
 import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
-import { TOrderDetailsActions, TOrderDetailsState } from '../types/order-details';
+import { TOrderConfirmationActions, TOrderConfirmationState } from '../types/order-details';
 
 const initialState = {
   sendingData: false,
@@ -8,7 +8,7 @@ const initialState = {
   showDetails: false
 };
 
-const orderDetailsReducer = (state: TOrderDetailsState = initialState, action: TOrderDetailsActions) => {
+const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState, action: TOrderConfirmationActions) => {
   switch (action.type) {
     case SET_SENDING_ORDER:
       return {
@@ -47,4 +47,4 @@ const orderDetailsReducer = (state: TOrderDetailsState = initialState, action: T
   }
 };
 
-export default orderDetailsReducer;
+export default OrderConfirmationReducer;

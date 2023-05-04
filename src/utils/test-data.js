@@ -142,3 +142,5 @@ export const testOrderList = [
   "884023",
   "558574"
 ];
+
+export const total = 510;

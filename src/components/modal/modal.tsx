@@ -6,7 +6,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 type TModal = {
   children: ReactNode;
-  header?: string;
+  header?: ReactNode;
   closeHandler: () => any;
 }
 
@@ -29,7 +29,7 @@ const Modal: FC<TModal> = ({ children, header, closeHandler }) => {
     <ModalOverlay closeHandler={closeHandler}>
       <div className={styles.container}>
         <div className={styles.header + ' mt-10 ml-10 mr-10'}>
-          {header && (<h2 className={styles.heading + ' text text_type_main-large'}>{header}</h2>)}
+          {header && (<h2 className={'text text_type_main-large'}>{header}</h2>)}
           <button
             className={styles['close-button'] + ' close-modal-btn'}
             onClick={closeHandler}

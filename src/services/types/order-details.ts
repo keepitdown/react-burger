@@ -1,7 +1,7 @@
 import { TResponseBody } from '../../utils/types';
 import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
 
-type TOrderDetailsState = {
+type TOrderConfirmationState = {
   sendingData: boolean;
   failedToSend: boolean;
   orderNumber: number | null;
@@ -25,21 +25,21 @@ type TSetOrderNumberAction = {
   readonly number: number | null;
 };
 
-type TShowOrderDetailsAction = {
+type TShowOrderConfirmationAction = {
   readonly type: typeof SHOW_ORDER_DETAILS;
 };
 
-type THideOrderDetailsAction = {
+type THideOrderConfirmationAction = {
   readonly type: typeof HIDE_ORDER_DETAILS;
 };
 
-type TOrderDetailsActions =
+type TOrderConfirmationActions =
   | TSetSendingOrderAction
   | TSetOrderSucceededAction
   | TSetOrderFailedAction
   | TSetOrderNumberAction
-  | TShowOrderDetailsAction
-  | THideOrderDetailsAction;
+  | TShowOrderConfirmationAction
+  | THideOrderConfirmationAction;
 
 type TOrderResponseBody = TResponseBody & {
   name: string;
@@ -47,7 +47,7 @@ type TOrderResponseBody = TResponseBody & {
 }
 
 export type {
-  TOrderDetailsState, TSetSendingOrderAction, TSetOrderSucceededAction,
-  TSetOrderFailedAction, TSetOrderNumberAction, TShowOrderDetailsAction,
-  THideOrderDetailsAction, TOrderDetailsActions, TOrderResponseBody
+  TOrderConfirmationState, TSetSendingOrderAction, TSetOrderSucceededAction,
+  TSetOrderFailedAction, TSetOrderNumberAction, TShowOrderConfirmationAction,
+  THideOrderConfirmationAction, TOrderConfirmationActions, TOrderResponseBody
 };

@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { sendOrder, showOrderDetails } from '../../services/actions/order-details';
+import { sendOrder, showOrderConfirmation } from '../../services/actions/order-details';
 import { showBunError } from '../../services/actions/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient, TIngredient } from '../../utils/types';
@@ -28,7 +28,7 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
       navigate('/login', { state: { originalPath: '/' } });
     } else {
       if (addedIngredients.bun) {
-        dispatch(showOrderDetails());
+        dispatch(showOrderConfirmation());
         dispatch(sendOrder());
       } else {
         dispatch(showBunError());

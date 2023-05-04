@@ -25,6 +25,7 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
           {orders && orders.map((item, index) => (
             <OrderCard
               key={index}
+              orderId={456789}
               status="Готовится"
               ingredients={item}
               timestamp='2023-04-30T21:33:32.877Z'

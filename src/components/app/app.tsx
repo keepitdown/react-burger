@@ -19,6 +19,7 @@ import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
 import IngredientModal from '../../modals/ingredient-modal';
 import { TLocationState } from '../../utils/types';
+import OrderModal from '../../modals/order-modal';
 
 const App: FC = () => {
 
@@ -78,6 +79,10 @@ const App: FC = () => {
           <Route
             path="/ingredients/:id"
             element={<IngredientModal />}
+          />
+          <Route
+            path="/feed/:id"
+            element={<OrderModal />}
           />
         </Routes>
       )}

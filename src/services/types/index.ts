@@ -4,7 +4,7 @@ import { ActionCreator } from 'redux';
 import { TAuthActions } from "./auth";
 import { TBurgerConstructorActions } from "./burger-constructor";
 import { TBurgerIngredientsActions } from "./burger-ingredients";
-import { TOrderDetailsActions } from "./order-details";
+import { TOrderConfirmationActions } from "./order-details";
 import { TProfileActions } from "./profile";
 
 type RootState = ReturnType<typeof store.getState>;
@@ -13,7 +13,7 @@ type TAppActions =
   | TAuthActions
   | TBurgerConstructorActions
   | TBurgerIngredientsActions
-  | TOrderDetailsActions
+  | TOrderConfirmationActions
   | TProfileActions;
 
 type AppThunk<TReturn = void> = ActionCreator<

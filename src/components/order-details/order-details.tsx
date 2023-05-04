@@ -1,20 +1,45 @@
 import React, { FC } from 'react';
-import { useSelector } from '../../services/hooks';
 import styles from './order-details.module.css';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import OrderIngredients from '../order-ingredients/order-ingredients';
+import { created, done, pending } from '../../utils/constants';
+//================Удалить!===================
+import { testIngredients, total } from '../../utils/test-data';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const OrderDetails: FC = () => {
+type TOrderDetails = {
+  orderData: any;
+  modal?: boolean;
+  status: typeof done | typeof pending | typeof created;
+};
 
-  const orderNumber = useSelector(state => state.orderDetails.orderNumber);
+const OrderDetails: FC<TOrderDetails> = ({ orderData, modal, status }) => {
+
+  const statusText = {
+    done: 'Выполнен',
+    pending: 'Готовится',
+    created: 'Создан'
+  }
 
   return (
-    <>
-      <h2 className={styles['order-number'] + ' text text_type_digits-large mt-4 mb-8'}>{orderNumber}</h2>
-      <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
-      <div className={styles['confirm-icon']}><CheckMarkIcon type="primary" /></div>
-      <p className="text text_type_main-default mt-15">Ваш заказ начали готовить</p>
-      <p className="text text_type_main-default text_color_inactive mt-2 mb-30">Дождитесь готовности на орбитальной станции</p>
-    </>
+    <div className={styles.constainer + (modal ? ' mt-5 mb-10' : ' mb-10')}>
+      <p className={'text text_type_main-medium' + (modal ? ' mb-2' : ' mb-3')}>Black Hole Singularity острый бургер</p>
+      <p className={'text text_type_main-default mb-15' + ((status === done) ? (' ' + styles['status-done']) : '')}>
+        {statusText[status]}
+      </p>
+      <OrderIngredients orderData={testIngredients} />
+      <div className={styles['order-info'] + ' mt-10'}>
+        <FormattedDate
+          className="text text_type_main-default text_color_inactive"
+          date={new Date('2023-04-30T21:33:32.877Z')}
+        />
+        <div className={styles['total-price']}>
+          <span className='text text_type_digits-default mr-2'>
+            {total}
+          </span>
+          <CurrencyIcon type="primary" />
+        </div>
+      </div>
+    </div>
   )
 };
 

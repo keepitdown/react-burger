@@ -6,11 +6,11 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import DragableContainer from '../dragable-container/dragable-container';
 import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import OrderConfirmation from '../order-confirmation/order-confirmation';
 import OrderError from '../order-error/order-error';
 import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
 import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities } from '../../services/actions/burger-ingredients';
-import { hideOrderDetails } from '../../services/actions/order-details';
+import { hideOrderConfirmation } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
 import { TIngredient, TIngredientsItemDragData } from '../../utils/types';
@@ -22,9 +22,9 @@ type TBurgerConstructor = {
 const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
   const { modalIsOpen, sendingData, failedToSend } = useSelector(state => ({
-    modalIsOpen: state.orderDetails.showDetails,
-    sendingData: state.orderDetails.sendingData,
-    failedToSend: state.orderDetails.failedToSend
+    modalIsOpen: state.OrderConfirmation.showDetails,
+    sendingData: state.OrderConfirmation.sendingData,
+    failedToSend: state.OrderConfirmation.failedToSend
   }));
 
   const { bun, middle } = useSelector(state => state.burgerConstructor.data);
@@ -62,7 +62,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
   }, [availableIngredients, dispatch, bun, showBunError]);
 
   const handleModalClose = (): void => {
-    dispatch(hideOrderDetails());
+    dispatch(hideOrderConfirmation());
     if (!failedToSend) {
       dispatch(resetConstructor());
       dispatch(resetAllQuantities());
@@ -123,7 +123,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       {modalIsOpen && !sendingData && (
         <Modal closeHandler={handleModalClose}>
           {!failedToSend
-            ? (<OrderDetails />)
+            ? (<OrderConfirmation />)
             : (<OrderError />)
           }
         </Modal>
