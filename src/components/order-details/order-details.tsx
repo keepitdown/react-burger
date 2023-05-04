@@ -14,17 +14,13 @@ type TOrderDetails = {
 
 const OrderDetails: FC<TOrderDetails> = ({ orderData, modal, status }) => {
 
-  const statusText = {
-    done: 'Выполнен',
-    pending: 'Готовится',
-    created: 'Создан'
-  };
-
   return (
     <div className={styles.container + (modal ? ' mt-5 mb-10' : ' mt-10 mb-10')}>
       <p className={'text text_type_main-medium' + (modal ? ' mb-2' : ' mb-3')}>Black Hole Singularity острый бургер</p>
-      <p className={'text text_type_main-default mb-15' + ((status === done) ? (' ' + styles['status-done']) : '')}>
-        {statusText[status]}
+      <p className={'text text_type_main-default mb-15'}>
+        {(status === done) && (<span className={styles['status-done']}>Выполнен</span>)}
+        {(status === pending) && (<>Готовится</>)}
+        {(status === created) && (<>Создан</>)}
       </p>
       <OrderIngredients orderData={testIngredients} />
       <div className={styles['order-info'] + ' mt-10'}>

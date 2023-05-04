@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './status-board-group.module.css';
-import { created, done, pending } from '../../utils/constants';
+import { done, pending } from '../../utils/constants';
 
 type TStatusBoardGroup = {
   orderIds: string[];
@@ -10,15 +10,11 @@ type TStatusBoardGroup = {
 
 const StatusBoardGroup: FC<TStatusBoardGroup> = ({ orderIds, status, extraClass }) => {
 
-  const headingText = {
-    done: 'Готовы:',
-    pending: 'В работе:'
-  };
-
   return (
     <div className={styles.container + (extraClass ? (' ' + extraClass) : '')}>
       <h2 className="text text_type_main-medium mb-6">
-        {headingText[status]}
+        {(status === done) && (<>Готовы:</>)}
+        {(status === pending) && (<>В работе:</>)}
       </h2>
       <ol className={styles.list + ' text text_type_digits-default' + ((status === done) ? (' ' + styles['status-done']) : '')}>
         {orderIds.map((item) => (

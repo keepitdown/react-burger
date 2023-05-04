@@ -3,12 +3,13 @@ import styles from './order-card.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { created, done, pending } from '../../utils/constants';
 
 type TOrderCard = {
   orderId: number;
   ingredients: any[];
   timestamp: string;
-  status?: string;
+  status?: typeof done | typeof pending | typeof created;
   ingredientsDisplayed?: number,
   extraClass?: string;
 };
@@ -55,7 +56,9 @@ const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, in
         </p>
         {status && (
           <p className="text text_type_main-default mt-2">
-            {status}
+            {(status === done) && (<span className={styles['status-done']}>Выполнен</span>)}
+            {(status === pending) && (<>Готовится</>)}
+            {(status === created) && (<>Создан</>)}
           </p>
         )}
       </div>

@@ -1,21 +1,33 @@
 import React, { FC } from 'react';
 import styles from './orders-history.module.css';
-import ProfileNav from '../profile-nav/profile-nav';
-import ProfileLink from '../profile-link/profile-link';
+import ProfileLayout from '../profile-layout/profile-layout';
+import OrderList from '../order-list/order-list';
+
+// ======================Удалить!===================================
+import { testFeed } from '../../utils/test-data';
+import OrderCard from '../order-card/order-card';
+import { done } from '../../utils/constants';
 
 const OrdersHistory: FC = () => {
 
+
+  const orders = testFeed;
+
   return (
-    <section className={styles.container + ' mt-30'}>
-      <div className={styles.sidebar}>
-        <ProfileNav>
-          <ProfileLink link="/profile" end>Профиль</ProfileLink>
-          <ProfileLink link="/profile/orders">История заказов</ProfileLink>
-          <ProfileLink link="/">Выход</ProfileLink>
-        </ProfileNav>
-        <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете просмотреть&nbsp;свою историю заказов</p>
-      </div>
-    </section >
+    <ProfileLayout >
+      <OrderList extraClass={styles.list}>
+        {orders && orders.map((item, index) => (
+          <OrderCard
+            key={index}
+            orderId={456789}
+            status={done}
+            ingredients={item}
+            timestamp='2023-04-30T21:33:32.877Z'
+            extraClass={styles['list-item'] + ((index > 0) ? ' mt-4' : '')}
+          />
+        ))}
+      </OrderList>
+    </ProfileLayout>
   )
 }
 

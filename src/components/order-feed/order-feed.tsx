@@ -21,12 +21,11 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
     <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
       <h1 className="text text_type_main-large mt-10 mb-5">Лента заказов</h1>
       <div className={styles.content}>
-        <OrderList extraClass={styles.list + ' pl-2 pr-4'}>
+        <OrderList extraClass={styles.list + ' pr-4'}>
           {orders && orders.map((item, index) => (
             <OrderCard
               key={index}
               orderId={456789}
-              status="Готовится"
               ingredients={item}
               timestamp='2023-04-30T21:33:32.877Z'
               extraClass={styles['list-item'] + ((index > 0) ? ' mt-4' : '')}
