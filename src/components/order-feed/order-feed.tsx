@@ -5,7 +5,7 @@ import OrderCard from '../order-card/order-card';
 import StatusBoard from '../status-board/status-board';
 import StatValue from '../stat-value/stat-value';
 import StatusBoardGroup from '../status-board-group/status-board-group';
-
+import { done, pending } from '../../utils/constants';
 // ======================Удалить!===================================
 import { testFeed, testOrderList } from '../../utils/test-data';
 
@@ -35,12 +35,8 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
         </OrderList>
         <div className={styles.summary}>
           <StatusBoard>
-            <StatusBoardGroup orderIds={testOrderList} highlight>
-              Готовы:
-            </StatusBoardGroup>
-            <StatusBoardGroup orderIds={testOrderList} extraClass='ml-9'>
-              В работе:
-            </StatusBoardGroup>
+            <StatusBoardGroup orderIds={testOrderList} status={done} />
+            <StatusBoardGroup orderIds={testOrderList} status={pending} extraClass='ml-9' />
           </StatusBoard>
           <StatValue value={27752} extraClass="mt-15">
             Выполнено за все время:

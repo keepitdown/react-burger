@@ -20,6 +20,7 @@ import AppMain from '../app-main/app-main';
 import IngredientModal from '../../modals/ingredient-modal';
 import { TLocationState } from '../../utils/types';
 import OrderModal from '../../modals/order-modal';
+import OrderPage from '../../pages/order-page';
 
 const App: FC = () => {
 
@@ -49,7 +50,14 @@ const App: FC = () => {
             path="/ingredients/:id"
             element={!ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
           />
-          <Route path="/feed" element={<FeedPage />} />
+          <Route
+            path="/feed"
+            element={<FeedPage />}
+          />
+          <Route
+            path="/feed/:id"
+            element={<OrderPage />}
+          />
           <Route
             path="/login"
             element={<UnauthorizedRoute element={<LoginPage />} />}
@@ -62,7 +70,10 @@ const App: FC = () => {
             path="/forgot-password"
             element={<UnauthorizedRoute element={<RecoveryPage />} />}
           />
-          <Route path="/reset-password" element={<ResetPage />} />
+          <Route
+            path="/reset-password"
+            element={<ResetPage />}
+          />
           <Route
             path="/profile"
             element={<ProtectedRoute element={<ProfilePage />} />}

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import styles from './order-details.module.css';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderIngredients from '../order-ingredients/order-ingredients';
 import { created, done, pending } from '../../utils/constants';
 //================Удалить!===================
 import { testIngredients, total } from '../../utils/test-data';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TOrderDetails = {
   orderData: any;
@@ -18,10 +18,10 @@ const OrderDetails: FC<TOrderDetails> = ({ orderData, modal, status }) => {
     done: 'Выполнен',
     pending: 'Готовится',
     created: 'Создан'
-  }
+  };
 
   return (
-    <div className={styles.constainer + (modal ? ' mt-5 mb-10' : ' mb-10')}>
+    <div className={styles.container + (modal ? ' mt-5 mb-10' : ' mt-10 mb-10')}>
       <p className={'text text_type_main-medium' + (modal ? ' mb-2' : ' mb-3')}>Black Hole Singularity острый бургер</p>
       <p className={'text text_type_main-default mb-15' + ((status === done) ? (' ' + styles['status-done']) : '')}>
         {statusText[status]}
