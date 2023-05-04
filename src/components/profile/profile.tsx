@@ -2,12 +2,9 @@ import React, { FC, useEffect, useMemo, useState, useRef, ChangeEvent, FormEvent
 import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import ProfileNav from '../profile-nav/profile-nav';
-import ProfileLink from '../profile-link/profile-link';
-import ProfileNavButton from '../profile-nav-button/profile-nav-button';
-import { sendLogOurRequest } from '../../services/actions/auth';
 import { editProfileData, setProfileEdited } from '../../services/actions/profile';
 import { TProfileChanges, TAuthData } from '../../utils/types';
+import ProfileLayout from '../profile-layout/profile-layout';
 
 const Profile: FC = () => {
 
@@ -67,22 +64,8 @@ const Profile: FC = () => {
     }
   }, [profileWasEdited, initialFormData, dispatch]);
 
-  const handleLogOut = () => {
-    dispatch(sendLogOurRequest());
-  }
-
   return (
-    <section className={styles.container + ' mt-30'}>
-      <div className={styles.sidebar}>
-        <ProfileNav>
-          <ProfileLink link="/profile" end>Профиль</ProfileLink>
-          <ProfileLink link="/profile/orders">История заказов</ProfileLink>
-          <ProfileNavButton clickHandler={handleLogOut}>
-            Выход
-          </ProfileNavButton>
-        </ProfileNav>
-        <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
-      </div>
+    <ProfileLayout>
       <form
         ref={formRef}
         onSubmit={handleSubmit}
@@ -127,7 +110,7 @@ const Profile: FC = () => {
           </div>
         )}
       </form>
-    </section >
+    </ProfileLayout>
   )
 }
 
