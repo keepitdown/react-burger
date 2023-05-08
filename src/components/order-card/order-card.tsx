@@ -1,24 +1,34 @@
 import React, { FC, CSSProperties } from 'react';
 import styles from './order-card.module.css';
+import { useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { created, done, pending } from '../../utils/constants';
 import { testIngredients } from '../../utils/test-data';
 import { FormattedDate } from '../formatted-date/formatted-date';
+import { TIngredient, TOrder, TPreviewData } from '../../utils/types';
+import { getIngredientById } from '../../utils/functions';
 
 type TOrderCard = {
-  orderId: string;
-  orderNumber: number;
-  name: string;
-  ingredients: any[];
-  timestamp: string;
-  status?: typeof done | typeof pending | typeof created;
+  orderData: TOrder;
+  displayStatus?: boolean;
   ingredientsDisplayed?: number,
   extraClass?: string;
 };
 
-const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, timestamp, status, ingredientsDisplayed = 6, extraClass }) => {
+const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDisplayed = 6, extraClass }) => {
+
+  const { name: orderName, number: orderNumber, createdAt: timestamp, status, _id: orderId, ingredients } = orderData;
+
+  const availableIngredients = useSelector(state => state.burgerIngredients.data);
+
+  const [previewData, totalPrice] = ingredients.reduce<[TPreviewData[], number]>((result, ingredientId) => {
+    const { name, image, price } = getIngredientById(availableIngredients, ingredientId) as TIngredient;
+    const updatedPreviewData = [...result[0], { name, image }];
+    const updatedTotalPrice = result[1] + price;
+    return [updatedPreviewData, updatedTotalPrice];
+  }, [[], 0]);
 
   const getPreviewItemStyles = (index: number): CSSProperties => ({
     position: 'absolute',
@@ -44,7 +54,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, ti
     <article
       className={styles.container + ' pt-6 pr-6 pb-6 pl-6' + (extraClass ? (' ' + extraClass) : '')}
       onClick={clickHandler}
-      >
+    >
       <div className={styles.identifiers}>
         <h2 className="text text_type_digits-default">
           {`#${orderNumber}`}
@@ -56,9 +66,9 @@ const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, ti
       </div>
       <div className="mt-6 mb-6">
         <p className="text text_type_main-medium">
-          {name}
+          {orderName}
         </p>
-        {status && (
+        {displayStatus && (
           <p className="text text_type_main-default mt-2">
             {(status === done) && (<span className={styles['status-done']}>Выполнен</span>)}
             {(status === pending) && (<>Готовится</>)}
@@ -68,7 +78,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, ti
       </div>
       <div className={styles.details}>
         <ul className={styles.list}>
-          {testIngredients.slice(0, ingredientsDisplayed).map((item, index) => (
+          {previewData.slice(0, ingredientsDisplayed).map((item, index) => (
             <li
               key={index}
               style={getPreviewItemStyles(index)}
@@ -82,7 +92,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, ti
           ))}
         </ul>
         <div className={styles['total-price'] + ' ml-6'}>
-          <span className="text text_type_digits-default mr-2">480</span>
+          <span className="text text_type_digits-default mr-2">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
       </div>

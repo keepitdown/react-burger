@@ -42,6 +42,10 @@ function groupByType(dataArray: TIngredient[]): TAvaliableIngredients {
   }, {});
 }
 
+function getIngredientById(availableIngredients: TAvaliableIngredients, ingredientId: string): TIngredient | undefined {
+  return Object.values(availableIngredients).flat().find(item => item._id === ingredientId);
+}
+
 function changePageTitle(title: string): void {
   document.title = `Stellar Burgers | ${title}`;
 }
@@ -100,4 +104,4 @@ function updateTokens(): Promise<void> {
     });
 }
 
-export { request, checkApiResponse, logError, addProperty, groupByType, changePageTitle, setCookie, getCookie, removeCookie, requestWithToken, updateTokens };
+export { request, checkApiResponse, logError, addProperty, groupByType, getIngredientById, changePageTitle, setCookie, getCookie, removeCookie, requestWithToken, updateTokens };

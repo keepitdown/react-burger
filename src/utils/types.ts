@@ -27,6 +27,8 @@ type TAddedIngredients = {
   middle: TConstructorIngredient[];
 };
 
+type TPreviewData = Pick<TIngredient, 'name' | 'image'>;
+
 type TOrder = {
   readonly _id: string;
   readonly number: number;
@@ -90,7 +92,7 @@ type TUpdateTokensResponseBody = TResponseBody & {
 };
 
 export type {
-  TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients,
+  TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients, TPreviewData,
   TOrder, TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
   TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
   TResponseBodyWithMessage, TUpdateTokensResponseBody

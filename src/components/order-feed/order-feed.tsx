@@ -41,11 +41,7 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
           {feedData && feedData.map((item, index) => (
             <OrderCard
               key={item._id}
-              orderId={item._id}
-              orderNumber={item.number}
-              name={item.name}
-              ingredients={item.ingredients}
-              timestamp={item.createdAt}
+              orderData={item}
               extraClass={styles['list-item'] + ((index > 0) ? ' mt-4' : '')}
             />
           ))}

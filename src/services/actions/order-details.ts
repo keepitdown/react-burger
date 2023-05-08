@@ -1,5 +1,5 @@
 import { ORDER_URL } from "../../utils/constants";
-import { request } from "../../utils/functions";
+import { requestWithToken } from "../../utils/functions";
 import {
   TSetSendingOrderAction, TSetOrderSucceededAction, TSetOrderFailedAction,
   TSetOrderNumberAction, TShowOrderConfirmationAction, THideOrderConfirmationAction, TOrderResponseBody
@@ -41,7 +41,7 @@ const hideOrderConfirmation = (): THideOrderConfirmationAction => ({
 const sendOrder: AppThunk = () => (dispatch, getState) => {
   dispatch(setSendingOrder());
   const orderData = [getState().burgerConstructor.data.bun!._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun!._id];
-  request<TOrderResponseBody>(ORDER_URL, {
+  requestWithToken<TOrderResponseBody>(ORDER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

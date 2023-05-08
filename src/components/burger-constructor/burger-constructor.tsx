@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
+import { getIngredientById } from '../../utils/functions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import DragableContainer from '../dragable-container/dragable-container';
 import Checkout from '../checkout/checkout';
@@ -47,7 +48,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       isHovered: monitor.isOver()
     }),
     drop(droppedItemId) {
-      const droppedItem = { ...Object.values(availableIngredients).flat().find(item => item._id === droppedItemId.id)} as TIngredient;
+      const droppedItem = { ...getIngredientById(availableIngredients, droppedItemId.id) } as TIngredient;
       if (droppedItem.type === 'bun') {
         if (!bun || (droppedItem._id !== bun._id)) {
           dispatch(increaseIngredientQuantity(droppedItem._id, 2));
