@@ -19,7 +19,9 @@ const OrdersHistory: FC = () => {
         {orders && orders.map((item, index) => (
           <OrderCard
             key={index}
-            orderId={456789}
+            orderId={'456789'}
+            orderNumber={2432}
+            name={'sdfds'}
             status={done}
             ingredients={item}
             timestamp='2023-04-30T21:33:32.877Z'

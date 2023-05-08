@@ -1,12 +1,16 @@
 import React, { FC, CSSProperties } from 'react';
 import styles from './order-card.module.css';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { created, done, pending } from '../../utils/constants';
+import { testIngredients } from '../../utils/test-data';
+import { FormattedDate } from '../formatted-date/formatted-date';
 
 type TOrderCard = {
-  orderId: number;
+  orderId: string;
+  orderNumber: number;
+  name: string;
   ingredients: any[];
   timestamp: string;
   status?: typeof done | typeof pending | typeof created;
@@ -14,7 +18,7 @@ type TOrderCard = {
   extraClass?: string;
 };
 
-const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, ingredientsDisplayed = 6, extraClass }) => {
+const OrderCard: FC<TOrderCard> = ({ orderId, orderNumber, name, ingredients, timestamp, status, ingredientsDisplayed = 6, extraClass }) => {
 
   const getPreviewItemStyles = (index: number): CSSProperties => ({
     position: 'absolute',
@@ -43,7 +47,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, in
       >
       <div className={styles.identifiers}>
         <h2 className="text text_type_digits-default">
-          {`#${orderId}`}
+          {`#${orderNumber}`}
         </h2>
         <FormattedDate
           className="text text_type_main-default text_color_inactive"
@@ -52,7 +56,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, in
       </div>
       <div className="mt-6 mb-6">
         <p className="text text_type_main-medium">
-          Death Star Starship Main бургер
+          {name}
         </p>
         {status && (
           <p className="text text_type_main-default mt-2">
@@ -64,7 +68,7 @@ const OrderCard: FC<TOrderCard> = ({ orderId, ingredients, timestamp, status, in
       </div>
       <div className={styles.details}>
         <ul className={styles.list}>
-          {ingredients.slice(0, ingredientsDisplayed).map((item, index) => (
+          {testIngredients.slice(0, ingredientsDisplayed).map((item, index) => (
             <li
               key={index}
               style={getPreviewItemStyles(index)}

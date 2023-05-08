@@ -46,7 +46,7 @@ const authReducer = (state: TAuthState = initialState, action: TAuthActions) => 
         }
       }
     default:
-      return state
+      return state;
   };
 }
 

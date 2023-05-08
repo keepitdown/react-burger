@@ -27,6 +27,16 @@ type TAddedIngredients = {
   middle: TConstructorIngredient[];
 };
 
+type TOrder = {
+  readonly _id: string;
+  readonly number: number;
+  readonly name: string;
+  readonly status: 'done' | 'pending' | 'created';
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly ingredients: string[];
+};
+
 type TErrorDetails = {
   code: number | undefined,
   description: string | undefined,
@@ -81,7 +91,7 @@ type TUpdateTokensResponseBody = TResponseBody & {
 
 export type {
   TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients,
-  TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
+  TOrder, TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
   TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
   TResponseBodyWithMessage, TUpdateTokensResponseBody
 };
