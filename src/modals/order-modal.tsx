@@ -2,31 +2,46 @@ import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from '../services/hooks';
 import { useParams, useNavigate } from 'react-router';
 import Modal from '../components/modal/modal';
-import { TIngredient } from '../utils/types';
+import { TOrder } from '../utils/types';
 import OrderDetails from '../components/order-details/order-details';
 
 const OrderModal: FC = () => {
 
-  const [ingredientData, setIngredientData] = useState<TIngredient>();
+  const [orderData, setOrderData] = useState<TOrder>();
 
-  const { dataIsLoaded, availableIngredients } = useSelector(state => ({
+  const { dataIsLoaded, orderFeed } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
-    availableIngredients: state.burgerIngredients.data
+    orderFeed: state.feedWs.feed
   }));
 
   const { id: orderId } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (orderFeed) {
+      const orderData = orderFeed.find(item => item._id === orderId);
+      if (!orderData) {
+        navigate(`/feed/${orderId}`, { state: { orderNotFound: true }, replace: true });
+      } else {
+        setOrderData({ ...orderData });
+      }
+    }
+  }, [orderFeed]);
+
+  if (!dataIsLoaded || !orderData) {
+    return null;
+  }
+
   return (
     <Modal
       header={
         <span className="text text_type_digits-default">
-          {`#${orderId}`}
+          {`#${orderData.number}`}
         </span>
       }
       closeHandler={() => navigate(-1)}
     >
-      <OrderDetails modal status={'done'} orderData={5} />
+      <OrderDetails modal orderData={orderData} />
     </Modal>
   );
 };

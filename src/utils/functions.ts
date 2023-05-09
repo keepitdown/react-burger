@@ -1,5 +1,5 @@
 import { BASE_URL, REFRESH_TOKEN_URL, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge } from "./constants";
-import { TIngredient, TErrorDetails, TAvaliableIngredients, TRawIngredient, TUpdateTokensResponseBody } from "./types";
+import { TIngredient, TErrorDetails, TAvaliableIngredients, TRawIngredient, TUpdateTokensResponseBody, TOrder } from "./types";
 
 async function checkApiResponse<T>(response: Response): Promise<T> {
   if (response.ok) {
@@ -40,6 +40,16 @@ function groupByType(dataArray: TIngredient[]): TAvaliableIngredients {
       : [currentItem];
     return { ...processedData, [itemType]: updatedGroup }
   }, {});
+}
+
+function groupByPropValue<T>(dataArray: T[], propKey: keyof T): Record<string, T[]> {
+  return dataArray.reduce<Record<string, T[]>>((processedData: Record<string, T[]>, currentItem: T) => {
+    const itemType = currentItem[propKey as keyof T];
+    const updatedGroup = (itemType as string) in processedData
+      ? [...processedData[itemType as string], currentItem]
+      : [currentItem];
+    return { ...processedData, [itemType as keyof T]: updatedGroup }
+  }, {} as Record<string, T[]>);
 }
 
 function getIngredientById(availableIngredients: TAvaliableIngredients, ingredientId: string): TIngredient | undefined {
@@ -104,4 +114,7 @@ function updateTokens(): Promise<void> {
     });
 }
 
-export { request, checkApiResponse, logError, addProperty, groupByType, getIngredientById, changePageTitle, setCookie, getCookie, removeCookie, requestWithToken, updateTokens };
+export {
+  request, checkApiResponse, logError, addProperty, groupByType, groupByPropValue,
+  getIngredientById, changePageTitle, setCookie, getCookie, removeCookie, requestWithToken, updateTokens
+};

@@ -28,6 +28,7 @@ const App: FC = () => {
   const locationState: TLocationState = location.state;
   const background = locationState?.background;
   const ingredientNotFound = locationState?.ingredientNotFound;
+  const orderNotFound = locationState?.orderNotFound;
 
 
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const App: FC = () => {
           />
           <Route
             path="/feed/:id"
-            element={<OrderPage />}
+            element={!orderNotFound ? <OrderPage /> : <NotFoundPage />}
           />
           <Route
             path="/login"

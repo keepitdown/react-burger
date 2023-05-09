@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
 import styles from './status-board-group.module.css';
 import { done, pending } from '../../utils/constants';
+import { TOrder } from '../../utils/types';
 
 type TStatusBoardGroup = {
-  orderIds: string[];
+  orders: TOrder[] | null;
   status: typeof done | typeof pending;
   extraClass?: string;
 };
 
-const StatusBoardGroup: FC<TStatusBoardGroup> = ({ orderIds, status, extraClass }) => {
+const StatusBoardGroup: FC<TStatusBoardGroup> = ({ orders, status, extraClass }) => {
 
   return (
     <div className={styles.container + (extraClass ? (' ' + extraClass) : '')}>
@@ -17,12 +18,12 @@ const StatusBoardGroup: FC<TStatusBoardGroup> = ({ orderIds, status, extraClass 
         {(status === pending) && (<>В работе:</>)}
       </h2>
       <ol className={styles.list + ' text text_type_digits-default' + ((status === done) ? (' ' + styles['status-done']) : '')}>
-        {orderIds.map((item) => (
+        {orders && orders.slice(0, 30).map((item) => (
           <li
-            key={item}
+            key={item.number}
             className={styles['list-item']}
           >
-            {item}
+            {item.number}
           </li>
         ))}
       </ol>

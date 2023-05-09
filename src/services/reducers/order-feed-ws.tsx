@@ -25,7 +25,6 @@ const feedWsReducer = (state: TFeedWsState = initialState, action: TFeedWsAction
         error: true
       };
     case FEED_WS_GET_ORDERS:
-      console.log(action.data.orders[0]);
       return {
         ...state,
         feed: action.data.orders,

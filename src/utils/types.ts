@@ -27,6 +27,11 @@ type TAddedIngredients = {
   middle: TConstructorIngredient[];
 };
 
+type TOrderIngredient = {
+  ingredient: TIngredient;
+  quantity: number;
+};
+
 type TPreviewData = Pick<TIngredient, 'name' | 'image'>;
 
 type TOrder = {
@@ -49,6 +54,7 @@ type TLocationState = {
   readonly background?: Location;
   readonly originalPath?: string;
   readonly ingredientNotFound?: boolean;
+  readonly orderNotFound?: boolean;
 } | null;
 
 type TAuthData = {
@@ -93,7 +99,7 @@ type TUpdateTokensResponseBody = TResponseBody & {
 
 export type {
   TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients, TPreviewData,
-  TOrder, TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
-  TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
+  TOrderIngredient, TOrder, TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm,
+  TRecoveryForm, TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
   TResponseBodyWithMessage, TUpdateTokensResponseBody
 };

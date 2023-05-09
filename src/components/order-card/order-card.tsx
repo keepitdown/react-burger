@@ -5,7 +5,6 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { created, done, pending } from '../../utils/constants';
-import { testIngredients } from '../../utils/test-data';
 import { FormattedDate } from '../formatted-date/formatted-date';
 import { TIngredient, TOrder, TPreviewData } from '../../utils/types';
 import { getIngredientById } from '../../utils/functions';

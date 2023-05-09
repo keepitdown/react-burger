@@ -19,8 +19,12 @@ const IngredientModal: FC = () => {
 
   useEffect(() => {
     if (dataIsLoaded) {
-      const ingredientData = Object.values(availableIngredients).flat().find(item => item._id === ingredientId) as TIngredient;
-      setIngredientData({ ...ingredientData });
+      const ingredientData = Object.values(availableIngredients).flat().find(item => item._id === ingredientId);
+      if (!ingredientData) {
+        navigate(`/ingredients/${ingredientId}`, { state: { ingredientNotFound: true }, replace: true });
+      } else {
+        setIngredientData({ ...ingredientData });
+      }
     }
   }, [ingredientId, dataIsLoaded, availableIngredients]);
 

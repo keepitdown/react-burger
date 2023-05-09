@@ -1,36 +1,57 @@
 import React, { FC } from 'react';
 import styles from './order-details.module.css';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderIngredients from '../order-ingredients/order-ingredients';
 import { created, done, pending } from '../../utils/constants';
-//================Удалить!===================
-import { testIngredients, total } from '../../utils/test-data';
+import { TIngredient, TOrder, TOrderIngredient } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
+import { FormattedDate } from '../formatted-date/formatted-date';
+import { getIngredientById } from '../../utils/functions';
 
 type TOrderDetails = {
-  orderData: any;
+  orderData: TOrder;
   modal?: boolean;
-  status: typeof done | typeof pending | typeof created;
 };
 
-const OrderDetails: FC<TOrderDetails> = ({ orderData, modal, status }) => {
+const OrderDetails: FC<TOrderDetails> = ({ orderData, modal }) => {
+
+  const availableIngredients = useSelector(state => state.burgerIngredients.data);
+
+  const ingredientsData = orderData.ingredients.reduce<TOrderIngredient[]>((result, ingredientId) => {
+    const duplicateIndex = result.findIndex(resultItem => resultItem.ingredient._id === ingredientId);
+    if (duplicateIndex >= 0) {
+      const duplicate = result[duplicateIndex];
+      const updatedDuplicate = { ...duplicate, quantity: duplicate.quantity + 1 };
+      let updatedResult = [...result];
+      updatedResult.splice(duplicateIndex, 1, updatedDuplicate)
+      return updatedResult;
+    } else {
+      const ingredientData = getIngredientById(availableIngredients, ingredientId) as TIngredient;
+      return [...result, { ingredient: ingredientData, quantity: 1 }];
+    }
+  }, []);
+
+  const totalPrice = ingredientsData.reduce<number>(
+    (total, { ingredient, quantity }) => total + (ingredient.price * quantity)
+, 0);
 
   return (
     <div className={styles.container + (modal ? ' mt-5 mb-10' : ' mt-10 mb-10')}>
-      <p className={'text text_type_main-medium' + (modal ? ' mb-2' : ' mb-3')}>Black Hole Singularity острый бургер</p>
+      <p className={'text text_type_main-medium' + (modal ? ' mb-2' : ' mb-3')}>{orderData.name}</p>
       <p className={'text text_type_main-default mb-15'}>
-        {(status === done) && (<span className={styles['status-done']}>Выполнен</span>)}
-        {(status === pending) && (<>Готовится</>)}
-        {(status === created) && (<>Создан</>)}
+        {(orderData.status === done) && (<span className={styles['status-done']}>Выполнен</span>)}
+        {(orderData.status === pending) && (<>Готовится</>)}
+        {(orderData.status === created) && (<>Создан</>)}
       </p>
-      <OrderIngredients orderData={testIngredients} />
+      <OrderIngredients orderData={ingredientsData} />
       <div className={styles['order-info'] + ' mt-10'}>
         <FormattedDate
           className="text text_type_main-default text_color_inactive"
-          date={new Date('2023-04-30T21:33:32.877Z')}
+          date={new Date(orderData.createdAt)}
         />
         <div className={styles['total-price']}>
           <span className='text text_type_digits-default mr-2'>
-            {total}
+            {totalPrice}
           </span>
           <CurrencyIcon type="primary" />
         </div>
