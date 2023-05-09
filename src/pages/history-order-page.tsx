@@ -2,9 +2,9 @@ import React, { FC, useEffect } from 'react';
 import { useSelector } from '../services/hooks';
 import ErrorMessage from '../components/error-message/error-message';
 import { changePageTitle } from '../utils/functions';
-import OrderSection from '../components/order-section/order-section';
+import HistoryOrder from '../components/history-order/history-order';
 
-const OrderPage: FC = () => {
+const HistoryOrderPage: FC = () => {
 
   useEffect(() => changePageTitle('Детали заказа'), []);
 
@@ -13,10 +13,10 @@ const OrderPage: FC = () => {
   return (
     !requestHasFailed
       ? (
-        <OrderSection />
+        <HistoryOrder />
       )
       : (<ErrorMessage>Не удалось установить связь с сервером</ErrorMessage>)
   );
 }
 
-export default OrderPage;
+export default HistoryOrderPage;

@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
-import styles from './order-section.module.css';
+import styles from './feed-order.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { TOrder } from '../../utils/types';
 import OrderDetails from '../order-details/order-details';
 import { feedWsClose, feedWsStart } from '../../services/actions/order-feed-ws';
 
-const OrderSection: FC = () => {
+const FeedOrder: FC = () => {
 
   const [orderData, setOrderData] = useState<TOrder>();
 
@@ -53,4 +53,4 @@ const OrderSection: FC = () => {
   );
 };
 
-export default OrderSection;
+export default FeedOrder;

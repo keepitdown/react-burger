@@ -10,6 +10,7 @@ import StatusBoardGroup from '../status-board-group/status-board-group';
 import { done, pending } from '../../utils/constants';
 import { groupByPropValue } from '../../utils/functions';
 import { TOrder } from '../../utils/types';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type TOrderFeed = {
   extraClass?: string;
@@ -36,6 +37,14 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
     }
   }, [dispatch]);
 
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const cardClickHandler = (orderId: string): void => {
+    navigate(`/feed/${orderId}`, { state: { background: location } });
+  };
+
   return (
     <section className={styles.section + (extraClass ? (' ' + extraClass) : '')}>
       <h1 className="text text_type_main-large mt-10 mb-5">Лента заказов</h1>
@@ -45,6 +54,7 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
             <OrderCard
               key={item._id}
               orderData={item}
+              clickHandler={(): void => cardClickHandler(item._id)}
               extraClass={styles['list-item'] + ((index > 0) ? ' mt-4' : '')}
             />
           ))}

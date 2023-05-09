@@ -5,28 +5,28 @@ import Modal from '../components/modal/modal';
 import { TOrder } from '../utils/types';
 import OrderDetails from '../components/order-details/order-details';
 
-const OrderModal: FC = () => {
+const HistoryModal: FC = () => {
 
   const [orderData, setOrderData] = useState<TOrder>();
 
-  const { dataIsLoaded, orderFeed } = useSelector(state => ({
+  const { dataIsLoaded, orderHistory } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
-    orderFeed: state.feedWs.feed
+    orderHistory: state.historyWs.history
   }));
 
   const { id: orderId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (orderFeed) {
-      const orderData = orderFeed.find(item => item._id === orderId);
+    if (orderHistory) {
+      const orderData = orderHistory.find(item => item._id === orderId);
       if (!orderData) {
-        navigate(`/feed/${orderId}`, { state: { orderNotFound: true }, replace: true });
+        navigate(`/profile/order/${orderId}`, { state: { orderNotFound: true }, replace: true });
       } else {
         setOrderData({ ...orderData });
       }
     }
-  }, [orderFeed]);
+  }, [orderHistory]);
 
   if (!dataIsLoaded || !orderData) {
     return null;
@@ -46,4 +46,4 @@ const OrderModal: FC = () => {
   );
 };
 
-export default OrderModal;
+export default HistoryModal;

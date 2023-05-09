@@ -3,7 +3,6 @@ import styles from './order-card.module.css';
 import { useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientPreview from '../ingredient-preview/ingredient-preview';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { created, done, pending } from '../../utils/constants';
 import { FormattedDate } from '../formatted-date/formatted-date';
 import { TIngredient, TOrder, TPreviewData } from '../../utils/types';
@@ -13,10 +12,11 @@ type TOrderCard = {
   orderData: TOrder;
   displayStatus?: boolean;
   ingredientsDisplayed?: number,
+  clickHandler: () => void;
   extraClass?: string;
 };
 
-const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDisplayed = 6, extraClass }) => {
+const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDisplayed = 6, clickHandler, extraClass }) => {
 
   const { name: orderName, number: orderNumber, createdAt: timestamp, status, _id: orderId, ingredients } = orderData;
 
@@ -40,13 +40,6 @@ const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDispla
       return null;
     }
     return `+${ingredients.length - ingredientsDisplayed}`
-  };
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const clickHandler = (): void => {
-    navigate(`/feed/${orderId}`, { state: { background: location } });
   };
 
   return (

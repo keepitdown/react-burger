@@ -61,4 +61,7 @@ type TFeedWsMessage = TResponseBody & {
   readonly totalToday: number;
 }
 
-export type { TFeedWsState, TFeedWsActionTypes, TFeedWsStartAction, TFeedWsCloseAction, TFeedWsConnectedAction, TFeedWsErrorAction, TFeedWsGetOrdersAction, TFeedWsActions, TFeedWsMessage };
+export type {
+  TFeedWsState, TFeedWsActionTypes, TFeedWsStartAction, TFeedWsCloseAction, TFeedWsConnectedAction,
+  TFeedWsErrorAction, TFeedWsGetOrdersAction, TFeedWsActions, TFeedWsMessage
+};

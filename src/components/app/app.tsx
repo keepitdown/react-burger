@@ -14,13 +14,15 @@ import IngredientPage from '../../pages/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page';
 import ProtectedRoute from '../protected-route/protected-route';
 import UnauthorizedRoute from '../unauthorized-route/unauthorized-route';
-import OrdersPage from '../../pages/orders-page';
+import HistoryPage from '../../pages/history-page';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
 import IngredientModal from '../../modals/ingredient-modal';
 import { TLocationState } from '../../utils/types';
-import OrderModal from '../../modals/order-modal';
-import OrderPage from '../../pages/order-page';
+import FeedModal from '../../modals/feed-modal';
+import FeedOrderPage from '../../pages/feed-order-page';
+import HistoryModal from '../../modals/history-modal';
+import HistoryOrderPage from '../../pages/history-order-page';
 
 const App: FC = () => {
 
@@ -29,7 +31,6 @@ const App: FC = () => {
   const background = locationState?.background;
   const ingredientNotFound = locationState?.ingredientNotFound;
   const orderNotFound = locationState?.orderNotFound;
-
 
   const dispatch = useDispatch();
 
@@ -57,7 +58,7 @@ const App: FC = () => {
           />
           <Route
             path="/feed/:id"
-            element={!orderNotFound ? <OrderPage /> : <NotFoundPage />}
+            element={!orderNotFound ? <FeedOrderPage /> : <NotFoundPage />}
           />
           <Route
             path="/login"
@@ -81,7 +82,11 @@ const App: FC = () => {
           />
           <Route
             path="/profile/orders"
-            element={<ProtectedRoute element={<OrdersPage />} />}
+            element={<ProtectedRoute element={<HistoryPage />} />}
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={<ProtectedRoute element={!orderNotFound ? < HistoryOrderPage /> : <NotFoundPage />} />}
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
@@ -94,7 +99,11 @@ const App: FC = () => {
           />
           <Route
             path="/feed/:id"
-            element={<OrderModal />}
+            element={<FeedModal />}
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={<HistoryModal />}
           />
         </Routes>
       )}

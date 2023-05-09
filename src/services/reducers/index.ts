@@ -4,7 +4,8 @@ import burgerConstructorReducer from "./burger-constructor";
 import OrderConfirmationReducer from "./order-details";
 import profileReducer from "./profile";
 import authReducer from "./auth";
-import { feedWsReducer } from "./order-feed-ws";
+import feedWsReducer from "./order-feed-ws";
+import historyWsReducer from "./order-history-ws";
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   OrderConfirmation: OrderConfirmationReducer,
   profile: profileReducer,
   auth: authReducer,
-  feedWs: feedWsReducer
+  feedWs: feedWsReducer,
+  historyWs: historyWsReducer
 });
 
 export default rootReducer;
