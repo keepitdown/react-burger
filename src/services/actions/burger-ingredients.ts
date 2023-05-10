@@ -1,5 +1,5 @@
 import { INGREDIENTS_URL } from "../../utils/constants";
-import { addProperty, groupByType, request } from "../../utils/functions";
+import { addProperty, groupByPropValue, request } from "../../utils/functions";
 import {
   TSetBurgerIngredientsAction, TSetLoadedStatusAction, TSetFailedStatusAction,
   TIncreaseIngredientQuantityAction, TDecreaseIngredientQuantityAction, TResetAllQuantitiesAction, TBurgerIngredientsResponseBody
@@ -51,7 +51,7 @@ const getIngredients: AppThunk = () => dispatch => {
 
   request<TBurgerIngredientsResponseBody>(INGREDIENTS_URL)
     .then(({ data: serverData }: {data: TRawIngredient[]}) => {
-      const processedData = groupByType(addProperty<number>(serverData, 'quantity', 0) as TIngredient[]);
+      const processedData = groupByPropValue<TIngredient>(addProperty<number>(serverData, 'quantity', 0) as TIngredient[], 'type');
       dispatch(setBurgerIngredients(processedData));
       dispatch(setLoadedStatus(true));
     })

@@ -32,16 +32,6 @@ function addProperty<T>(ingredientsData: TRawIngredient[], propertyName: string,
   return ingredientsData.map(item => ({ ...item, [propertyName]: initialValue }))
 }
 
-function groupByType(dataArray: TIngredient[]): TAvaliableIngredients {
-  return dataArray.reduce((processedData: TAvaliableIngredients, currentItem: TIngredient): TAvaliableIngredients => {
-    const itemType = currentItem.type;
-    const updatedGroup = itemType in processedData
-      ? [...processedData[itemType], currentItem]
-      : [currentItem];
-    return { ...processedData, [itemType]: updatedGroup }
-  }, {});
-}
-
 function groupByPropValue<T>(dataArray: T[], propKey: keyof T): Record<string, T[]> {
   return dataArray.reduce<Record<string, T[]>>((processedData: Record<string, T[]>, currentItem: T) => {
     const itemType = currentItem[propKey as keyof T];
@@ -115,6 +105,6 @@ function updateTokens(): Promise<void> {
 }
 
 export {
-  request, checkApiResponse, logError, addProperty, groupByType, groupByPropValue,
+  request, checkApiResponse, logError, addProperty, groupByPropValue,
   getIngredientById, changePageTitle, setCookie, getCookie, removeCookie, requestWithToken, updateTokens
 };
