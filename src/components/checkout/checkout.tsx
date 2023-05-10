@@ -15,9 +15,10 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
 
   const addedIngredients = useSelector(state => state.burgerConstructor.data);
 
-  const { userIsLoggedIn, authIsChecked } = useSelector(state => ({
+  const { userIsLoggedIn, authIsChecked, sendingData } = useSelector(state => ({
     userIsLoggedIn: state.auth.userIsLoggedIn,
-    authIsChecked: state.auth.authIsChecked
+    authIsChecked: state.auth.authIsChecked,
+    sendingData: state.OrderConfirmation.sendingData,
   }));
 
   const dispatch = useDispatch();
@@ -52,10 +53,11 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
         htmlType="button"
         type="primary"
         size="large"
-        disabled={!authIsChecked}
+        disabled={!authIsChecked || sendingData}
         onClick={handleClick}
+        extraClass={styles.button}
       >
-        Оформить заказ
+        {!sendingData ? (<>Оформить заказ</>) : (<>Отправка...</>)}
       </Button>
     </div>
   )

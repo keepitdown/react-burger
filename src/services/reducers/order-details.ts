@@ -1,11 +1,12 @@
-import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS } from '../actions/order-details';
+import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER } from '../actions/order-details';
 import { TOrderConfirmationActions, TOrderConfirmationState } from '../types/order-details';
 
 const initialState = {
   sendingData: false,
   failedToSend: false,
   orderNumber: null,
-  showDetails: false
+  showDetails: false,
+  showLoader: false
 };
 
 const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState, action: TOrderConfirmationActions) => {
@@ -14,18 +15,21 @@ const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState,
       return {
         ...state,
         sendingData: true,
-        failedToSend: false
+        failedToSend: false,
+        showLoader: true
       }
     case SET_ORDER_SUCCEEDED:
       return {
         ...state,
-        sendingData: false
+        sendingData: false,
+        showLoader: false
       }
     case SET_ORDER_FAILED:
       return {
         ...state,
         failedToSend: true,
-        sendingData: false
+        sendingData: false,
+        showLoader: false
       }
     case SET_ORDER_NUMBER:
       return {
@@ -42,6 +46,11 @@ const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState,
         ...state,
         showDetails: false
       };
+    case HIDE_LOADER:
+      return {
+        ...state,
+        showLoader: false
+      }
     default:
       return state;
   }

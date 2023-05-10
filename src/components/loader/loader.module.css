@@ -1,0 +1,25 @@
+.animation-container {
+  margin: 45px 0 80px;
+  width: 340px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 20px 3px #4c4cff73;
+}
+
+.animation-element {
+  width: 300%;
+  height: 5px;
+  background-image: linear-gradient(to right, #29299b, #801ab2, #29299b, #801ab2);
+  position: relative;
+  animation: slide 3s linear infinite normal;
+}
+
+@keyframes slide {
+  from {
+    right: 200%;
+  }
+
+  to {
+    right: 0;
+  }
+}

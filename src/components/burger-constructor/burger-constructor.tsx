@@ -11,10 +11,11 @@ import OrderConfirmation from '../order-confirmation/order-confirmation';
 import OrderError from '../order-error/order-error';
 import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
 import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities } from '../../services/actions/burger-ingredients';
-import { hideOrderConfirmation } from '../../services/actions/order-details';
+import { hideLoader, hideOrderConfirmation } from '../../services/actions/order-details';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
 import { TIngredient, TIngredientsItemDragData } from '../../utils/types';
+import Loader from '../loader/loader';
 
 type TBurgerConstructor = {
   extraClass?: string;
@@ -22,8 +23,9 @@ type TBurgerConstructor = {
 
 const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
-  const { modalIsOpen, sendingData, failedToSend } = useSelector(state => ({
+  const { modalIsOpen, showLoader, sendingData, failedToSend } = useSelector(state => ({
     modalIsOpen: state.OrderConfirmation.showDetails,
+    showLoader: state.OrderConfirmation.showLoader,
     sendingData: state.OrderConfirmation.sendingData,
     failedToSend: state.OrderConfirmation.failedToSend
   }));
@@ -68,6 +70,10 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       dispatch(resetConstructor());
       dispatch(resetAllQuantities());
     };
+  };
+
+  const handleLoaderClose = (): void => {
+    dispatch(hideLoader());
   };
 
   return (
@@ -121,6 +127,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
           extraClass="ml-4 mr-4"
         />
       </section>
+      {showLoader && (<Modal closeHandler={handleLoaderClose}><Loader /></Modal>)}
       {modalIsOpen && !sendingData && (
         <Modal closeHandler={handleModalClose}>
           {!failedToSend

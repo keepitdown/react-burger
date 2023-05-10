@@ -2,7 +2,7 @@ import { ORDER_URL } from "../../utils/constants";
 import { requestWithToken } from "../../utils/functions";
 import {
   TSetSendingOrderAction, TSetOrderSucceededAction, TSetOrderFailedAction,
-  TSetOrderNumberAction, TShowOrderConfirmationAction, THideOrderConfirmationAction, TOrderResponseBody
+  TSetOrderNumberAction, TShowOrderConfirmationAction, THideOrderConfirmationAction, TOrderResponseBody, THideLoaderAction
 } from '../types/order-details';
 import { AppThunk } from "../types";
 
@@ -12,6 +12,7 @@ const SET_ORDER_FAILED = 'SET_ORDER_FAILED';
 const SET_ORDER_NUMBER = 'SET_ORDER_NUMBER';
 const SHOW_ORDER_DETAILS = 'SHOW_ORDER_DETAILS';
 const HIDE_ORDER_DETAILS = 'HIDE_ORDER_DETAILS';
+const HIDE_LOADER = 'HIDE_LOADER';
 
 const setSendingOrder = (): TSetSendingOrderAction => ({
   type: SET_SENDING_ORDER
@@ -38,6 +39,10 @@ const hideOrderConfirmation = (): THideOrderConfirmationAction => ({
   type: HIDE_ORDER_DETAILS
 });
 
+const hideLoader = (): THideLoaderAction => ({
+  type: HIDE_LOADER
+});
+
 const sendOrder: AppThunk = () => (dispatch, getState) => {
   dispatch(setSendingOrder());
   const orderData = [getState().burgerConstructor.data.bun!._id, ...getState().burgerConstructor.data.middle.map(item => item._id), getState().burgerConstructor.data.bun!._id];
@@ -60,6 +65,6 @@ const sendOrder: AppThunk = () => (dispatch, getState) => {
 }
 
 export {
-  SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS,
-  setSendingOrder, setOrderSucceeded, setOrderFailed, setOrderNumber, showOrderConfirmation, hideOrderConfirmation, sendOrder
+  SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER,
+  setSendingOrder, setOrderSucceeded, setOrderFailed, setOrderNumber, showOrderConfirmation, hideOrderConfirmation, hideLoader, sendOrder
 };
