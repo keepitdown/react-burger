@@ -1,5 +1,5 @@
-import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER } from '../actions/order-details';
-import { TOrderConfirmationActions, TOrderConfirmationState } from '../types/order-details';
+import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER } from '../actions/order-confirmation';
+import { TOrderConfirmationActions, TOrderConfirmationState } from '../types/order-confirmation';
 
 const initialState = {
   sendingData: false,

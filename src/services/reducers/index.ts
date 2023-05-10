@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import burgerIngredientsReducer from "./burger-ingredients";
 import burgerConstructorReducer from "./burger-constructor";
-import OrderConfirmationReducer from "./order-details";
+import OrderConfirmationReducer from "./order-confirmation";
 import profileReducer from "./profile";
 import authReducer from "./auth";
 import feedWsReducer from "./order-feed-ws";

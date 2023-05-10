@@ -3,7 +3,7 @@ import { requestWithToken } from "../../utils/functions";
 import {
   TSetSendingOrderAction, TSetOrderSucceededAction, TSetOrderFailedAction,
   TSetOrderNumberAction, TShowOrderConfirmationAction, THideOrderConfirmationAction, TOrderResponseBody, THideLoaderAction
-} from '../types/order-details';
+} from '../types/order-confirmation';
 import { AppThunk } from "../types";
 
 const SET_SENDING_ORDER = 'SET_SENDING_ORDER';

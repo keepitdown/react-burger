@@ -11,7 +11,7 @@ import OrderConfirmation from '../order-confirmation/order-confirmation';
 import OrderError from '../order-error/order-error';
 import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
 import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities } from '../../services/actions/burger-ingredients';
-import { hideLoader, hideOrderConfirmation } from '../../services/actions/order-details';
+import { hideLoader, hideOrderConfirmation } from '../../services/actions/order-confirmation';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
 import { TIngredient, TIngredientsItemDragData } from '../../utils/types';

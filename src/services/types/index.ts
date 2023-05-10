@@ -4,7 +4,7 @@ import { ActionCreator } from 'redux';
 import { TAuthActions } from "./auth";
 import { TBurgerConstructorActions } from "./burger-constructor";
 import { TBurgerIngredientsActions } from "./burger-ingredients";
-import { TOrderConfirmationActions } from "./order-details";
+import { TOrderConfirmationActions } from "./order-confirmation";
 import { TProfileActions } from "./profile";
 import { TFeedWsActions } from "./order-feed-ws";
 
