@@ -1,5 +1,5 @@
 import { BASE_URL, REFRESH_TOKEN_URL, accessToken, refreshToken, accessTokenMaxAge, refreshTokenMaxAge } from "./constants";
-import { TIngredient, TErrorDetails, TAvaliableIngredients, TRawIngredient, TUpdateTokensResponseBody, TOrder } from "./types";
+import { TIngredient, TErrorDetails, TAvaliableIngredients, TRawIngredient, TUpdateTokensResponseBody } from "./types";
 
 async function checkApiResponse<T>(response: Response): Promise<T> {
   if (response.ok) {
