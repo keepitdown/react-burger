@@ -1,5 +1,5 @@
-import React, { FC, useState, useRef, SyntheticEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useState, useRef, ChangeEvent, FormEvent } from 'react';
+import { useDispatch } from '../../services/hooks';
 import { Link } from 'react-router-dom';
 import styles from './registration-form.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,14 +15,14 @@ const RegistrationForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   }
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendSignUpRequest(formData));
+    dispatch(sendSignUpRequest(formData));
   }
 
   return (

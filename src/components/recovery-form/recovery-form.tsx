@@ -1,11 +1,12 @@
-import React, { FC, useState, useRef, useEffect, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState, useRef, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate } from 'react-router-dom';
 import styles from './recovery-form.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_SUBMIT_STATUS, sendRecoverRequest } from '../../services/actions/auth';
+import { sendRecoverRequest, setFormSubmitStatus } from '../../services/actions/auth';
 import { TRecoveryForm } from '../../utils/types';
+import { recover } from '../../utils/constants';
 
 const RecoveryForm: FC = () => {
   const [formData, setFormData] = useState<TRecoveryForm>({ email: '' });
@@ -15,26 +16,22 @@ const RecoveryForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const formIsSubmitted = useSelector<any, boolean>(state => state.auth.forms.recover.isSubmitted);
+  const formIsSubmitted = useSelector(state => state.auth.forms.recover.isSubmitted);
 
   useEffect(() => {
     return () => {
-      dispatch({
-        type: SET_FORM_SUBMIT_STATUS,
-        form: 'recover',
-        status: false
-      });
+      dispatch(setFormSubmitStatus(recover, false));
     };
-  }, []);
+  }, [dispatch]);
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   }
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendRecoverRequest(formData));
+    dispatch(sendRecoverRequest(formData));
   };
 
   if (formIsSubmitted) {

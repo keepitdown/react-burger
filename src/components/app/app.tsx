@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { getProfileData } from '../../services/actions/profile';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor-page';
+import FeedPage from '../../pages/feed-page';
 import LoginPage from '../../pages/login-page';
 import RegistrationPage from '../../pages/registration-page';
 import RecoveryPage from '../../pages/recovery-page';
@@ -13,11 +14,15 @@ import IngredientPage from '../../pages/ingredient-page';
 import NotFoundPage from '../../pages/not-found-page';
 import ProtectedRoute from '../protected-route/protected-route';
 import UnauthorizedRoute from '../unauthorized-route/unauthorized-route';
-import OrdersPage from '../../pages/orders-page';
+import HistoryPage from '../../pages/history-page';
 import AppHeader from '../app-header/app-header';
 import AppMain from '../app-main/app-main';
 import IngredientModal from '../../modals/ingredient-modal';
 import { TLocationState } from '../../utils/types';
+import FeedModal from '../../modals/feed-modal';
+import FeedOrderPage from '../../pages/feed-order-page';
+import HistoryModal from '../../modals/history-modal';
+import HistoryOrderPage from '../../pages/history-order-page';
 
 const App: FC = () => {
 
@@ -25,14 +30,14 @@ const App: FC = () => {
   const locationState: TLocationState = location.state;
   const background = locationState?.background;
   const ingredientNotFound = locationState?.ingredientNotFound;
+  const orderNotFound = locationState?.orderNotFound;
 
-  
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch<any>(getProfileData());
-    dispatch<any>(getIngredients());
-  }, []);
+    dispatch(getProfileData());
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <>
@@ -48,6 +53,14 @@ const App: FC = () => {
             element={!ingredientNotFound ? <IngredientPage /> : <NotFoundPage />}
           />
           <Route
+            path="/feed"
+            element={<FeedPage />}
+          />
+          <Route
+            path="/feed/:id"
+            element={!orderNotFound ? <FeedOrderPage /> : <NotFoundPage />}
+          />
+          <Route
             path="/login"
             element={<UnauthorizedRoute element={<LoginPage />} />}
           />
@@ -59,14 +72,21 @@ const App: FC = () => {
             path="/forgot-password"
             element={<UnauthorizedRoute element={<RecoveryPage />} />}
           />
-          <Route path="/reset-password" element={<ResetPage />} />
+          <Route
+            path="/reset-password"
+            element={<ResetPage />}
+          />
           <Route
             path="/profile"
             element={<ProtectedRoute element={<ProfilePage />} />}
           />
           <Route
             path="/profile/orders"
-            element={<ProtectedRoute element={<OrdersPage />} />}
+            element={<ProtectedRoute element={<HistoryPage />} />}
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={<ProtectedRoute element={!orderNotFound ? < HistoryOrderPage /> : <NotFoundPage />} />}
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
@@ -76,6 +96,14 @@ const App: FC = () => {
           <Route
             path="/ingredients/:id"
             element={<IngredientModal />}
+          />
+          <Route
+            path="/feed/:id"
+            element={<FeedModal />}
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={<HistoryModal />}
           />
         </Routes>
       )}

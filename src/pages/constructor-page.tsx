@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/hooks';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import DragLayer from '../components/drag-layer/drag-layer';
@@ -12,7 +12,7 @@ const ConstructorPage: FC = () => {
 
   useEffect(() => changePageTitle('Конструктор'), []);
 
-  const requestHasFailed = useSelector<any, boolean>(state => state.burgerIngredients.requestHasFailed);
+  const requestHasFailed = useSelector(state => state.burgerIngredients.requestHasFailed);
 
   return (
     !requestHasFailed

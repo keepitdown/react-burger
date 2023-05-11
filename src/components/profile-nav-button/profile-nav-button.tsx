@@ -1,9 +1,9 @@
-import React, { FC, ReactNode, SyntheticEvent } from 'react';
+import React, { FC, MouseEvent, ReactNode } from 'react';
 import styles from './profile-nav-button.module.css';
 
 type TProfileNavButton = {
   children: ReactNode;
-  clickHandler: (e?: SyntheticEvent) => any;
+  clickHandler: (e?: MouseEvent) => any;
 }
 
 const ProfileNavButton: FC<TProfileNavButton> = ({ children, clickHandler }) => {

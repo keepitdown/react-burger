@@ -1,20 +1,21 @@
 import React, { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
+import { getIngredientById } from '../../utils/functions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import DragableContainer from '../dragable-container/dragable-container';
 import Checkout from '../checkout/checkout';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import OrderConfirmation from '../order-confirmation/order-confirmation';
 import OrderError from '../order-error/order-error';
-import { HIDE_BUN_ERROR, REMOVE_CONSTRUCTOR_ITEM, RESET_CONSTRUCTOR } from '../../services/actions/burger-constructor';
-import { INCREASE_INGREDIENT_QUANTITY, DECREASE_INGREDIENT_QUANTITY, RESET_ALL_QUANTITIES } from '../../services/actions/burger-ingredients';
-import { ADD_CONSTRUCTOR_ITEM } from '../../services/actions/burger-constructor';
-import { HIDE_ORDER_DETAILS } from '../../services/actions/order-details';
+import { addConstructorItem, hideBunError, removeConstructorItem, resetConstructor } from '../../services/actions/burger-constructor';
+import { increaseIngredientQuantity, decreaseIngredientQuantity, resetAllQuantities } from '../../services/actions/burger-ingredients';
+import { hideLoader, hideOrderConfirmation } from '../../services/actions/order-confirmation';
 import { addedIngredient } from '../../utils/constants';
 import Notification from '../notification/notification';
-import { TAddedIngredients, TAvaliableIngredients, TIngredientsItemDragData } from '../../utils/types';
+import { TIngredient, TIngredientsItemDragData } from '../../utils/types';
+import Loader from '../loader/loader';
 
 type TBurgerConstructor = {
   extraClass?: string;
@@ -22,15 +23,16 @@ type TBurgerConstructor = {
 
 const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
-  const { modalIsOpen, sendingData, failedToSend } = useSelector<any, { modalIsOpen: boolean, sendingData: boolean, failedToSend: boolean }>(state => ({
-    modalIsOpen: state.orderDetails.showDetails,
-    sendingData: state.orderDetails.sendingData,
-    failedToSend: state.orderDetails.failedToSend
+  const { modalIsOpen, showLoader, sendingData, failedToSend } = useSelector(state => ({
+    modalIsOpen: state.OrderConfirmation.showDetails,
+    showLoader: state.OrderConfirmation.showLoader,
+    sendingData: state.OrderConfirmation.sendingData,
+    failedToSend: state.OrderConfirmation.failedToSend
   }));
 
-  const { bun, middle } = useSelector<any, TAddedIngredients>(state => state.burgerConstructor.data);
+  const { bun, middle } = useSelector(state => state.burgerConstructor.data);
 
-  const { availableIngredients, showBunError } = useSelector<any, { availableIngredients: TAvaliableIngredients, showBunError: boolean }>(state => ({
+  const { availableIngredients, showBunError } = useSelector(state => ({
     availableIngredients: state.burgerIngredients.data,
     showBunError: state.burgerConstructor.showBunError
   }));
@@ -38,15 +40,8 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
   const dispatch = useDispatch();
 
   const closeHandler = ({ constructorId, _id }: { constructorId: number, _id: string }) => {
-    dispatch({
-      type: REMOVE_CONSTRUCTOR_ITEM,
-      id: constructorId
-    })
-    dispatch({
-      type: DECREASE_INGREDIENT_QUANTITY,
-      id: _id,
-      decreaseAmount: 1
-    })
+    dispatch(removeConstructorItem(constructorId));
+    dispatch(decreaseIngredientQuantity(_id, 1));
   };
 
   const [{ isHovered }, dropTargetRef] = useDrop<TIngredientsItemDragData, any, { isHovered: boolean }>({
@@ -55,45 +50,30 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
       isHovered: monitor.isOver()
     }),
     drop(droppedItemId) {
-      const droppedItem = { ...Object.values(availableIngredients).flat().find(item => item._id === droppedItemId.id) };
+      const droppedItem = { ...getIngredientById(availableIngredients, droppedItemId.id) } as TIngredient;
       if (droppedItem.type === 'bun') {
         if (!bun || (droppedItem._id !== bun._id)) {
-          dispatch({
-            type: INCREASE_INGREDIENT_QUANTITY,
-            id: droppedItem._id,
-            increaseAmount: 2
-          });
-          bun &&
-            dispatch({
-              type: DECREASE_INGREDIENT_QUANTITY,
-              id: bun._id,
-              decreaseAmont: 2
-            });
-          showBunError &&
-            dispatch({
-              type: HIDE_BUN_ERROR
-            });
+          dispatch(increaseIngredientQuantity(droppedItem._id, 2));
+          bun && dispatch(decreaseIngredientQuantity(bun._id, 2));
+          showBunError && dispatch(hideBunError());
         }
       } else {
-        dispatch({
-          type: INCREASE_INGREDIENT_QUANTITY,
-          id: droppedItem._id,
-          increaseAmount: 1
-        });
+        dispatch(increaseIngredientQuantity(droppedItem._id, 1));
       }
-      dispatch({
-        type: ADD_CONSTRUCTOR_ITEM,
-        data: droppedItem
-      });
+      dispatch(addConstructorItem(droppedItem));
     }
   }, [availableIngredients, dispatch, bun, showBunError]);
 
   const handleModalClose = (): void => {
-    dispatch({ type: HIDE_ORDER_DETAILS })
+    dispatch(hideOrderConfirmation());
     if (!failedToSend) {
-      dispatch({ type: RESET_CONSTRUCTOR });
-      dispatch({ type: RESET_ALL_QUANTITIES });
+      dispatch(resetConstructor());
+      dispatch(resetAllQuantities());
     };
+  };
+
+  const handleLoaderClose = (): void => {
+    dispatch(hideLoader());
   };
 
   return (
@@ -147,10 +127,11 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
           extraClass="ml-4 mr-4"
         />
       </section>
+      {showLoader && (<Modal closeHandler={handleLoaderClose}><Loader /></Modal>)}
       {modalIsOpen && !sendingData && (
         <Modal closeHandler={handleModalClose}>
           {!failedToSend
-            ? (<OrderDetails />)
+            ? (<OrderConfirmation />)
             : (<OrderError />)
           }
         </Modal>

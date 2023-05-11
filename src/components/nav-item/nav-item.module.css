@@ -15,6 +15,15 @@
 }
 
 .link:hover .link-text,
-.link:hover .link-text:focus {
+.link:focus .link-text {
   color: #fff;
+}
+
+.link svg {
+  transition: fill .3s ease-in;
+}
+
+.link:hover svg,
+.link:focus svg {
+  fill: #fff;
 }

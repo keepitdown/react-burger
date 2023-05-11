@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import styles from './ingredients-category.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { TIngredient } from '../../utils/types';
 
 type TIngredientsCategory = {
   children: string;
@@ -12,7 +11,7 @@ type TIngredientsCategory = {
 const IngredientsCategory = forwardRef<HTMLElement, TIngredientsCategory>(
   ({ children, categoryName }, passedRef) => {
 
-    const categoryData = useSelector<any, TIngredient[]>(state => state.burgerIngredients.data[categoryName]);
+    const categoryData = useSelector(state => state.burgerIngredients.data[categoryName]);
 
     return (
       <article ref={passedRef}>

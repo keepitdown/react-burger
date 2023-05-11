@@ -1,11 +1,12 @@
-import React, { FC, useState, useEffect, useRef, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import styles from './reset-form.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_FAIL_STATUS, SET_FORM_SUBMIT_STATUS, sendResetRequest } from '../../services/actions/auth';
+import { sendResetRequest, setFormFailStatus, setFormSubmitStatus } from '../../services/actions/auth';
 import { TLocationState, TResetForm } from '../../utils/types';
+import { reset } from '../../utils/constants';
 
 const ResetForm: FC = () => {
   const [formData, setFormData] = useState<TResetForm>({ password: '', token: '' });
@@ -15,41 +16,34 @@ const ResetForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { formIsSubmitted, resetHasFailed } = useSelector<any, { formIsSubmitted: boolean, resetHasFailed: boolean }>(state => ({
+  const { formIsSubmitted, resetHasFailed } = useSelector(state => ({
     formIsSubmitted: state.auth.forms.reset.isSubmitted,
     resetHasFailed: state.auth.forms.reset.hasFailed
   }));
 
   useEffect(() => {
     return () => {
-      dispatch({
-        type: SET_FORM_SUBMIT_STATUS,
-        form: 'reset',
-        status: false
-      });
+      dispatch(setFormSubmitStatus(reset, false));
+      dispatch(setFormFailStatus(reset, false));
     };
-  }, []);
+  }, [dispatch]);
 
   const { state: locationState }: { state: TLocationState } = useLocation();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   };
 
   const handleFocus = () => {
     if (resetHasFailed) {
-      dispatch({
-        type: SET_FORM_FAIL_STATUS,
-        form: 'reset',
-        status: false
-      });
+      dispatch(setFormFailStatus(reset, false));
     }
   };
 
-  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendResetRequest(formData));
+    dispatch(sendResetRequest(formData));
   };
 
   if (locationState?.originalPath !== '/forgot-password') {

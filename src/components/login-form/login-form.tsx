@@ -1,42 +1,45 @@
-import React, { FC, useState, useRef, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContainer from '../form-container/form-container';
-import { SET_FORM_FAIL_STATUS, sendLogInRequest } from '../../services/actions/auth';
+import { sendLogInRequest, setFormFailStatus } from '../../services/actions/auth';
 import { TLocationState, TSignInForm } from '../../utils/types';
+import { login } from '../../utils/constants';
 
 const LoginForm: FC = () => {
   const [formData, setFormData] = useState<TSignInForm>({ email: '', password: '' });
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
 
-  const logInHasFaild = useSelector<any, boolean>(state => state.auth.forms.login.hasFailed);
+  const logInHasFaild = useSelector(state => state.auth.forms.login.hasFailed);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(setFormFailStatus(login, false));
+    };
+  }, [dispatch]);
+
   const { state: locationState }: { state: TLocationState } = useLocation();
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
   };
 
   const handleFocus = (): void => {
     if (logInHasFaild) {
-      dispatch({
-        type: SET_FORM_FAIL_STATUS,
-        form: 'login',
-        status: false
-      });
+      dispatch(setFormFailStatus(login, false));
     }
   };
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch<any>(sendLogInRequest(formData));
+    dispatch(sendLogInRequest(formData));
   };
 
   return (

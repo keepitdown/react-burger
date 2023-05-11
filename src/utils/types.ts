@@ -27,6 +27,23 @@ type TAddedIngredients = {
   middle: TConstructorIngredient[];
 };
 
+type TOrderIngredient = {
+  ingredient: TIngredient;
+  quantity: number;
+};
+
+type TPreviewData = Pick<TIngredient, 'name' | 'image'>;
+
+type TOrder = {
+  readonly _id: string;
+  readonly number: number;
+  readonly name: string;
+  readonly status: 'done' | 'pending' | 'created';
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly ingredients: string[];
+};
+
 type TErrorDetails = {
   code: number | undefined,
   description: string | undefined,
@@ -37,12 +54,13 @@ type TLocationState = {
   readonly background?: Location;
   readonly originalPath?: string;
   readonly ingredientNotFound?: boolean;
+  readonly orderNotFound?: boolean;
 } | null;
 
 type TAuthData = {
-  name: string;
-  email: string;
-  password: string;
+  readonly name: string;
+  readonly email: string;
+  readonly password: string;
 };
 
 type TProfile = Omit<TAuthData, 'password'>;
@@ -56,8 +74,8 @@ type TRecoveryForm = Pick<TAuthData, 'email'>;
 type TResetForm = Pick<TAuthData, 'password'> & { token: string };
 
 type TConstructorItemDragData = {
-  constructorId: number;
-  originalIndex: number;
+  readonly constructorId: number;
+  readonly originalIndex: number;
 };
 
 type TIngredientsItemDragData = {
@@ -66,8 +84,22 @@ type TIngredientsItemDragData = {
 
 type TItemDragData = TIngredientsItemDragData | TConstructorItemDragData;
 
+type TResponseBody = {
+  readonly success: boolean;
+};
+
+type TResponseBodyWithMessage = TResponseBody & {
+  readonly message: string;
+};
+
+type TUpdateTokensResponseBody = TResponseBody & {
+  readonly accessToken: string;
+  readonly refreshToken: string;
+};
+
 export type {
-  TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients,
-  TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm, TRecoveryForm,
-  TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData
+  TIngredient, TRawIngredient, TAvaliableIngredients, TConstructorIngredient, TAddedIngredients, TPreviewData,
+  TOrderIngredient, TOrder, TErrorDetails, TLocationState, TProfile, TAuthData, TProfileChanges, TSignInForm,
+  TRecoveryForm, TResetForm, TConstructorItemDragData, TIngredientsItemDragData, TItemDragData, TResponseBody,
+  TResponseBodyWithMessage, TUpdateTokensResponseBody
 };

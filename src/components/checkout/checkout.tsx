@@ -1,11 +1,11 @@
 import React, { FC, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './checkout.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { sendOrder, SHOW_ORDER_DETAILS } from '../../services/actions/order-details';
-import { SHOW_BUN_ERROR } from '../../services/actions/burger-constructor';
+import { sendOrder, showOrderConfirmation } from '../../services/actions/order-confirmation';
+import { showBunError } from '../../services/actions/burger-constructor';
 import { useNavigate } from 'react-router-dom';
-import { TAddedIngredients, TConstructorIngredient, TIngredient } from '../../utils/types';
+import { TConstructorIngredient, TIngredient } from '../../utils/types';
 
 type TCheckout = {
   extraClass?: string;
@@ -13,11 +13,12 @@ type TCheckout = {
 
 const Checkout: FC<TCheckout> = ({ extraClass }) => {
 
-  const addedIngredients = useSelector<any, TAddedIngredients>(state => state.burgerConstructor.data);
+  const addedIngredients = useSelector(state => state.burgerConstructor.data);
 
-  const { userIsLoggedIn, authIsChecked } = useSelector<any, { userIsLoggedIn: boolean, authIsChecked: boolean }>(state => ({
+  const { userIsLoggedIn, authIsChecked, sendingData } = useSelector(state => ({
     userIsLoggedIn: state.auth.userIsLoggedIn,
-    authIsChecked: state.auth.authIsChecked
+    authIsChecked: state.auth.authIsChecked,
+    sendingData: state.OrderConfirmation.sendingData,
   }));
 
   const dispatch = useDispatch();
@@ -28,10 +29,10 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
       navigate('/login', { state: { originalPath: '/' } });
     } else {
       if (addedIngredients.bun) {
-        dispatch({ type: SHOW_ORDER_DETAILS });
-        dispatch<any>(sendOrder());
+        dispatch(showOrderConfirmation());
+        dispatch(sendOrder());
       } else {
-        dispatch({ type: SHOW_BUN_ERROR });
+        dispatch(showBunError());
       }
     }
   }
@@ -52,10 +53,11 @@ const Checkout: FC<TCheckout> = ({ extraClass }) => {
         htmlType="button"
         type="primary"
         size="large"
-        disabled={!authIsChecked}
+        disabled={!authIsChecked || sendingData}
         onClick={handleClick}
+        extraClass={styles.button}
       >
-        Оформить заказ
+        {!sendingData ? (<>Оформить заказ</>) : (<>Отправка...</>)}
       </Button>
     </div>
   )

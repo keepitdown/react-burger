@@ -1,0 +1,34 @@
+.container {
+  background-color: #1c1c21;
+  border-radius: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.identifiers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details {
+  min-height: 64px;
+  display: flex;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  position: relative;
+  z-index: 0;
+}
+
+.total-price {
+  display: flex;
+  align-items: center;
+}
+
+.status-done {
+  color: #00cccc;
+}

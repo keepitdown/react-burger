@@ -1,19 +1,19 @@
-import React, { FC, useEffect, useState, useRef, SyntheticEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC, useEffect, useMemo, useState, useRef, ChangeEvent, FormEvent } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
 import styles from './profile.module.css';
 import { PasswordInput, Input, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import ProfileNav from '../profile-nav/profile-nav';
-import ProfileLink from '../profile-link/profile-link';
-import ProfileNavButton from '../profile-nav-button/profile-nav-button';
-import { sendLogOurRequest } from '../../services/actions/auth';
-import { SET_PROFILE_EDITED, editProfileData } from '../../services/actions/profile';
-import { TProfile, TProfileChanges, TAuthData } from '../../utils/types';
+import { editProfileData, setProfileEdited } from '../../services/actions/profile';
+import { TProfileChanges, TAuthData } from '../../utils/types';
+import ProfileLayout from '../profile-layout/profile-layout';
 
 const Profile: FC = () => {
 
   const dispatch = useDispatch();
 
-  const initialFormData: TAuthData = { ...useSelector<any, TProfile>(state => state.profile.data), password: '' };
+  const storedUserData = useSelector(state => state.profile.data);
+  const initialFormData = useMemo<TAuthData>(() => (
+    storedUserData ? { ...storedUserData, password: '' } : { name: '', email: '', password: '' }
+  ), [storedUserData]);
 
   const [formData, setFormData] = useState<TAuthData>({ ...initialFormData });
   const [formWasEdited, setFormWasEdited] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const Profile: FC = () => {
 
   const handleBlur = (): void => setNameInputIsLocked(true);
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
     setFormIsValid(formRef.current!.checkValidity());
     !formWasEdited && setFormWasEdited(true);
@@ -43,46 +43,29 @@ const Profile: FC = () => {
     setFormWasEdited(false);
   };
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const profileChanges: TProfileChanges = Object.keys(formData).reduce<TProfileChanges>(
       (changes, fieldName) => (initialFormData[fieldName as keyof TAuthData] !== formData[fieldName as keyof TAuthData])
-        ? { ...changes, [fieldName]: formData[fieldName  as keyof TAuthData] }
+        ? { ...changes, [fieldName]: formData[fieldName as keyof TAuthData] }
         : { ...changes }
       , {});
 
-    dispatch<any>(editProfileData(profileChanges));
+    dispatch(editProfileData(profileChanges));
   };
 
-  const profileWasEdited = useSelector<any, boolean>(state => state.profile.profileWasEdited);
+  const profileWasEdited = useSelector(state => state.profile.profileWasEdited);
 
   useEffect(() => {
     if (profileWasEdited) {
       setFormData({ ...initialFormData });
       setFormWasEdited(false);
-      dispatch({
-        type: SET_PROFILE_EDITED,
-        status: false
-      });
+      dispatch(setProfileEdited(false));
     }
-  }, [profileWasEdited, initialFormData]);
-
-  const handleLogOut = () => {
-    dispatch<any>(sendLogOurRequest());
-  }
+  }, [profileWasEdited, initialFormData, dispatch]);
 
   return (
-    <section className={styles.container + ' mt-30'}>
-      <div className={styles.sidebar}>
-        <ProfileNav>
-          <ProfileLink link="/profile" end>Профиль</ProfileLink>
-          <ProfileLink link="/profile/orders">История заказов</ProfileLink>
-          <ProfileNavButton clickHandler={handleLogOut}>
-            Выход
-          </ProfileNavButton>
-        </ProfileNav>
-        <p className="text text_type_main-default text_color_inactive mt-20">В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
-      </div>
+    <ProfileLayout>
       <form
         ref={formRef}
         onSubmit={handleSubmit}
@@ -127,7 +110,7 @@ const Profile: FC = () => {
           </div>
         )}
       </form>
-    </section >
+    </ProfileLayout>
   )
 }
 

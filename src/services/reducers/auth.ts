@@ -1,4 +1,5 @@
-import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_AUTH_ERROR_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
+import { SET_AUTH_CHECK_STATUS, SET_LOGGED_IN_STATUS, SET_FORM_SUBMIT_STATUS, SET_FORM_FAIL_STATUS } from "../actions/auth";
+import { TAuthActions, TAuthState } from "../types/auth";
 
 const initialState = {
   userIsLoggedIn: false,
@@ -10,7 +11,7 @@ const initialState = {
   }
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state: TAuthState = initialState, action: TAuthActions) => {
   switch (action.type) {
     case SET_AUTH_CHECK_STATUS:
       return {
@@ -45,7 +46,7 @@ const authReducer = (state = initialState, action) => {
         }
       }
     default:
-      return state
+      return state;
   };
 }
 

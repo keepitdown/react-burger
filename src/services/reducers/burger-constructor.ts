@@ -1,4 +1,6 @@
+import { TConstructorIngredient } from "../../utils/types";
 import { ADD_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM, MOVE_CONSTRUCTOR_ITEM, SHOW_BUN_ERROR, HIDE_BUN_ERROR, RESET_CONSTRUCTOR } from "../actions/burger-constructor";
+import { TBurgerConstructorState, TBurgerConstructorActions } from "../types/burger-constructor";
 
 const initialState = {
   data: {
@@ -9,7 +11,7 @@ const initialState = {
   showBunError: false
 };
 
-const burgerConstructorReducer = (state = initialState, action) => {
+const burgerConstructorReducer = (state: TBurgerConstructorState = initialState, action: TBurgerConstructorActions) => {
   switch (action.type) {
     case ADD_CONSTRUCTOR_ITEM: {
       if (action.data.type === 'bun') {
@@ -40,7 +42,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
       };
     case MOVE_CONSTRUCTOR_ITEM: {
 
-      function moveArrayItem(originalIndex, targetIndex, array) {
+      const moveArrayItem = (originalIndex: number, targetIndex: number, array: TConstructorIngredient[]): TConstructorIngredient[] => {
         const updatedArray = [...array];
         const movedItem = updatedArray.splice(originalIndex, 1)[0];
         updatedArray.splice(targetIndex, 0, movedItem);
@@ -71,7 +73,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         data: {
-          bun: {},
+          bun: null,
           middle: []
         },
         nextConstructorId: 0,

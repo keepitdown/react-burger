@@ -1,0 +1,12 @@
+.container {
+  position: relative;
+  min-width: 480px;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar {
+  max-width: 320px;
+  position: absolute;
+  left: -380px;
+}

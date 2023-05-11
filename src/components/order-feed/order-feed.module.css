@@ -1,0 +1,28 @@
+.section {
+  flex-grow: 1;
+  max-width: 1240px;
+  display: flex;
+  flex-direction: column;
+  color: #f2f2f3;
+}
+
+.content {
+  min-height: 0;
+  display: flex;
+  column-gap: 60px;
+}
+
+.list {
+  box-sizing: border-box;
+  flex-grow: 1;
+  max-width: 608px;
+}
+
+.list-item {
+  min-width: 584px;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+}
