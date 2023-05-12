@@ -29,4 +29,4 @@
 
 ---
 
-**[Открыть актуальную версию проекта в браузере](https://keepitdown.github.io/react-burger/index.html)**
+**[Открыть актуальную версию проекта в браузере](https://stellarproject.nomoredomains.monster/)**
