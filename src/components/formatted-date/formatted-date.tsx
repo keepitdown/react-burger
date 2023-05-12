@@ -12,12 +12,8 @@ const getDiffDays = (date: Date) => {
   const localTimeOffsetMs = 0 - (currentDate.getTimezoneOffset() * 1000 * 60);
   const currentDateMs = currentDate.getTime();
   const dateMs = date.getTime();
-  const fullDaysDiff = Math.floor((currentDateMs - dateMs) / fullDayMs);
-  if (((currentDateMs + localTimeOffsetMs) % fullDayMs) >= ((dateMs + localTimeOffsetMs) % fullDayMs )) {
-    return fullDaysDiff;
-  } else {
-    return fullDaysDiff + 1;
-  }
+  const fullDaysDiff = Math.floor((currentDateMs + localTimeOffsetMs) / fullDayMs) - Math.floor((dateMs + localTimeOffsetMs) / fullDayMs);
+  return fullDaysDiff;
 };
 
 const getFormattedTime = (date: Date): string =>
