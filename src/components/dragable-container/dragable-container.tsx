@@ -46,7 +46,7 @@ const DragableContainer: FC<TDragableContainer> = ({ constructorId, children, in
 
   useEffect(() => {
     preview(getEmptyImage())
-  }, [])
+  }, [preview]);
 
   return (
     <div

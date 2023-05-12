@@ -26,7 +26,7 @@ const FeedModal: FC = () => {
         setOrderData({ ...orderData });
       }
     }
-  }, [orderFeed]);
+  }, [orderFeed, orderId, navigate]);
 
   if (!dataIsLoaded || !orderData) {
     return null;

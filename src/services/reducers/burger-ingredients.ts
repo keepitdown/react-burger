@@ -95,3 +95,4 @@ const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState,
 };
 
 export default burgerIngredientsReducer;
+export { initialState };

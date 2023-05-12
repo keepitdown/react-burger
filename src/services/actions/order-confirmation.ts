@@ -10,8 +10,8 @@ const SET_SENDING_ORDER = 'SET_SENDING_ORDER';
 const SET_ORDER_SUCCEEDED = 'SET_ORDER_SUCCEEDED';
 const SET_ORDER_FAILED = 'SET_ORDER_FAILED';
 const SET_ORDER_NUMBER = 'SET_ORDER_NUMBER';
-const SHOW_ORDER_DETAILS = 'SHOW_ORDER_DETAILS';
-const HIDE_ORDER_DETAILS = 'HIDE_ORDER_DETAILS';
+const SHOW_ORDER_CONFIRMATION = 'SHOW_ORDER_CONFIRMATION';
+const HIDE_ORDER_CONFIRMATION = 'HIDE_ORDER_CONFIRMATION';
 const HIDE_LOADER = 'HIDE_LOADER';
 
 const setSendingOrder = (): TSetSendingOrderAction => ({
@@ -32,11 +32,11 @@ const setOrderNumber = (number: number | null): TSetOrderNumberAction => ({
 });
 
 const showOrderConfirmation = (): TShowOrderConfirmationAction => ({
-  type: SHOW_ORDER_DETAILS
+  type: SHOW_ORDER_CONFIRMATION
 });
 
 const hideOrderConfirmation = (): THideOrderConfirmationAction => ({
-  type: HIDE_ORDER_DETAILS
+  type: HIDE_ORDER_CONFIRMATION
 });
 
 const hideLoader = (): THideLoaderAction => ({
@@ -65,6 +65,6 @@ const sendOrder: AppThunk = () => (dispatch, getState) => {
 }
 
 export {
-  SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER,
+  SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_CONFIRMATION, HIDE_ORDER_CONFIRMATION, HIDE_LOADER,
   setSendingOrder, setOrderSucceeded, setOrderFailed, setOrderNumber, showOrderConfirmation, hideOrderConfirmation, hideLoader, sendOrder
 };

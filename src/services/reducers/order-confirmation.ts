@@ -1,15 +1,15 @@
-import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_DETAILS, HIDE_ORDER_DETAILS, HIDE_LOADER } from '../actions/order-confirmation';
+import { SET_SENDING_ORDER, SET_ORDER_SUCCEEDED, SET_ORDER_FAILED, SET_ORDER_NUMBER, SHOW_ORDER_CONFIRMATION, HIDE_ORDER_CONFIRMATION, HIDE_LOADER } from '../actions/order-confirmation';
 import { TOrderConfirmationActions, TOrderConfirmationState } from '../types/order-confirmation';
 
 const initialState = {
   sendingData: false,
   failedToSend: false,
   orderNumber: null,
-  showDetails: false,
+  showConfirmation: false,
   showLoader: false
 };
 
-const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState, action: TOrderConfirmationActions) => {
+const orderConfirmationReducer = (state: TOrderConfirmationState = initialState, action: TOrderConfirmationActions) => {
   switch (action.type) {
     case SET_SENDING_ORDER:
       return {
@@ -36,15 +36,15 @@ const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState,
         ...state,
         orderNumber: action.number
       }
-    case SHOW_ORDER_DETAILS:
+    case SHOW_ORDER_CONFIRMATION:
       return {
         ...state,
-        showDetails: true
+        showConfirmation: true
       };
-    case HIDE_ORDER_DETAILS:
+    case HIDE_ORDER_CONFIRMATION:
       return {
         ...state,
-        showDetails: false
+        showConfirmation: false
       };
     case HIDE_LOADER:
       return {
@@ -56,4 +56,5 @@ const OrderConfirmationReducer = (state: TOrderConfirmationState = initialState,
   }
 };
 
-export default OrderConfirmationReducer;
+export default orderConfirmationReducer;
+export { initialState };

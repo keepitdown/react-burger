@@ -31,7 +31,7 @@ const getFormattedDate = (date: Date): string => {
 const isToday = (date: Date): boolean => getDiffDays(date) === 0;
 const isYesterday = (date: Date): boolean => getDiffDays(date) === 1;
 
-export const FormattedDate: React.FC<TFormattedDate> = ({ date, className }) => {
+export const FormattedDate: FC<TFormattedDate> = ({ date, className }) => {
 
   if (isToday(date)) {
     return <span className={className}>Сегодня, {getFormattedTime(date)}</span>;

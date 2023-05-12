@@ -18,7 +18,7 @@ type TOrderCard = {
 
 const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDisplayed = 6, clickHandler, extraClass }) => {
 
-  const { name: orderName, number: orderNumber, createdAt: timestamp, status, _id: orderId, ingredients } = orderData;
+  const { name: orderName, number: orderNumber, createdAt: timestamp, status, ingredients } = orderData;
 
   const availableIngredients = useSelector(state => state.burgerIngredients.data);
 

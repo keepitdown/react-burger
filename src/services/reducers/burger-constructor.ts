@@ -85,3 +85,4 @@ const burgerConstructorReducer = (state: TBurgerConstructorState = initialState,
 };
 
 export default burgerConstructorReducer;
+export { initialState };

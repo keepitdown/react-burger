@@ -24,7 +24,7 @@ type TBurgerConstructor = {
 const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
 
   const { modalIsOpen, showLoader, sendingData, failedToSend } = useSelector(state => ({
-    modalIsOpen: state.OrderConfirmation.showDetails,
+    modalIsOpen: state.OrderConfirmation.showConfirmation,
     showLoader: state.OrderConfirmation.showLoader,
     sendingData: state.OrderConfirmation.sendingData,
     failedToSend: state.OrderConfirmation.failedToSend
