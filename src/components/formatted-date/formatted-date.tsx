@@ -12,12 +12,8 @@ const getDiffDays = (date: Date) => {
   const localTimeOffsetMs = 0 - (currentDate.getTimezoneOffset() * 1000 * 60);
   const currentDateMs = currentDate.getTime();
   const dateMs = date.getTime();
-  const fullDaysDiff = Math.floor((currentDateMs - dateMs) / fullDayMs);
-  if (((currentDateMs + localTimeOffsetMs) % fullDayMs) >= ((dateMs + localTimeOffsetMs) % fullDayMs )) {
-    return fullDaysDiff;
-  } else {
-    return fullDaysDiff + 1;
-  }
+  const fullDaysDiff = Math.floor((currentDateMs + localTimeOffsetMs) / fullDayMs) - Math.floor((dateMs + localTimeOffsetMs) / fullDayMs);
+  return fullDaysDiff;
 };
 
 const getFormattedTime = (date: Date): string =>
@@ -31,7 +27,7 @@ const getFormattedDate = (date: Date): string => {
 const isToday = (date: Date): boolean => getDiffDays(date) === 0;
 const isYesterday = (date: Date): boolean => getDiffDays(date) === 1;
 
-export const FormattedDate: React.FC<TFormattedDate> = ({ date, className }) => {
+export const FormattedDate: FC<TFormattedDate> = ({ date, className }) => {
 
   if (isToday(date)) {
     return <span className={className}>Сегодня, {getFormattedTime(date)}</span>;

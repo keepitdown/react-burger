@@ -30,3 +30,4 @@ const profileReducer = (state: TProfileState = initialState, action: TProfileAct
 }
 
 export default profileReducer;
+export { initialState };

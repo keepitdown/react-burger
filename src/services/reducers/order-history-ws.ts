@@ -38,3 +38,4 @@ const historyWsReducer = (state: THistoryWsState = initialState, action: THistor
 };
 
 export default historyWsReducer;
+export { initialState };

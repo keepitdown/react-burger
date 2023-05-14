@@ -26,7 +26,7 @@ const IngredientModal: FC = () => {
         setIngredientData({ ...ingredientData });
       }
     }
-  }, [ingredientId, dataIsLoaded, availableIngredients]);
+  }, [ingredientId, dataIsLoaded, availableIngredients, navigate]);
 
   if (!ingredientData) {
     return null;

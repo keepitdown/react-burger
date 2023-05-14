@@ -51,3 +51,4 @@ const authReducer = (state: TAuthState = initialState, action: TAuthActions) => 
 }
 
 export default authReducer;
+export { initialState };

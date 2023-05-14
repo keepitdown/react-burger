@@ -26,7 +26,10 @@ const OrderDetails: FC<TOrderDetails> = ({ orderData, modal }) => {
       updatedResult.splice(duplicateIndex, 1, updatedDuplicate)
       return updatedResult;
     } else {
-      const ingredientData = getIngredientById(availableIngredients, ingredientId) as TIngredient;
+      const ingredientData = getIngredientById(availableIngredients, ingredientId);
+      if (!ingredientData) {
+        return result;
+      }
       return [...result, { ingredient: ingredientData, quantity: 1 }];
     }
   }, []);

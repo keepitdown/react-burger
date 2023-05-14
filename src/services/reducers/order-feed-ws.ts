@@ -42,3 +42,4 @@ const feedWsReducer = (state: TFeedWsState = initialState, action: TFeedWsAction
 };
 
 export default feedWsReducer;
+export { initialState };

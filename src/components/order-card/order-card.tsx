@@ -18,12 +18,16 @@ type TOrderCard = {
 
 const OrderCard: FC<TOrderCard> = ({ orderData, displayStatus, ingredientsDisplayed = 6, clickHandler, extraClass }) => {
 
-  const { name: orderName, number: orderNumber, createdAt: timestamp, status, _id: orderId, ingredients } = orderData;
+  const { name: orderName, number: orderNumber, createdAt: timestamp, status, ingredients } = orderData;
 
   const availableIngredients = useSelector(state => state.burgerIngredients.data);
 
   const [previewData, totalPrice] = ingredients.reduce<[TPreviewData[], number]>((result, ingredientId) => {
-    const { name, image, price } = getIngredientById(availableIngredients, ingredientId) as TIngredient;
+    const ingredientData = getIngredientById(availableIngredients, ingredientId);
+    if (!ingredientData) {
+      return result;
+    }
+    const { name, image, price } = ingredientData;
     const updatedPreviewData = [...result[0], { name, image }];
     const updatedTotalPrice = result[1] + price;
     return [updatedPreviewData, updatedTotalPrice];

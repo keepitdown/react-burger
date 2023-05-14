@@ -26,7 +26,7 @@ const HistoryModal: FC = () => {
         setOrderData({ ...orderData });
       }
     }
-  }, [orderHistory]);
+  }, [orderHistory, orderId, navigate]);
 
   if (!dataIsLoaded || !orderData) {
     return null;
