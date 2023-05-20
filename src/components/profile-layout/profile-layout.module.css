@@ -1,8 +1,6 @@
 .container {
   position: relative;
   min-width: 480px;
-  display: flex;
-  justify-content: center;
 }
 
 .sidebar {

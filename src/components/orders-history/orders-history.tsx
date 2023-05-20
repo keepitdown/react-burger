@@ -36,7 +36,7 @@ const OrdersHistory: FC = () => {
   if (!historyData && !historyError) {
     return (
       <ProfileLayout>
-        <div className="mt-25 ml-30"><Loader>Загрузка</Loader></div>
+        <Loader extraClass="mt-25 ml-30">Загрузка</Loader>
       </ProfileLayout>
     );
   }
