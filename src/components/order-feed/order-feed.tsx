@@ -1,7 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import styles from './order-feed.module.css';
-import { useDispatch, useSelector } from '../../services/hooks';
-import { feedWsClose, feedWsStart } from '../../services/actions/order-feed-ws';
+import { useSelector } from '../../services/hooks';
 import OrderList from '../order-list/order-list';
 import OrderCard from '../order-card/order-card';
 import StatusBoard from '../status-board/status-board';
@@ -18,8 +17,6 @@ type TOrderFeed = {
 
 const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
 
-  const dispatch = useDispatch();
-
   const { dataIsLoaded, feedData, ordersToday, orderTotal } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
     feedData: state.feedWs.feed,
@@ -28,15 +25,6 @@ const OrderFeed: FC<TOrderFeed> = ({ extraClass }) => {
   }));
 
   const ordersInGroups = feedData && groupByPropValue<TOrder>(feedData, 'status');
-
-  useEffect(() => {
-    dispatch(feedWsStart());
-
-    return () => {
-      dispatch(feedWsClose());
-    }
-  }, [dispatch]);
-
 
   const navigate = useNavigate();
   const location = useLocation();

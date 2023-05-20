@@ -127,7 +127,11 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ extraClass }) => {
           extraClass="ml-4 mr-4"
         />
       </section>
-      {showLoader && (<Modal closeHandler={handleLoaderClose}><Loader /></Modal>)}
+      {showLoader && (
+        <Modal closeHandler={handleLoaderClose}>
+          <Loader>Отправка заказа</Loader>
+        </Modal>
+      )}
       {modalIsOpen && !sendingData && (
         <Modal closeHandler={handleModalClose}>
           {!failedToSend

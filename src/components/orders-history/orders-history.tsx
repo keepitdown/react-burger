@@ -6,12 +6,14 @@ import OrderList from '../order-list/order-list';
 import OrderCard from '../order-card/order-card';
 import { historyWsClose, historyWsStart } from '../../services/actions/order-history-ws';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Loader from '../loader/loader';
 
 const OrdersHistory: FC = () => {
 
-  const { dataIsLoaded, historyData } = useSelector(state => ({
+  const { dataIsLoaded, historyData, historyError } = useSelector(state => ({
     dataIsLoaded: state.burgerIngredients.dataIsLoaded,
-    historyData: state.historyWs.history
+    historyData: state.historyWs.history,
+    historyError: state.historyWs.error
   }));
 
   const dispatch = useDispatch();
@@ -30,6 +32,14 @@ const OrdersHistory: FC = () => {
       dispatch(historyWsClose());
     }
   }, [dispatch]);
+
+  if (!historyData && !historyError) {
+    return (
+      <ProfileLayout>
+        <div className="mt-25 ml-30"><Loader>Загрузка</Loader></div>
+      </ProfileLayout>
+    );
+  }
 
   return (
     <ProfileLayout >

@@ -30,7 +30,8 @@ const historyWsReducer = (state: THistoryWsState = initialState, action: THistor
     case HISTORY_WS_WAS_CLOSED:
       return {
         ...state,
-        connected: false
+        connected: false,
+        history: null
       }
     default:
       return state;

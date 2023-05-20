@@ -64,7 +64,7 @@ describe('order-feed web-sockets middleware reducer', () => {
       .toEqual({
         ...initialState,
         connected: false,
-        feed: testOrders
+        feed: null
       });
   });
 });

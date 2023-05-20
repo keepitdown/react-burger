@@ -62,7 +62,7 @@ describe('order-history web-sockets middleware reducer', () => {
       .toEqual({
         ...initialState,
         connected: false,
-        history: testOrders
+        history: null
       });
   });
 });

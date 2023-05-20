@@ -34,7 +34,8 @@ const feedWsReducer = (state: TFeedWsState = initialState, action: TFeedWsAction
     case FEED_WS_WAS_CLOSED:
       return {
         ...state,
-        connected: false
+        connected: false,
+        feed: null
       }
     default:
       return state;
