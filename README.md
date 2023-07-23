@@ -20,14 +20,15 @@
 
 ## Используемые технологии
 
-* HTML
-* CSS
-* TypeScript
-* JavaScript
-* React
-* Redux
-* React DnD
-* React Router
+<div>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML5" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" title="CSS3" alt="CSS3" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="TypeScript" alt="TypeScript" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" title="React" alt="React" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" title="Redux" alt="Redux" width="35" height="35"/>&nbsp;
+  <img src="https://github.com/keepitdown/keepitdown/blob/main/react-router-logo.svg" title="React Router" alt="React Router" height="30"/>&nbsp;
+</div>
 
 В качестве основы проекта применяется библиотека для создания пользовательских интерфейсов **React**. В приложении используются языки программирования **TypeSctipt** и **JavaScript**. Среди компонентов проекта имеются присутствуют специального созданные, так и уже готовые. Благодаря использованию технологии **flexbox** страница приложения подстраивается под размер окна браузера. Для хранения глобального состояния применяется хранилище **Redux** с расширением **Thunk**. Также в хранилище проекта используется собственный мидлвар для обмена информацией с сервером по протоколу **WebSocket**. Функционал Drag-and-drop реализован с применением библиотеки **React DnD**. Для маршрутизации используется библиотека **React Router**. Проведение unit-тестов компонентов приложения осуществляется в среде **Jest**. При проверке функционала e2e тестами применятеся **Cypress**.
 
